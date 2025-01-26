@@ -1,0 +1,22 @@
+@import "../vars";
+
+@mixin btn($width, $bg-clr, $clr, $b-clr) {
+  all: unset;
+  width: $width;
+  background-color: $bg-clr;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 59px;
+  font-size: 22px;
+  font-style: normal;
+  font-weight: 500;
+  font-family: $main-font;
+  color: $clr;
+  border: 1px solid $b-clr;
+  border-radius: 20px;
+  box-shadow: 0px 0px 400px 1px rgba(80, 99, 191, 0.78);
+  -webkit-box-shadow: 0px 0px 400px 1px rgba(80, 99, 191, 0.78);
+  -moz-box-shadow: 0px 0px 400px 1px rgba(80, 99, 191, 0.78);
+  cursor: pointer;
+}

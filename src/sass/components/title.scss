@@ -1,0 +1,19 @@
+@import "../vars";
+
+@mixin title() {
+  color: $black-clr;
+  font-size: 30px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 42px;
+  font-family: $main-font;
+}
+
+@mixin text($size, $weight, $clr) {
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 20px;
+  color: $clr;
+  // font-family: $global-font;
+}

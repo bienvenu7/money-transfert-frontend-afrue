@@ -1,0 +1,17 @@
+[
+  {
+    "title": "1. Convertir son argent",
+    "description": "Le convertisseur de devises de AfruE a pour rôle de permettre aux clients de convertir une devise en une autre lors de leurs transactions financières internationales. Cela signifie que les clients peuvent envoyer de l'argent dans une devise et le destinataire peut le recevoir dans une devise différente, en utilisant le taux de change en vigueur. Le convertisseur garantit ainsi une conversion précise et transparente, facilitant les transferts d'argent entre la Russie et les différentes destinations que couvre AfruE.",
+    "icon": "/exchange.png"
+  },
+  {
+    "title": "2. Fournir les informations",
+    "description": "Après avoir pris connaissance du taux de change des devises que vous souhaitez utiliser lors de votre transaction, l'étape suivante consiste à cliquer sur le bouton <strong>Transférer de l'argent</strong>, qui vous redirigera vers notre service client pour soumettre les informations de votre transaction. Pour plus de détaille sur comment recevoir/ envoyer de l’argent, veuillez cliquer <a href='http://localhost:3000/faq'>ICI<a/>",
+    "icon": "/write.png"
+  },
+  {
+    "title": "3. Réception de la confirmation",
+    "description": "Une fois que les informations de votre transaction sont traitées et que le transfert est financé, l’étape suivante consiste à initier l’ordre de paiement ou de transfert selon les procédures en vigueur. Après réalisation de l’ordre de transfert par l’agence réceptrice, une preuve de la réalisation sera envoyée à l'expéditeur et/ou au bénéficiaire.",
+    "icon": "/confirmation.png"
+  }
+]
