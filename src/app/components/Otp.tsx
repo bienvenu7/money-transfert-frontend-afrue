@@ -101,7 +101,6 @@ const Otp = ({ email }: Props) => {
           />
         ))}
       </div>
-
       <button className="text" onClick={resend}>
         Envoyer un nouveau code
       </button>
