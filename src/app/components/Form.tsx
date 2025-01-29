@@ -8,6 +8,7 @@ import { getCountries } from "../utils/getCountry";
 import { ICountry } from "@/types/country";
 import Image from "next/image";
 import { IBadResquestErrorData, IBaseErrorData } from "@/types/fetch";
+import { useRouter } from "next/navigation";
 
 type Props = {
   pageName: string;
@@ -28,6 +29,8 @@ const Form = ({ pageName }: Props) => {
   const [nameError, setNameError] = useState<boolean>(false);
 
   const [countries, setCountries] = useState<ICountry[]>([]);
+
+  const router = useRouter();
 
   const submit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -102,11 +105,15 @@ const Form = ({ pageName }: Props) => {
           });
         } else {
           const obj = el as IBaseErrorData;
-          console.log(obj.message);
+          // if (obj.statusCode === 500) {
+          //   router.push("/500");
+          // }
           errorMessage(obj.message);
         }
       })
-      .catch((error) => console.error(error));
+      .catch((error) => {
+        console.error(error);
+      });
   };
 
   const allCountries = async (): Promise<void> => {

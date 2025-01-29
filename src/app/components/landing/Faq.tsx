@@ -4,7 +4,7 @@ type Props = {};
 
 const Faq = (props: Props) => {
   return (
-    <div className="main__faq">
+    <div className="main__faq" id="faq">
       <div className="main__faq--wrapper">
         <h2>FAQ</h2>
         <div className="main__faq--content">

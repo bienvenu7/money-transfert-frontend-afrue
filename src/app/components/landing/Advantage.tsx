@@ -51,7 +51,7 @@ type Props = {};
 
 const Advantage = (props: Props) => {
   return (
-    <div className="main__advantage">
+    <div className="main__advantage" id="advantage">
       <div className="main__advantage--wrapper">
         <h2>Avantages</h2>
         <div className="main__advantage--cards">

@@ -15,7 +15,7 @@ import {
   AiOutlineUser,
 } from "react-icons/ai";
 import HeaderData from "./HeaderData";
-import { useRouter } from "next/navigation";
+import { useRouter, usePathname } from "next/navigation";
 import HeaderNoData from "./HeaderNoData";
 import { errorMessage } from "@/app/utils/notification";
 import Svgs from "../Svgs";
@@ -57,6 +57,8 @@ const MobileNav = () => {
   const voyelles = ["e", "a"];
   const [openMenu, setOpenMenu] = useState<boolean>(false);
   const [clientData, setClientData] = useState<IClientResponse>();
+
+  const pathName = usePathname();
 
   const [show, setShow] = useState(true);
   const [lastScrollY, setLastScrollY] = useState(0);
@@ -131,17 +133,21 @@ const MobileNav = () => {
   };
 
   return (
-    <div className={`navbar__mobile--container ${show && "hide"}`}>
+    <div className={`navbar__mobile--container ${show && "hide"} `}>
       <div className="navbar__mobile--header">
-        <div className="navbar__mobile--header__box">
+        <div
+          className={`navbar__mobile--header__box ${
+            pathName !== "/" ? "bg" : ""
+          }`}
+        >
           <div className="navbar__mobile--logo">
             <Image src={"/logo.png"} alt="" fill />
           </div>
           <ul className="navbar__mobile--list">
-            <a href="">A propos</a>
-            <a href="">Avantages</a>
+            <a href="/#about">A propos</a>
+            <a href="/#advantage">Avantages</a>
             <a href="">Transaction</a>
-            <a href="">FAQ</a>
+            <a href="/#faq">FAQ</a>
           </ul>
           <div className="navbar__mobile--btn">
             {clientData !== undefined ? (
@@ -168,7 +174,10 @@ const MobileNav = () => {
           </div>
         </div>
         {clientData !== undefined ? (
-          <button onClick={() => setOpenMenu(true)}>
+          <button
+            className={`${pathName !== "/" ? "bg" : ""}`}
+            onClick={() => setOpenMenu(true)}
+          >
             <Svgs name="menu" />
           </button>
         ) : (

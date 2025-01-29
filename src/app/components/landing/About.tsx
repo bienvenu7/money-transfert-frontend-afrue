@@ -5,7 +5,7 @@ type Props = {};
 
 function About({}: Props) {
   return (
-    <div className="main__about">
+    <div className="main__about" id="about">
       <div className="main__about--wrapper">
         <Titles line1="À propos de nous" line2="Afru-Exchange" />
         <div className="main__about--globe">

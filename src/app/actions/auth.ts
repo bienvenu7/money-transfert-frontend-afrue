@@ -110,9 +110,6 @@ export const confirmOtp = async (
 
     return successResponseOtp(data, status);
   } catch (error: any) {
-    console.error(error);
-    console.table({ newOtp, email });
-
     return errorToSendBack(error);
   }
 };

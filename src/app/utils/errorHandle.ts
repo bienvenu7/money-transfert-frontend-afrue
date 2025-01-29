@@ -32,6 +32,7 @@ export class ValidationError extends BaseError {
 export const errorToSendBack = (
   error: any
 ): IBaseErrorData | IBadResquestErrorData => {
+  console.log(error.response);
   if (error.status === 400) {
     let err = error.response.data as IBadResquestErrorData;
     const newData: IBadResquestErrorData = {
@@ -39,9 +40,9 @@ export const errorToSendBack = (
       statusCode: 400,
     };
     return newData;
-  } else if (error.status === 500) {
+  } else if (error.status === 500 || error.response === undefined) {
     let err: IBaseErrorData = {
-      message: "Server error!",
+      message: "Server error! please try again later",
       statusCode: 500,
       status: "failed",
     };
