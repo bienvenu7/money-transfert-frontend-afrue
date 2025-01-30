@@ -77,7 +77,7 @@ html {
 
     @include mobile {
       width: $mobile-width;
-      padding: 20px;
+      padding: 40px 20px;
     }
 
     &--box {
@@ -873,64 +873,126 @@ html {
     display: flex;
     align-items: center;
     justify-content: center;
+    margin-top: 160px;
   }
 
   &__box {
-    width: $mobile-width;
+    width: 1280px;
     display: flex;
     flex-direction: column;
     height: auto;
     align-items: flex-start;
     justify-content: flex-start;
     gap: 30px;
+
+    @include mobile {
+      width: $mobile-width;
+    }
+  }
+
+  &__wrapper {
+    border-radius: 60px;
+    background: #e7eeff;
+    width: 100%;
+    padding: 40px 80px;
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+
+    @include mobile {
+      border-radius: 20px;
+      padding: 32px 10px;
+    }
+  }
+
+  &__tab {
+    display: flex;
+    width: 100%;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 20px;
+
+    @include mobile {
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: center;
+    }
+
+    & > h2 {
+      color: #000;
+      font-family: $main-font;
+      font-size: 20px;
+      font-style: normal;
+      font-weight: 500;
+      line-height: 120%; /* 24px */
+
+      @include mobile {
+        font-size: 16px;
+      }
+    }
+
+    & > select {
+      all: unset;
+      display: flex;
+      width: 251px;
+      padding: 12px 20px;
+      justify-content: space-between;
+      align-items: center;
+      border-radius: 20px;
+      border: 1px solid rgba(0, 0, 0, 0.2);
+      background: #fdfcff;
+      box-shadow: 5px 5px 10px 0px rgba(84, 100, 185, 0.16) inset,
+        -5px -5px 10px 0px #fafbff inset;
+      cursor: pointer;
+
+      @include mobile {
+        width: 120px !important;
+        padding: 12px 20px;
+      }
+    }
   }
 
   &__histories {
     display: flex;
     width: 100%;
     height: auto;
-    flex-direction: column;
-    gap: 25px;
+    justify-content: center;
+    align-items: flex-start;
+    flex-shrink: 0;
+    border-radius: 20px;
+    background: #fdfcff;
 
-    & > h2 {
-      font-family: $main-font;
-      font-size: 18px;
-      font-weight: 600;
-      color: $line-grey-clr;
-    }
-
-    &--transactions {
-      width: 100%;
-      height: auto;
+    &--cards {
       display: flex;
+      width: 100%;
+      padding: 0 10px;
+      gap: 25px;
       flex-direction: column;
       align-items: flex-start;
       justify-content: flex-start;
-      gap: 15px;
+    }
 
-      &__card {
-        width: 100%;
-        height: auto;
+    &--card {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: flex-start;
+      padding: 30px;
+      border-bottom: 0.6px solid rgba(204, 204, 204, 0.8);
+
+      &__left {
         display: flex;
         align-items: center;
         justify-content: flex-start;
-        gap: 13px;
-        padding: 12px 13px;
-        box-shadow: 0px 0px 10px -6px rgba(0, 0, 0, 0.5);
-        -webkit-box-shadow: 0px 0px 10px -6px rgba(0, 0, 0, 0.5);
-        -moz-box-shadow: 0px 0px 10px -6px rgba(0, 0, 0, 0.5);
-        border-radius: 20px;
+        gap: 10px;
+        width: 400px;
 
-        &--picture {
-          min-width: 57px;
-          min-height: 57px;
+        & > .img {
           position: relative;
-          border-radius: 50%;
-          box-shadow: 0px 0px 59px -5px rgba(80, 99, 191, 0.5);
-          -webkit-box-shadow: 0px 0px 59px -5px rgba(80, 99, 191, 0.5);
-          -moz-box-shadow: 0px 0px 59px -5px rgba(80, 99, 191, 0.5);
+          width: 42px;
+          height: 42px;
 
-          & > .img {
+          & > img {
             width: 100%;
             height: 100%;
             object-fit: cover;
@@ -938,55 +1000,84 @@ html {
           }
         }
 
-        &--content {
+        & > span {
+          color: #454545;
+          font-family: $main-font;
+          font-size: 16px;
+          font-style: normal;
+          font-weight: 500;
+          line-height: 135%; /* 21.6px */
+        }
+      }
+
+      &__right {
+        display: flex;
+        align-items: center;
+        justify-content: flex-start;
+        gap: 24px;
+
+        & > p {
+          color: #454545;
+          font-family: $main-font;
+          font-size: 16px;
+          font-style: normal;
+          font-weight: 400;
+          line-height: 135%; /* 21.6px */
+          width: 146px;
+        }
+
+        & > .date {
           display: flex;
-          width: 100%;
-          height: auto;
           flex-direction: column;
-          gap: 5px;
+          gap: 2px;
+          width: 156px;
 
-          &__up {
-            display: flex;
-            width: 100%;
-            align-items: center;
-            justify-content: space-between;
-
-            & > h3 {
-              font-family: $main-font;
-              font-size: 16px;
-              font-weight: 600;
-              color: $black-clr;
-            }
-
-            & > svg {
-              width: 24px;
-              height: 24px;
-              stroke-width: 10px;
-              color: $blue-clr;
-              transform: rotate(45deg);
-            }
+          & > p {
+            color: #454545;
+            font-family: $secondary-font;
+            font-size: 14px;
+            font-style: normal;
+            font-weight: 500;
+            line-height: 22px; /* 157.143% */
+            letter-spacing: -0.28px;
           }
 
-          &__down {
-            width: 100%;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-
-            & > p {
-              font-family: $main-font;
-              font-size: 14px;
-              font-weight: 400;
-              color: $black-clr;
-            }
-
-            & > span {
-              font-family: $main-font;
-              font-size: 16px;
-              font-weight: 800;
-              color: $blue-clr;
-            }
+          & > span {
+            color: #8f8f8f;
+            font-family: $main-font;
+            font-size: 12px;
+            font-style: normal;
+            font-weight: 300;
+            line-height: 120%; /* 14.4px */
           }
+        }
+
+        & > small {
+          color: #36bf9e;
+          font-family: $secondary-font;
+          font-size: 14px;
+          font-style: normal;
+          font-weight: 500;
+          line-height: 22px; /* 157.143% */
+          letter-spacing: -0.28px;
+          width: 144px;
+        }
+
+        & > strong {
+          display: flex;
+          width: 106px;
+          align-items: center;
+          justify-content: center;
+          gap: 10px;
+          border-radius: 12px;
+          background: #a6ffba;
+          padding: 8px 12px;
+          color: #232323;
+          font-family: $main-font;
+          font-size: 12px;
+          font-style: normal;
+          font-weight: 300;
+          line-height: 120%; /* 14.4px */
         }
       }
     }
@@ -997,7 +1088,6 @@ html {
   &__container {
     width: 100%;
     height: auto;
-    margin-top: 100px;
 
     & > h1 {
       @include title();
