@@ -18,6 +18,7 @@ import {
   getNetworks,
 } from "@/redux/transactionReducer";
 import { getNetworksById } from "@/app/utils/network";
+import Image from "next/image";
 
 type Props = {};
 
@@ -44,6 +45,7 @@ const QuizTwo = () => {
 
   return (
     <div className="transfert__slides--first">
+      <Image src="/grad.png" alt="" fill />
       <h2>{`Entrez le montant que vous souhaiter ${
         type === "send" ? "envoyer" : "recevoir"
       }  pour pouvoir avoir l'aperçu de la somme à ${

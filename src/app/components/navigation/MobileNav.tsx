@@ -30,22 +30,22 @@ const links: Ilinks[] = [
   {
     name: "Accueil",
     uri: "/",
-    icon: <AiOutlineHome />,
+    icon: <Svgs name="home" />,
   },
   {
     name: "Profile",
     uri: "/profile",
-    icon: <AiOutlineUser />,
+    icon: <Svgs name="profile" />,
   },
   {
-    icon: <AiOutlineExpandAlt />,
+    icon: <Svgs name="h-t-d" />,
     name: "Transaction",
     uri: "/transaction",
   },
   {
     name: "Historiques",
     uri: "/historiques",
-    icon: <AiOutlineHistory />,
+    icon: <Svgs name="history" />,
   },
 ];
 
@@ -133,7 +133,7 @@ const MobileNav = () => {
   };
 
   return (
-    <div className={`navbar__mobile--container ${show && "hide"} `}>
+    <div className={`navbar__mobile--container`}>
       <div className="navbar__mobile--header">
         <div
           className={`navbar__mobile--header__box ${
@@ -220,6 +220,14 @@ const MobileNav = () => {
             )}
           </div>
         </div>
+      </div>
+      <div className="navbar__mobile--phone">
+        <div className="navbar__mobile--phone__logo">
+          <Image src={"/logo.png"} alt="" fill />
+        </div>
+        <button onClick={() => setOpenMenu(true)}>
+          <Svgs name="menu" />
+        </button>
       </div>
     </div>
   );

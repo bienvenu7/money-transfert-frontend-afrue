@@ -11,6 +11,7 @@ import { IType } from "./Transaction";
 import { ICountry } from "@/types/country";
 import { useSelector } from "react-redux";
 import { selectTransaction, selectTransactionType } from "@/redux/selector";
+import Svgs from "../Svgs";
 
 type Props = {
   amount: number;
@@ -33,7 +34,7 @@ const Convertisseur = () => {
           isAuthUser={transactionType === "send" ? true : false}
         />
         <button>
-          <AiOutlineSwap />
+          <Svgs name="exchange" />
         </button>
         <Convert
           name="receive"

@@ -8,6 +8,7 @@ import { getCountries, getCountryById } from "@/app/utils/getCountry";
 import { ICountry } from "@/types/country";
 import { useDispatch } from "react-redux";
 import { getCounties, getUser, getUserCountry } from "@/redux/clientReducer";
+import Titles from "@/app/components/Titles";
 
 const Page = async () => {
   const dispatch = useDispatch();
@@ -30,7 +31,7 @@ const Page = async () => {
   return (
     <div className="transfert__container">
       <div className="transfert__box">
-        <h1>Transaction</h1>
+        <Titles line1="Transaction" line2="Afru-Exchange " />
         <Transaction />
       </div>
     </div>

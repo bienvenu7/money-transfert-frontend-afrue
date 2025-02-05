@@ -64,7 +64,7 @@ const SendForm = () => {
   return (
     <>
       <div className="transfert--send__form">
-        <div className="form__input">
+        <div className="transfert--send__form--input">
           <label htmlFor="country">Pays*</label>
           <select
             disabled
@@ -88,7 +88,7 @@ const SendForm = () => {
             ))}
           </select>
         </div>
-        <div className="form__input">
+        <div className="transfert--send__form--input">
           <label htmlFor="operator">Opérateur réseau*</label>
           <select
             className={operator !== "" ? "colored" : ""}
@@ -122,7 +122,7 @@ const SendForm = () => {
           </select>
           {/* {<p>{"Le numéro doit contenir 9 chiffres!"}</p>} */}
         </div>
-        <div className="form__input">
+        <div className="transfert--send__form--input">
           <label htmlFor="name">{`Nom(s) et prénom(s) ${
             transaction?.type === "send" ? "du destinataire" : "de l'expéditeur"
           }*`}</label>
@@ -142,7 +142,7 @@ const SendForm = () => {
           />
           {/* {<p>{"Le nom doit contenir au moins 5 lettres!"}</p>} */}
         </div>
-        <div className="form__input">
+        <div className="transfert--send__form--input">
           <label htmlFor="phone">Le numero relié au compte*</label>
           <input
             className={

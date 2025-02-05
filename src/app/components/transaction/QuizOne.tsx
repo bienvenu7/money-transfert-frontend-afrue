@@ -10,6 +10,7 @@ import {
   getTransactionType,
 } from "@/redux/transactionReducer";
 import { selectCountry, selectTransaction } from "@/redux/selector";
+import Image from "next/image";
 
 interface Props {}
 
@@ -20,6 +21,7 @@ const QuizOne = () => {
 
   return (
     <div className="transfert__slides--question">
+      <Image src="/grad.png" alt="" fill />
       <h2>
         {`Veillez s'il plait choisir le type de transaction que vous voulez
         éffectuer :`}
@@ -39,7 +41,7 @@ const QuizOne = () => {
                 }
               }}
             >
-              Envoyer <AiOutlineArrowDown />
+              Envoyer
             </button>
             <button
               onClick={() => {
@@ -53,7 +55,7 @@ const QuizOne = () => {
                 }
               }}
             >
-              Recevoir <AiOutlineArrowDown />
+              Recevoir
             </button>
           </div>
         </div>

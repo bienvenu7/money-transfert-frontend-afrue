@@ -29,6 +29,7 @@ import {
 import { AppDispatch } from "@/redux/store";
 import { getStep } from "@/redux/clientReducer";
 import { getCountryfrom, getCountryTo } from "@/redux/transactionReducer";
+import Image from "next/image";
 
 export type IType = "send" | "receive";
 
@@ -101,28 +102,34 @@ const Transaction = () => {
 
   return (
     <div className="transfert__slides">
-      <div
-        className={`transfert__slides--box ${
-          step === 1 ? "one" : step === 2 ? "two" : ""
-        }`}
-      >
-        <QuizOne />
-        <QuizTwo />
-        <div className="transfert__slides--second">
-          <div className="transfert__form">
-            <p>{`Veillez entrer soigneusement les informations ${
-              type === "send" ? "du destinatire" : "de l'expéditeur"
-            }`}</p>
-            <SendForm />
+      <div className="transfert__slides--wrapper">
+        <div
+          className={`transfert__slides--box ${
+            step === 1 ? "one" : step === 2 ? "two" : ""
+          }`}
+        >
+          <QuizOne />
+          <QuizTwo />
+          <div className="transfert__slides--second">
+            <Image src="/grad.png" alt="" fill />
+            <div className="transfert__form">
+              <p>{`Veillez entrer soigneusement les informations ${
+                type === "send" ? "du destinatire" : "de l'expéditeur"
+              }`}</p>
+              <SendForm />
+            </div>
+            <div className="btns" style={step === 2 ? { marginTop: 30 } : {}}>
+              <button
+                onClick={(event) => dispatch(getStep(-1))}
+                type={"button"}
+              >
+                <AiOutlineDown />
+              </button>
+              <button type={"button"}>
+                <AiOutlineDown />
+              </button>
+            </div>
           </div>
-          {/* <div className="btns" style={step === 2 ? { marginTop: 30 } : {}}>
-            <button onClick={(event) => dispatch(getStep(-1))} type={"button"}>
-              <AiOutlineDown />
-            </button>
-            <button onClick={confirmTransaction} type={"button"}>
-              <AiOutlineDown />
-            </button>
-          </div> */}
         </div>
       </div>
 
