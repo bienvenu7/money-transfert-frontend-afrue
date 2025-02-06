@@ -134,6 +134,34 @@ const Cover = (props: Props) => {
             </div>
           </div>
         </div>
+        <div className="main__cover--mobile">
+          <img src="/footer.png" alt="" />
+          <div className="main__cover--mobile__content">
+            <h1>
+              {`Transférer de l’argent en un clic`}
+              <span>
+                {`     `}
+                <img src="/gradient.png" />
+              </span>
+              depuis le confort de votre salon
+            </h1>
+            <p>
+              Mode de paiement flexible avec une possibilité de se rendre dans
+              nos locaux
+            </p>
+            <img src="/coin.png" alt="" />
+          </div>
+          <div className="main__cover--content__stats">
+            {stats.map((stat) => {
+              return (
+                <div key={stat.id} className="box">
+                  <h2>{stat.stats}</h2>
+                  <span>{stat.text}</span>
+                </div>
+              );
+            })}
+          </div>
+        </div>
       </div>
     </div>
   );

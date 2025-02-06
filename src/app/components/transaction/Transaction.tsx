@@ -119,10 +119,7 @@ const Transaction = () => {
               <SendForm />
             </div>
             <div className="btns" style={step === 2 ? { marginTop: 30 } : {}}>
-              <button
-                onClick={(event) => dispatch(getStep(-1))}
-                type={"button"}
-              >
+              <button onClick={() => dispatch(getStep(-1))} type={"button"}>
                 <AiOutlineDown />
               </button>
               <button type={"button"}>
