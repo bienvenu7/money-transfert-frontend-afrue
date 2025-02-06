@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import GetWidownDimensoins from "../GetWidownDimensoins";
 
 interface IEl {
   id: string;
@@ -15,6 +16,8 @@ type Props = {
 const CardAdv = ({ el, index }: Props) => {
   const [ishover, setIsHover] = useState(false);
 
+  const { height, width } = GetWidownDimensoins();
+
   function MouseOver(event: React.MouseEvent<HTMLDivElement, MouseEvent>) {
     setIsHover(true);
   }
@@ -24,13 +27,7 @@ const CardAdv = ({ el, index }: Props) => {
   return (
     <div
       className={`main__advantage--card ${
-        index === 0
-          ? "active"
-          : index === 0 && ishover
-          ? "active"
-          : index !== 0 && ishover
-          ? "active"
-          : ""
+        ishover && width > 520 ? "active" : ""
       } `}
       onMouseOver={MouseOver}
       onMouseOut={MouseOut}

@@ -9,7 +9,7 @@ const Faq = (props: Props) => {
         <h2>FAQ</h2>
         {[1].map((el, index) => {
           return (
-            <div className="main__faq--content">
+            <div key={index} className="main__faq--content">
               <div className="main__faq--content__left">
                 <div className="main__faq--content__left--title">
                   <span>0{index + 1}</span>
