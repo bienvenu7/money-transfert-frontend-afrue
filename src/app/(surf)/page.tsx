@@ -12,12 +12,12 @@ import Transfert from "../components/landing/Transfert";
 
 export const metadata: Metadata = {
   icons: {
-    icon: "/ico.png",
+    icon: "https://afrue.com/ico.png",
   },
   title: "Africa exchange",
   description: "AfruE, your platform to send money quickly over sanctions.",
   openGraph: {
-    images: "/ico.png",
+    images: "https://afrue.com/ico.png",
     title: "Africa exchange",
     description: "AfruE, your platform to send money quickly over sanctions.",
   },

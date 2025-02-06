@@ -2941,7 +2941,6 @@ html {
       display: flex;
       align-items: flex-end;
       justify-content: flex-end;
-      overflow: visible;
 
       @include mobile {
         width: 100%;
@@ -2949,6 +2948,7 @@ html {
         border-radius: 40px;
         align-items: flex-start;
         justify-content: center;
+        overflow: visible;
       }
 
       &__content {
