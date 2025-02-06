@@ -3,6 +3,7 @@ import "../styles/global.scss";
 import ToastProvider from "./utils/ToastProvider";
 import { Metadata } from "next";
 import { store } from "@/redux/store";
+import manifest from "@/seo/manifest";
 
 export const metadata: Metadata = {
   icons: {
@@ -10,7 +11,7 @@ export const metadata: Metadata = {
     // apple: ['/apple-touch-icon.png?v=4'],
     // shortcut: ['/apple-touch-icon.png'],
   },
-  manifest: "/site.webmanifest",
+  manifest: "/seo/manifest.json",
 };
 
 export default function RootLayout({

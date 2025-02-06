@@ -1,3 +1,4 @@
+import { Metadata } from "next";
 import About from "../components/landing/About";
 import Advantage from "../components/landing/Advantage";
 import Cover from "../components/landing/Cover";
@@ -8,6 +9,19 @@ import Mission from "../components/landing/Mission";
 import Partners from "../components/landing/Partners";
 import Show from "../components/landing/Show";
 import Transfert from "../components/landing/Transfert";
+
+export const metadata: Metadata = {
+  icons: {
+    icon: "/ico.png",
+  },
+  title: "Africa exchange",
+  description: "AfruE, you platform to send money quickly over sanctions.",
+  openGraph: {
+    images: "/ico.png",
+    title: "Africa exchange",
+    description: "AfruE, you platform to send money quickly over sanctions.",
+  },
+};
 
 export default function Home() {
   return (
@@ -20,8 +34,6 @@ export default function Home() {
       <Show />
       <Partners />
       <Footer />
-      {/* <Mission />
-        <Transfert /> */}
     </main>
   );
 }
