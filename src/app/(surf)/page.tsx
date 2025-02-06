@@ -15,11 +15,11 @@ export const metadata: Metadata = {
     icon: "/ico.png",
   },
   title: "Africa exchange",
-  description: "AfruE, you platform to send money quickly over sanctions.",
+  description: "AfruE, your platform to send money quickly over sanctions.",
   openGraph: {
     images: "/ico.png",
     title: "Africa exchange",
-    description: "AfruE, you platform to send money quickly over sanctions.",
+    description: "AfruE, your platform to send money quickly over sanctions.",
   },
 };
 
