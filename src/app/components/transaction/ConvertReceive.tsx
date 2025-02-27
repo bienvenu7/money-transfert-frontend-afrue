@@ -1,9 +1,3 @@
-"use client";
-import React, { useEffect } from "react";
-import { IType } from "./Transaction";
-import { errorMessage } from "@/app/utils/notification";
-import { ICountry } from "@/types/country";
-import { useDispatch, useSelector } from "react-redux";
 import {
   selectCountries,
   selectCountry,
@@ -14,10 +8,12 @@ import {
 import { AppDispatch } from "@/redux/store";
 import {
   getAmountFrom,
+  getAmountTo,
   getCountryTo,
   getCountryToData,
-  getAmountTo,
 } from "@/redux/transactionReducer";
+import React from "react";
+import { useDispatch, useSelector } from "react-redux";
 import Big from "big.js";
 
 type Props = {
@@ -25,31 +21,28 @@ type Props = {
   rate: string;
 };
 
-const Convert = ({ isAuthUser, rate }: Props) => {
-  const dispatch = useDispatch<AppDispatch>();
+const ConvertReceive = ({ isAuthUser, rate }: Props) => {
   const userCountry = useSelector(selectCountry);
-  const transaction = useSelector(selectTransaction);
-  const countries = useSelector(selectCountries);
-  const transactionType = useSelector(selectTransactionType);
   const countryWhereToData = useSelector(selectCountryWhereToData);
+  const transaction = useSelector(selectTransaction);
+  const transactionType = useSelector(selectTransactionType);
+  const countries = useSelector(selectCountries);
 
-  useEffect(() => {
-    dispatch(getCountryToData(countries[2]));
-  }, [countries]);
+  const dispatch = useDispatch<AppDispatch>();
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     event.preventDefault();
     // Big.DP = 10;
     const x = new Big(event.target.value === "" ? 0 : event.target.value);
     const y = new Big(rate);
-    dispatch(getAmountFrom(event.target.value));
-    dispatch(getAmountTo(x.div(y).toString()));
+    dispatch(getAmountTo(event.target.value));
+    dispatch(getAmountFrom(x.times(y).toString()));
   };
 
   return (
     <div className="transfert__convert--list__input">
       <div className="transfert__convert--list__input--left">
-        <label htmlFor="send">Montant à envoyer</label>
+        <label htmlFor="send">Montant à recevoir</label>
         <div className="block">
           <div>
             {isAuthUser
@@ -58,8 +51,8 @@ const Convert = ({ isAuthUser, rate }: Props) => {
           </div>
           <input
             type={"number"}
-            placeholder="Vous envoyer"
-            value={transaction.amountFrom}
+            placeholder="vous recevez"
+            value={transaction.amountTo}
             onChange={handleChange}
           />
         </div>
@@ -94,4 +87,4 @@ const Convert = ({ isAuthUser, rate }: Props) => {
   );
 };
 
-export default Convert;
+export default ConvertReceive;

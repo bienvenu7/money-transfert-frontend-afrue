@@ -1,5 +1,4 @@
 import { getAuth } from "@/app/actions/auth";
-import Header from "@/app/components/profile/Header";
 import Personal from "@/app/components/profile/Personal";
 import Titles from "@/app/components/Titles";
 import { IClientResponse } from "@/types/user";
@@ -8,7 +7,9 @@ import React from "react";
 type Props = {};
 
 const page = async (props: Props) => {
-  const clientData = (await getAuth()) as IClientResponse;
+  const clientData = (await getAuth().catch((er) =>
+    console.log(er)
+  )) as IClientResponse;
   const voyelles = ["e", "a"];
   const name = clientData?.fullName.split(" ")[0];
 

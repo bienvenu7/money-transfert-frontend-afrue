@@ -1,6 +1,4 @@
 import React from "react";
-import { AiOutlineArrowDown } from "react-icons/ai";
-import { IType } from "./Transaction";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch } from "@/redux/store";
 import { getStep } from "@/redux/clientReducer";
@@ -9,15 +7,30 @@ import {
   getCountryTo,
   getTransactionType,
 } from "@/redux/transactionReducer";
-import { selectCountry, selectTransaction } from "@/redux/selector";
+import { selectCountry } from "@/redux/selector";
 import Image from "next/image";
-
-interface Props {}
 
 const QuizOne = () => {
   const dispatch = useDispatch<AppDispatch>();
-  const transaction = useSelector(selectTransaction);
   const userCountry = useSelector(selectCountry);
+
+  const handleSend = (
+    event: React.MouseEvent<HTMLButtonElement, MouseEvent>
+  ) => {
+    event.preventDefault();
+    dispatch(getTransactionType("send"));
+    dispatch(getStep(1));
+    dispatch(getCountryfrom(userCountry?.id as string));
+  };
+
+  const handleReceive = (
+    event: React.MouseEvent<HTMLButtonElement, MouseEvent>
+  ) => {
+    event.preventDefault();
+    dispatch(getTransactionType("receive"));
+    dispatch(getStep(1));
+    dispatch(getCountryTo(userCountry?.id as string));
+  };
 
   return (
     <div className="transfert__slides--question">
@@ -29,34 +42,8 @@ const QuizOne = () => {
       <div className="transfert__slides--question__btns">
         <div className="transfert__types">
           <div className={"transfert__types--wrapper"}>
-            <button
-              onClick={() => {
-                dispatch(getTransactionType("send"));
-                dispatch(getStep(1));
-
-                if (transaction.type === "send") {
-                  dispatch(getCountryfrom(userCountry?.id as string));
-                } else {
-                  dispatch(getCountryTo(userCountry?.id as string));
-                }
-              }}
-            >
-              Envoyer
-            </button>
-            <button
-              onClick={() => {
-                dispatch(getTransactionType("receive"));
-                dispatch(getStep(1));
-
-                if (transaction.type === "receive") {
-                  dispatch(getCountryTo(userCountry?.id as string));
-                } else {
-                  dispatch(getCountryfrom(userCountry?.id as string));
-                }
-              }}
-            >
-              Recevoir
-            </button>
+            <button onClick={handleSend}>Envoyer</button>
+            <button onClick={handleReceive}>Recevoir</button>
           </div>
         </div>
       </div>

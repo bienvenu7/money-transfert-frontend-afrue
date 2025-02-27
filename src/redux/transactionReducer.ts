@@ -14,7 +14,8 @@ export interface IInitialTransaction {
 
 const initialState: IInitialTransaction = {
   transaction: {
-    amount: "0",
+    amountFrom: "0",
+    amountTo: "0",
     clientEmail: "",
     countryFrom: "",
     countryWhereTo: "",
@@ -37,8 +38,11 @@ export const transactionSlice = createSlice({
   name: "transactionSlice",
   initialState,
   reducers: {
-    getAmount: (state, action: PayloadAction<string>) => {
-      state.transaction = { ...state.transaction, amount: action.payload };
+    getAmountFrom: (state, action: PayloadAction<string>) => {
+      state.transaction = { ...state.transaction, amountFrom: action.payload };
+    },
+    getAmountTo: (state, action: PayloadAction<string>) => {
+      state.transaction = { ...state.transaction, amountTo: action.payload };
     },
     getTransactionType: (state, action: PayloadAction<"send" | "receive">) => {
       state.transaction = { ...state.transaction, type: action.payload };
@@ -96,7 +100,8 @@ export const transactionSlice = createSlice({
 
 // Action creators are generated for each case reducer function
 export const {
-  getAmount,
+  getAmountTo,
+  getAmountFrom,
   getTransactionType,
   getCountryTo,
   getCountryToData,

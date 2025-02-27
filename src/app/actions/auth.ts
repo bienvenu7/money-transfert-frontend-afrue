@@ -15,6 +15,7 @@ import {
   ISuccessData,
   ISuccessOtpCodeResponse,
 } from "@/types/fetch";
+import { IClientResponse } from "@/types/user";
 
 export const register = async (
   email: string,
@@ -79,12 +80,12 @@ export const login = async (
 export const confirmOtp = async (
   email: string,
   newOtp: string[]
-): Promise<
-  ISuccessOtpCodeResponse | IBaseErrorData | IBadResquestErrorData
-> => {
+): Promise<ISuccessOtpCodeResponse> => {
   let otp = "";
 
   newOtp.map((el) => (otp = otp + el));
+
+  console.log(otp);
 
   try {
     const { data, status } = await instance.post("auth/verify-otp", {
@@ -124,20 +125,15 @@ export const resendOtp = async (email: string) => {
   }
 };
 
-export const getAuth = async () => {
+export const getAuth = async (): Promise<IClientResponse> => {
   try {
     const accessToken = cookies().get("accessToken")?.value;
-    const { data, status } = await instance.get("auth/get-auth", {
+    const { data } = await instance.get("auth/get-auth", {
       headers: { Authorization: `Bearer ${accessToken}` },
     });
-
-    if (status === 200) {
-      return data;
-    }
-    return status;
+    return data as IClientResponse;
   } catch (error: any) {
-    console.log(error.response);
-    return error.response;
+    return errorToSendBack(error);
   }
 };
 

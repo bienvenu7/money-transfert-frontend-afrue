@@ -59,6 +59,8 @@ const SendForm = () => {
   const phoneTo = useSelector(selectPhoneTo);
   const countrySelectedata = useSelector(selectCountry);
 
+  console.log(transaction.countryWhereTo);
+
   const dispatch = useDispatch<AppDispatch>();
 
   return (
@@ -67,25 +69,19 @@ const SendForm = () => {
         <div className="transfert--send__form--input">
           <label htmlFor="country">Pays*</label>
           <select
-            disabled
+            disabled={transaction.type === "receive" ? true : false}
             className={"colored"}
-            value={
-              transaction.type === "send"
-                ? transaction.countryWhereTo
-                : transaction.countryFrom
-            }
+            value={transaction?.countryWhereTo}
             id="country"
           >
-            <option value="">{`Sélectionnez le pays ${
-              transaction.type === "send"
-                ? "du destinataire"
-                : "de l'expéditeur"
-            } `}</option>
-            {countries.map((el) => (
-              <option key={el?.id} value={el?.id}>
-                {el?.pubicName}
-              </option>
-            ))}
+            <option value="">{`Sélectionnez le pays du destinataire`}</option>
+            {countries
+              .filter((el) => el.id !== transaction.countryWhereTo)
+              .map((el) => (
+                <option key={el?.id} value={el?.id}>
+                  {el?.pubicName}
+                </option>
+              ))}
           </select>
         </div>
         <div className="transfert--send__form--input">

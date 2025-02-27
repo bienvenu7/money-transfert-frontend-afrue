@@ -50,15 +50,14 @@ const Otp = ({ email }: Props) => {
 
     await confirmOtp(email, otp)
       .then((el) => {
-        if (el.statusCode === 200) {
-          setDisable(false);
-          router.push("/");
-        } else {
-          setDisable(false);
-          errorMessage("Le code entré n'est pas correcte!");
-        }
+        router.push("/");
+        console.log(el);
+        setDisable(false);
       })
-      .catch((error) => console.error(error));
+      .catch((error) => {
+        setDisable(false);
+        errorMessage(error.message);
+      });
   };
 
   const resend = async (

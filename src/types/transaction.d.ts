@@ -2,7 +2,7 @@ export interface ITrasanctionData {
   countryFrom: string;
   countryWhereTo: string;
   clientEmail: string;
-  type: string;
+  type: "send" | "receive" | "";
   fullNameFrom: string;
   fullNameWhereTo: string;
   phoneFrom: string;
@@ -10,7 +10,8 @@ export interface ITrasanctionData {
   transfertAmount: string;
   ReceiveAmount: string;
   status: string;
-  amount: string;
+  amountFrom: string;
+  amountTo: string;
 }
 
 export interface ITrasanctionDataReady extends ITrasanctionData {

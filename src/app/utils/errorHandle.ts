@@ -29,31 +29,18 @@ export class ValidationError extends BaseError {
   }
 }
 
-export const errorToSendBack = (
-  error: any
-): IBaseErrorData | IBadResquestErrorData => {
-  console.log(error.response);
+export const errorToSendBack = (error: any) => {
   if (error.status === 400) {
     let err = error.response.data as IBadResquestErrorData;
-    const newData: IBadResquestErrorData = {
-      ...err,
-      statusCode: 400,
-    };
-    return newData;
+    throw new ValidationError(err.data);
   } else if (error.status === 500 || error.response === undefined) {
-    let err: IBaseErrorData = {
-      message: "Server error! please try again later",
-      statusCode: 500,
-      status: "failed",
-    };
-    return err;
+    throw new BaseError(
+      "Désolé, une erreur s'est produite. Veillez ressayer plutard",
+      500
+    );
   } else {
     let err = error.response.data as IBaseErrorData;
-    const newData: IBaseErrorData = {
-      ...err,
-      statusCode: err.statusCode,
-    };
-    return newData;
+    throw new BaseError(err.message, error.status);
   }
 };
 

@@ -1,38 +1,52 @@
-"use client";
-
-import React, { useEffect } from "react";
+import React from "react";
 import Transaction from "@/app/components/transaction/Transaction";
-import { getAuth } from "@/app/actions/auth";
 import { IClientResponse } from "@/types/user";
 import { getCountries, getCountryById } from "@/app/utils/getCountry";
 import { ICountry } from "@/types/country";
 import { useDispatch } from "react-redux";
 import { getCounties, getUser, getUserCountry } from "@/redux/clientReducer";
 import Titles from "@/app/components/Titles";
+import { cookies } from "next/headers";
+import { baseURL, instance } from "@/instance";
+import { errorToSendBack } from "@/app/utils/errorHandle";
+
+async function getData() {
+  const userUrl = `${baseURL}auth/get-auth`;
+  const countriesUrl = `${baseURL}country/get-countries`;
+
+  const accessToken = cookies().get("accessToken")?.value;
+
+  const responses = await Promise.all([
+    fetch(userUrl, { headers: { Authorization: `Bearer ${accessToken}` } }),
+    fetch(countriesUrl),
+  ]);
+
+  if (!responses[0].ok || !responses[1].ok) {
+    throw new Error(
+      "Un problème est survenu, veillez ressayer plutard ou vérifiez votre connection internet!"
+    );
+  }
+
+  const user: IClientResponse = await responses[0].json();
+  const countries: ICountry[] = await responses[1].json();
+
+  return { user, countries };
+
+  // Ensure response is JSON-serializable
+}
 
 const Page = async () => {
-  const dispatch = useDispatch();
+  // const dispatch = useDispatch();
 
-  const getUserData = async () => {
-    const userData = (await getAuth()) as IClientResponse;
-    dispatch(getCounties((await getCountries()) as ICountry[]));
-    dispatch(getUser(userData));
-    dispatch(
-      getUserCountry(
-        (await getCountryById(userData?.country as string)) as ICountry
-      )
-    );
-  };
+  // const userData = (await getAuth()) as IClientResponse;
 
-  useEffect(() => {
-    getUserData();
-  }, []);
+  const { countries, user } = await getData();
 
   return (
     <div className="transfert__container">
       <div className="transfert__box">
         <Titles line1="Transaction" line2="Afru-Exchange " />
-        <Transaction />
+        <Transaction clientData={user} countries={countries} />
       </div>
     </div>
   );

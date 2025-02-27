@@ -41,7 +41,7 @@ const Personal = ({ type, clientData }: Props) => {
     },
     {
       title: "Pays",
-      text: clientData?.country as string,
+      text: clientData?.Country.pubicName as string,
     },
   ];
   return (

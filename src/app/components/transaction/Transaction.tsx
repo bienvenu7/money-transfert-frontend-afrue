@@ -27,22 +27,29 @@ import {
   selectTransactionType,
 } from "@/redux/selector";
 import { AppDispatch } from "@/redux/store";
-import { getStep } from "@/redux/clientReducer";
+import {
+  getCounties,
+  getStep,
+  getUser,
+  getUserCountry,
+} from "@/redux/clientReducer";
 import { getCountryfrom, getCountryTo } from "@/redux/transactionReducer";
 import Image from "next/image";
 
 export type IType = "send" | "receive";
 
-// type Props = {
-//   clientData: IClientResponse;
-//   countries: ICountry[];
-// };
+type Props = {
+  clientData: IClientResponse;
+  countries: ICountry[];
+};
 
-const Transaction = () => {
-  const userCountry = useSelector(selectCountry);
-  const type = useSelector(selectTransactionType);
-  const step = useSelector(selectStep);
+const Transaction = ({ clientData, countries }: Props) => {
   const dispatch = useDispatch<AppDispatch>();
+
+  dispatch(getCounties(countries));
+  dispatch(getUser(clientData));
+  dispatch(getUserCountry(clientData.Country));
+  const step = useSelector(selectStep);
 
   // const transactionData: ITrasanctionData = {
   //   transfertAmount: amount.toString(),
@@ -113,9 +120,7 @@ const Transaction = () => {
           <div className="transfert__slides--second">
             <Image src="/grad.png" alt="" fill />
             <div className="transfert__form">
-              <p>{`Veillez entrer soigneusement les informations ${
-                type === "send" ? "du destinatire" : "de l'expéditeur"
-              }`}</p>
+              <p>{`Veillez entrer soigneusement les informations necessaires du destinataire!`}</p>
               <SendForm />
             </div>
             <div className="btns" style={step === 2 ? { marginTop: 30 } : {}}>
