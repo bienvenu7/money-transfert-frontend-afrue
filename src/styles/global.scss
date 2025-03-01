@@ -1574,19 +1574,18 @@ html {
     }
 
     &--wrapper {
-      width: $mobile-width;
-      margin-top: 120px;
+      width: 1280px;
+      margin-top: 160px;
       margin-bottom: 100px;
       display: flex;
       flex-direction: column;
       align-items: flex-start;
-      gap: 40px;
+      gap: 60px;
 
-      & > h1 {
-        font-family: $main-font;
-        font-size: 28px;
-        font-weight: 600;
-        color: $black-clr;
+      @include mobile {
+        width: $mobile-width;
+        gap: 30px;
+        margin-top: 120px;
       }
     }
 
@@ -1594,25 +1593,212 @@ html {
       width: 100%;
       height: auto;
       display: flex;
-      flex-direction: column;
-      background-color: rgba($color: $line-grey-clr, $alpha: 0.2);
+      // background-color: rgba($color: $line-grey-clr, $alpha: 0.2);
       border-radius: 20px;
       padding: 20px 10px;
+      align-items: center;
+      justify-content: center;
+      gap: 40px;
 
-      & > p {
-        font-size: 16px;
-        font-weight: 400;
-        color: $black-clr;
-        line-height: 18px;
-        margin-bottom: 20px;
+      @include mobile {
+        flex-direction: column;
+        gap: 20px;
+      }
+
+      &__left {
+        width: 520px;
+        height: auto;
+        flex-shrink: 0;
+        border-radius: 40px;
+        background: #e7eeff;
+        box-shadow: 0px 0px 2px 0px rgba(0, 0, 0, 0.1),
+          0px 4px 4px 0px rgba(0, 0, 0, 0.1);
+        display: flex;
+        align-items: center;
+        justify-content: flex-start;
+        flex-direction: column;
+        gap: 54px;
+        padding: 40px 0;
+        margin-bottom: 40px;
+
+        @include mobile {
+          width: 100%;
+          margin-bottom: 0;
+        }
+
+        & > h2 {
+          color: $blue-clr;
+          font-size: 18px;
+          font-weight: 500;
+          font-family: $main-font;
+        }
+
+        @include mobile {
+          width: 100%;
+          border-radius: 20px;
+          background: #e7eeff;
+          box-shadow: 0px 0px 2px 0px rgba(0, 0, 0, 0.1),
+            0px 4px 4px 0px rgba(0, 0, 0, 0.1);
+          padding: 22px 15px 52px 22px;
+        }
+
+        &--cards {
+          width: 100%;
+          height: auto;
+          display: flex;
+          flex-wrap: wrap;
+          justify-content: space-between;
+          align-items: center;
+          gap: 40px 20px;
+          padding: 0 20px;
+
+          @include mobile {
+            flex-direction: column;
+            width: 100%;
+          }
+        }
+      }
+
+      &__right {
+        width: 520px;
+        height: auto;
+        flex-shrink: 0;
+        border-radius: 40px;
+        background: #e7eeff;
+        box-shadow: 0px 0px 2px 0px rgba(0, 0, 0, 0.1),
+          0px 4px 4px 0px rgba(0, 0, 0, 0.1);
+        display: flex;
+        align-items: center;
+        justify-content: flex-start;
+        flex-direction: column;
+        gap: 54px;
+        padding: 40px 0;
+        margin-bottom: 40px;
+
+        @include mobile {
+          width: 100%;
+          margin-bottom: 0;
+        }
+
+        & > h2 {
+          color: $blue-clr;
+          font-size: 18px;
+          font-weight: 500;
+          font-family: $main-font;
+        }
+
+        @include mobile {
+          width: 100%;
+          border-radius: 20px;
+          background: #e7eeff;
+          box-shadow: 0px 0px 2px 0px rgba(0, 0, 0, 0.1),
+            0px 4px 4px 0px rgba(0, 0, 0, 0.1);
+          padding: 22px 15px 52px 22px;
+        }
+
+        &--forms {
+          display: flex;
+          width: 100%;
+          padding: 0 20px;
+          align-items: flex-start;
+          justify-content: space-between;
+
+          @include mobile {
+            width: 100%;
+            flex-direction: column;
+            gap: 20px;
+          }
+        }
+
+        &--input {
+          display: flex;
+          flex-direction: column;
+          gap: 5px;
+          width: calc((100% - 20px) / 2);
+
+          @include mobile {
+            width: 100%;
+          }
+
+          & > input {
+            all: unset;
+            display: flex;
+            font-family: $main-font;
+            padding: 12px 20px;
+            align-items: center;
+            gap: 10px;
+            align-self: stretch;
+            border-radius: 20px;
+            border: 1px solid rgba(0, 0, 0, 0.2);
+            background: #fdfcff;
+            box-shadow: 5px 5px 10px 0px rgba(84, 100, 185, 0.16) inset,
+              -5px -5px 10px 0px #fafbff inset;
+          }
+
+          & > label {
+            color: $black-clr;
+            font-family: $main-font;
+            font-size: 12px;
+            font-style: normal;
+            font-weight: 400;
+            line-height: 120%; /* 14.4px */
+            z-index: 1;
+          }
+        }
+
+        & > button {
+          all: unset;
+          display: flex;
+          width: 146px;
+          height: 38px;
+          padding: 8px 20px;
+          justify-content: center;
+          align-items: center;
+          gap: 10px;
+          flex-shrink: 0;
+          border-radius: 40px;
+          background: #e2be68;
+          box-shadow: 0px 0px 2px 0px rgba(0, 0, 0, 0.1),
+            0px 4px 4px 0px rgba(0, 0, 0, 0.1);
+          cursor: pointer;
+
+          // @include mobile {
+          //   width: 92px;
+          //   height: auto;
+          //   font-size: 12px;
+          //   padding: 8px 10px;
+          //   font-weight: 500;
+          // }
+        }
       }
 
       &__row {
-        width: 100%;
+        width: calc((100% - 20px) / 2);
         display: flex;
         align-items: center;
         justify-content: space-between;
-        margin-top: 10px;
+        background-color: #f4f4f4;
+        border-radius: 20px;
+        padding: 21px;
+        box-shadow: 5px 5px 10px 0px rgba(84, 100, 185, 0.16) inset,
+          -5px -5px 10px 0px #fafbff inset;
+
+        @include mobile {
+          width: 100%;
+        }
+
+        & > h3 {
+          font-size: 14px;
+          font-weight: 500;
+          color: $blue-clr;
+          font-family: $main-font;
+        }
+
+        & > span {
+          font-size: 14px;
+          font-weight: 400;
+          color: #878787 !important;
+        }
 
         &:nth-child(5) {
           margin-bottom: 40px;
@@ -2061,7 +2247,8 @@ html {
         }
 
         & > select,
-        input {
+        input,
+        div {
           all: unset;
           display: flex;
           padding: 12px 20px;
@@ -2078,6 +2265,14 @@ html {
           /* Neo */
           box-shadow: 5px 5px 10px 0px rgba(84, 100, 185, 0.16) inset,
             -5px -5px 10px 0px #fafbff inset;
+
+          // &.colored {
+          //   border: 1px solid #e2be68;
+          // }
+
+          // &.uncolored {
+          //   border: 1px solid rgb(248, 96, 96);
+          // }
         }
       }
 
@@ -2429,9 +2624,13 @@ html {
 
 .confirm {
   &__container {
-    width: 100%;
+    width: 520px;
     height: max-content;
     height: auto;
+
+    @include mobile {
+      width: 310px;
+    }
   }
 
   &__wrapper {
@@ -2439,7 +2638,12 @@ html {
     display: flex;
     flex-direction: column;
     height: auto;
-    gap: 20px;
+    gap: 40px;
+    padding: 20px;
+
+    @include mobile {
+      padding: 0;
+    }
   }
 
   &__header {
@@ -2450,11 +2654,13 @@ html {
     justify-content: flex-start;
 
     & > h4 {
-      font-size: 22px;
-      font-weight: 600;
-      font-family: $global-font;
+      color: #232323;
+      font-family: $main-font;
+      font-size: 24px;
       font-style: normal;
-      color: $black-clr;
+      font-weight: 500;
+      line-height: 120%; /* 38.4px */
+      text-decoration-line: strikethrough;
     }
   }
 
@@ -2484,18 +2690,21 @@ html {
       justify-content: space-between;
 
       & > h5 {
-        font-size: 15px;
-        font-weight: 400;
+        color: #232323;
         font-family: $main-font;
+        font-size: 16px;
         font-style: normal;
-        color: $black-clr;
+        font-weight: 500;
+        line-height: 120%; /* 24px */
       }
 
       & > p {
-        font-size: 14px;
         color: $blue-clr;
-        font-weight: 500;
+        font-size: 16px;
         font-style: normal;
+        font-weight: 500;
+        line-height: 120%; /* 24px */
+        font-family: $main-font;
       }
     }
   }

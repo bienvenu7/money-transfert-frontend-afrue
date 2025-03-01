@@ -1,17 +1,17 @@
+import { IFee, INetworkResponse } from "./networks";
+
 export interface ITrasanctionData {
-  countryFrom: string;
-  countryWhereTo: string;
+  id?: string;
+  code: string;
   clientEmail: string;
   type: "send" | "receive" | "";
-  fullNameFrom: string;
-  fullNameWhereTo: string;
-  phoneFrom: string;
-  phoneWhereTo: string;
-  transfertAmount: string;
-  ReceiveAmount: string;
+  amountToSend: string;
+  receiverName: string;
+  receiverPhone: string;
+  amountToPayOut: string;
   status: string;
-  amountFrom: string;
-  amountTo: string;
+  networkId: string;
+  fees: string;
 }
 
 export interface ITrasanctionDataReady extends ITrasanctionData {
@@ -19,14 +19,7 @@ export interface ITrasanctionDataReady extends ITrasanctionData {
   direction: string;
 }
 
-export interface ITrasanctionResponse {
-  dateTime: string;
-  direction: string;
-  clientEmail: string;
-  type: string;
-  amount: string;
-  fullNameFrom: string;
-  fullNameWhereTo: string;
-  phoneFrom: string;
-  phoneWhereTo: string;
+export interface ITrasanctionResponse extends ITrasanctionData {
+  Rate: IFee;
+  Network: INetworkResponse;
 }

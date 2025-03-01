@@ -1,3 +1,4 @@
+"use server";
 import React from "react";
 import Transaction from "@/app/components/transaction/Transaction";
 import { IClientResponse } from "@/types/user";
@@ -21,7 +22,13 @@ async function getData() {
     fetch(countriesUrl),
   ]);
 
-  if (!responses[0].ok || !responses[1].ok) {
+  if (!responses[0].ok) {
+    throw new Error(
+      "Un problème est survenu, veillez ressayer plutard ou vérifiez votre connection internet!"
+    );
+  }
+
+  if (!responses[1].ok) {
     throw new Error(
       "Un problème est survenu, veillez ressayer plutard ou vérifiez votre connection internet!"
     );
@@ -31,15 +38,9 @@ async function getData() {
   const countries: ICountry[] = await responses[1].json();
 
   return { user, countries };
-
-  // Ensure response is JSON-serializable
 }
 
 const Page = async () => {
-  // const dispatch = useDispatch();
-
-  // const userData = (await getAuth()) as IClientResponse;
-
   const { countries, user } = await getData();
 
   return (

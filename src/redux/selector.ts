@@ -18,6 +18,9 @@ export const selectCountries = (state: RootState) =>
 export const selectCountryWhereToData = (state: RootState) =>
   state.transactionSlice.countryTo;
 
+export const selectCountryFromData = (state: RootState) =>
+  state.transactionSlice.countryFrom;
+
 export const selectNetworks = (state: RootState) =>
   state.transactionSlice.networks;
 
@@ -26,15 +29,3 @@ export const selectSelectedNetwork = (state: RootState) =>
 
 export const selectNetworkData = (state: RootState) =>
   state.transactionSlice.networkData;
-
-export const selectNameFrom = (state: RootState) =>
-  state.transactionSlice.transaction.fullNameFrom;
-
-export const selectNameTo = (state: RootState) =>
-  state.transactionSlice.transaction.fullNameWhereTo;
-
-export const selectPhoneTo = (state: RootState) =>
-  state.transactionSlice.transaction.phoneWhereTo;
-
-export const selectPhoneFrom = (state: RootState) =>
-  state.transactionSlice.transaction.phoneFrom;

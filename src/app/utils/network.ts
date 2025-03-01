@@ -1,7 +1,8 @@
 "use server";
 
 import { instance } from "@/instance";
-import { INetworkResponse } from "@/types/networks";
+import { IFee, INetworkResponse } from "@/types/networks";
+import { errorToSendBack } from "./errorHandle";
 
 export const getNetworksById = async (id: string) => {
   "use server";
@@ -13,5 +14,17 @@ export const getNetworksById = async (id: string) => {
     return { err: "No content found!" };
   } catch (error: any) {
     return error.response.data.message;
+  }
+};
+
+export const getNetworkByAmount = async (
+  networkId: string,
+  amount: string
+): Promise<IFee> => {
+  try {
+    const { data } = await instance.get(`fee/get-fee/${networkId}/${amount}`);
+    return data;
+  } catch (error) {
+    return errorToSendBack(error);
   }
 };

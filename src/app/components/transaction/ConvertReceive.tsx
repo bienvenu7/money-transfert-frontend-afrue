@@ -1,4 +1,5 @@
 import {
+  selectClientData,
   selectCountries,
   selectCountry,
   selectCountryWhereToData,
@@ -10,7 +11,6 @@ import {
   getAmountFrom,
   getAmountTo,
   getCountryTo,
-  getCountryToData,
 } from "@/redux/transactionReducer";
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
@@ -22,7 +22,7 @@ type Props = {
 };
 
 const ConvertReceive = ({ isAuthUser, rate }: Props) => {
-  const userCountry = useSelector(selectCountry);
+  const userData = useSelector(selectClientData);
   const countryWhereToData = useSelector(selectCountryWhereToData);
   const transaction = useSelector(selectTransaction);
   const transactionType = useSelector(selectTransactionType);
@@ -39,20 +39,27 @@ const ConvertReceive = ({ isAuthUser, rate }: Props) => {
     dispatch(getAmountFrom(x.times(y).toString()));
   };
 
+  const handleCountry = (event: React.ChangeEvent<HTMLSelectElement>) => {
+    event.preventDefault();
+    dispatch(
+      getCountryTo(countries?.filter((el) => el.id === event.target.value)[0])
+    );
+  };
+
+  const groupCountry = isAuthUser
+    ? countries
+    : countries.filter((el) => el.id !== userData?.Country.id);
+
   return (
     <div className="transfert__convert--list__input">
       <div className="transfert__convert--list__input--left">
         <label htmlFor="send">Montant à recevoir</label>
         <div className="block">
-          <div>
-            {isAuthUser
-              ? (userCountry?.currency as string)
-              : (countryWhereToData?.currency as string)}
-          </div>
+          <div>{countryWhereToData?.currency}</div>
           <input
             type={"number"}
             placeholder="vous recevez"
-            value={transaction.amountTo}
+            value={transaction.amountToPayOut}
             onChange={handleChange}
           />
         </div>
@@ -61,26 +68,14 @@ const ConvertReceive = ({ isAuthUser, rate }: Props) => {
         <select
           disabled={isAuthUser ? true : false}
           className={`${transactionType}`}
-          onChange={(event) => {
-            event.preventDefault();
-            dispatch(getCountryTo(event.target.value));
-            dispatch(
-              getCountryToData(
-                countries?.filter((el) => el.id === event.target.value)[0]
-              )
-            );
-          }}
-          value={isAuthUser ? userCountry?.id : countryWhereToData?.id}
+          onChange={handleCountry}
+          value={countryWhereToData?.id as string}
         >
-          {countries
-            .filter((el) =>
-              !isAuthUser ? el.id !== userCountry?.id : el.id !== ""
-            )
-            .map((el) => (
-              <option key={el.id} value={el.id}>
-                {el.pubicName}
-              </option>
-            ))}
+          {groupCountry.map((el) => (
+            <option key={el.id} value={el.id}>
+              {el.pubicName}
+            </option>
+          ))}
         </select>
       </div>
     </div>

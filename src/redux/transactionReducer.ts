@@ -7,6 +7,7 @@ import type { PayloadAction } from "@reduxjs/toolkit";
 export interface IInitialTransaction {
   transaction: ITrasanctionData;
   countryTo: ICountry | null;
+  countryFrom: ICountry | null;
   networks: INetworkResponse[];
   choosenNetwork: string;
   networkData: INetworkResponse | null;
@@ -14,21 +15,19 @@ export interface IInitialTransaction {
 
 const initialState: IInitialTransaction = {
   transaction: {
-    amountFrom: "0",
-    amountTo: "0",
     clientEmail: "",
-    countryFrom: "",
-    countryWhereTo: "",
-    fullNameFrom: "",
-    fullNameWhereTo: "",
-    phoneFrom: "",
-    phoneWhereTo: "",
-    ReceiveAmount: "",
-    status: "",
-    transfertAmount: "",
+    status: "uncomfirmed",
     type: "",
+    amountToPayOut: "",
+    amountToSend: "",
+    code: "",
+    fees: "",
+    networkId: "",
+    receiverName: "",
+    receiverPhone: "",
   },
   countryTo: null,
+  countryFrom: null,
   networks: [],
   networkData: null,
   choosenNetwork: "",
@@ -39,28 +38,28 @@ export const transactionSlice = createSlice({
   initialState,
   reducers: {
     getAmountFrom: (state, action: PayloadAction<string>) => {
-      state.transaction = { ...state.transaction, amountFrom: action.payload };
+      state.transaction = {
+        ...state.transaction,
+        amountToSend: action.payload,
+      };
     },
     getAmountTo: (state, action: PayloadAction<string>) => {
-      state.transaction = { ...state.transaction, amountTo: action.payload };
+      state.transaction = {
+        ...state.transaction,
+        amountToPayOut: action.payload,
+      };
     },
     getTransactionType: (state, action: PayloadAction<"send" | "receive">) => {
       state.transaction = { ...state.transaction, type: action.payload };
     },
-    getCountryTo: (state, action: PayloadAction<string>) => {
-      state.transaction = {
-        ...state.transaction,
-        countryWhereTo: action.payload,
-      };
+    getFee: (state, action: PayloadAction<string>) => {
+      state.transaction = { ...state.transaction, fees: action.payload };
     },
-    getCountryfrom: (state, action: PayloadAction<string>) => {
-      state.transaction = {
-        ...state.transaction,
-        countryFrom: action.payload,
-      };
-    },
-    getCountryToData: (state, action: PayloadAction<ICountry>) => {
+    getCountryTo: (state, action: PayloadAction<ICountry>) => {
       state.countryTo = action.payload;
+    },
+    getCountryfrom: (state, action: PayloadAction<ICountry>) => {
+      state.countryFrom = action.payload;
     },
     getNetworks: (state, action: PayloadAction<INetworkResponse[]>) => {
       state.networks = action.payload;
@@ -70,29 +69,33 @@ export const transactionSlice = createSlice({
     },
     getNetworkData: (state, action: PayloadAction<INetworkResponse>) => {
       state.networkData = action.payload;
-    },
-    getNameFrom: (state, action: PayloadAction<string>) => {
       state.transaction = {
         ...state.transaction,
-        fullNameFrom: action.payload,
+        networkId: action.payload.id,
       };
     },
     getNameTo: (state, action: PayloadAction<string>) => {
       state.transaction = {
         ...state.transaction,
-        fullNameWhereTo: action.payload,
+        receiverName: action.payload,
       };
     },
-    getPhoneFrom: (state, action: PayloadAction<string>) => {
+    getCode: (state, action: PayloadAction<string>) => {
       state.transaction = {
         ...state.transaction,
-        phoneFrom: action.payload,
+        code: action.payload,
       };
     },
-    getPhoneTo: (state, action: PayloadAction<string>) => {
+    getPhone: (state, action: PayloadAction<string>) => {
       state.transaction = {
         ...state.transaction,
-        phoneWhereTo: action.payload,
+        receiverPhone: action.payload,
+      };
+    },
+    getEmail: (state, action: PayloadAction<string>) => {
+      state.transaction = {
+        ...state.transaction,
+        clientEmail: action.payload,
       };
     },
   },
@@ -104,15 +107,15 @@ export const {
   getAmountFrom,
   getTransactionType,
   getCountryTo,
-  getCountryToData,
   getNetworks,
   getSelectedNetwork,
   getNetworkData,
-  getNameFrom,
   getNameTo,
   getCountryfrom,
-  getPhoneFrom,
-  getPhoneTo,
+  getPhone,
+  getCode,
+  getFee,
+  getEmail,
 } = transactionSlice.actions;
 
 export default transactionSlice.reducer;

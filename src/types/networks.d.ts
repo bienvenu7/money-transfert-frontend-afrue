@@ -5,3 +5,12 @@ export interface INetworkResponse {
   createdAt: Date;
   countryId: string;
 }
+
+export interface IFee {
+  id: string;
+  amount: string;
+  amountFrom: string;
+  amountTo: string;
+  createdAt: Date;
+  networkId: string;
+}

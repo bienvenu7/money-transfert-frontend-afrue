@@ -1,39 +1,19 @@
 "use client";
 
-import React, { useCallback, useEffect, useState } from "react";
-import {
-  AiOutlineArrowDown,
-  AiOutlineCheck,
-  AiOutlineDown,
-} from "react-icons/ai";
-import Convertisseur from "./Convertisseur";
+import React, { useEffect, useState } from "react";
+import { AiOutlineDown } from "react-icons/ai";
 import SendForm from "./SendForm";
 import { IClientResponse } from "@/types/user";
 import { ICountry } from "@/types/country";
-import { errorMessage } from "@/app/utils/notification";
-import { ITrasanctionData } from "@/types/transaction";
 import Modal from "../modals/Modal";
 import Confirm from "../modals/Confirm";
-import { INetworkResponse } from "@/types/networks";
-import { getNetworksById } from "@/app/utils/network";
-import { getCountries } from "@/app/utils/getCountry";
-import { getAuth } from "@/app/actions/auth";
 import QuizOne from "./QuizOne";
 import QuizTwo from "./QuizTwo";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  selectCountry,
-  selectStep,
-  selectTransactionType,
-} from "@/redux/selector";
+import { selectStep, selectTransaction } from "@/redux/selector";
 import { AppDispatch } from "@/redux/store";
-import {
-  getCounties,
-  getStep,
-  getUser,
-  getUserCountry,
-} from "@/redux/clientReducer";
-import { getCountryfrom, getCountryTo } from "@/redux/transactionReducer";
+import { getCounties, getStep, getUser } from "@/redux/clientReducer";
+import { getEmail } from "@/redux/transactionReducer";
 import Image from "next/image";
 
 export type IType = "send" | "receive";
@@ -45,11 +25,23 @@ type Props = {
 
 const Transaction = ({ clientData, countries }: Props) => {
   const dispatch = useDispatch<AppDispatch>();
+  const [openModal, setOpenModal] = useState(false);
 
-  dispatch(getCounties(countries));
-  dispatch(getUser(clientData));
-  dispatch(getUserCountry(clientData.Country));
+  useEffect(() => {
+    dispatch(getEmail(clientData.email));
+    dispatch(getCounties(countries));
+    dispatch(getUser(clientData));
+  }, []);
+
   const step = useSelector(selectStep);
+  const transaction = useSelector(selectTransaction);
+
+  const handleTransactionInfos = async (
+    event: React.MouseEvent<HTMLButtonElement, MouseEvent>
+  ) => {
+    event.preventDefault();
+    setOpenModal(true);
+  };
 
   // const transactionData: ITrasanctionData = {
   //   transfertAmount: amount.toString(),
@@ -127,7 +119,7 @@ const Transaction = ({ clientData, countries }: Props) => {
               <button onClick={() => dispatch(getStep(-1))} type={"button"}>
                 <AiOutlineDown />
               </button>
-              <button type={"button"}>
+              <button onClick={handleTransactionInfos} type={"button"}>
                 <AiOutlineDown />
               </button>
             </div>
@@ -135,22 +127,9 @@ const Transaction = ({ clientData, countries }: Props) => {
         </div>
       </div>
 
-      {/* <Modal show={openModal} onClose={setOpenModal}>
-        <Confirm
-          countryFrom={
-            countries.find((el) => el.id === transactionData.countryFrom)
-              ?.pubicName as string
-          }
-          countryWhereTo={
-            countries.find((el) => el.id === transactionData.countryWhereTo)
-              ?.pubicName as string
-          }
-          transactionData={transactionData}
-          type={type as IType}
-          openModal={openModal}
-          setOpenModal={setOpenModal}
-        />
-      </Modal> */}
+      <Modal show={openModal} onClose={setOpenModal}>
+        <Confirm openModal={openModal} setOpenModal={setOpenModal} />
+      </Modal>
     </div>
   );
 };

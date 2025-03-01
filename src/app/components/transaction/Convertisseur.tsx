@@ -1,21 +1,10 @@
 "use client";
 import React, { useState } from "react";
 import Convert from "./Convert";
-import { IType } from "./Transaction";
-import { ICountry } from "@/types/country";
 import { useSelector } from "react-redux";
-import { selectTransaction, selectTransactionType } from "@/redux/selector";
+import { selectTransactionType } from "@/redux/selector";
 import Svgs from "../Svgs";
 import ConvertReceive from "./ConvertReceive";
-
-type Props = {
-  amount: number;
-  setAmount: React.Dispatch<React.SetStateAction<number>>;
-  convert: number;
-  setConvert: React.Dispatch<React.SetStateAction<number>>;
-  type: IType | null;
-  countries: ICountry[];
-};
 
 const Convertisseur = () => {
   const transactionType = useSelector(selectTransactionType);
@@ -35,10 +24,6 @@ const Convertisseur = () => {
           rate={exchange}
           isAuthUser={transactionType === "receive" ? true : false}
         />
-        {/* <Convert
-          name="receive"
-          isAuthUser={transactionType === "receive" ? true : false}
-        /> */}
       </div>
       <div className="transfert__convert--content">
         <div>

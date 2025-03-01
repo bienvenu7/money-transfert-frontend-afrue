@@ -7,12 +7,18 @@ import {
   getCountryTo,
   getTransactionType,
 } from "@/redux/transactionReducer";
-import { selectCountry } from "@/redux/selector";
+import {
+  selectClientData,
+  selectCountries,
+  selectCountry,
+} from "@/redux/selector";
 import Image from "next/image";
+import { ICountry } from "@/types/country";
 
 const QuizOne = () => {
   const dispatch = useDispatch<AppDispatch>();
-  const userCountry = useSelector(selectCountry);
+  const userData = useSelector(selectClientData);
+  const countries = useSelector(selectCountries);
 
   const handleSend = (
     event: React.MouseEvent<HTMLButtonElement, MouseEvent>
@@ -20,7 +26,12 @@ const QuizOne = () => {
     event.preventDefault();
     dispatch(getTransactionType("send"));
     dispatch(getStep(1));
-    dispatch(getCountryfrom(userCountry?.id as string));
+    dispatch(getCountryfrom(userData?.Country as ICountry));
+    dispatch(
+      getCountryTo(
+        countries.filter((el) => el.id !== (userData?.Country.id as string))[0]
+      )
+    );
   };
 
   const handleReceive = (
@@ -29,7 +40,12 @@ const QuizOne = () => {
     event.preventDefault();
     dispatch(getTransactionType("receive"));
     dispatch(getStep(1));
-    dispatch(getCountryTo(userCountry?.id as string));
+    dispatch(getCountryTo(userData?.Country as ICountry));
+    dispatch(
+      getCountryfrom(
+        countries.filter((el) => el.id !== (userData?.Country.id as string))[0]
+      )
+    );
   };
 
   return (

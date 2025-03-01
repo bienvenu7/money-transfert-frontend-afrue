@@ -6,6 +6,8 @@ import { ICountry } from "@/types/country";
 import { useDispatch, useSelector } from "react-redux";
 import {
   selectCountry,
+  selectCountryFromData,
+  selectCountryWhereToData,
   selectStep,
   selectTransaction,
   selectTransactionType,
@@ -13,6 +15,7 @@ import {
 import { AppDispatch } from "@/redux/store";
 import { getStep } from "@/redux/clientReducer";
 import {
+  getCode,
   getCountryfrom,
   getCountryTo,
   getNetworks,
@@ -25,22 +28,16 @@ type Props = {};
 const QuizTwo = () => {
   const dispatch = useDispatch<AppDispatch>();
   const type = useSelector(selectTransactionType);
-  const transaction = useSelector(selectTransaction);
+  const countryTo = useSelector(selectCountryWhereToData);
+  const countryFrom = useSelector(selectCountryFromData);
 
   const handleNetwork = async (
     event: React.MouseEvent<HTMLButtonElement, MouseEvent>
   ) => {
     event.preventDefault();
+    dispatch(getNetworks(await getNetworksById(countryTo?.id as string)));
+    dispatch(getCode(`${countryFrom?.name}-${countryTo?.name}`));
     dispatch(getStep(1));
-    dispatch(
-      getNetworks(
-        await getNetworksById(
-          transaction?.type === "send"
-            ? (transaction?.countryWhereTo as string)
-            : (transaction?.countryFrom as string)
-        )
-      )
-    );
   };
 
   return (

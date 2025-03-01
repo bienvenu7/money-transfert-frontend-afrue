@@ -37,8 +37,8 @@ const ModalWrapper = styled.div`
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  width: calc(100% - 30px);
-  background-color: white;
+  width: auto;
+  background-color: transparent;
   z-index: 1000;
   border-radius: 10px;
   box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
@@ -47,6 +47,9 @@ const ModalWrapper = styled.div`
 const ModalContent = styled.div`
   padding: 20px;
   position: relative;
+  width: max-content;
+  background-color: white;
+  border-radius: 10px;
 `;
 
 const CloseButton = styled.button`
