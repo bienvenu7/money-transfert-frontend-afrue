@@ -102,6 +102,7 @@ const SendForm = () => {
           type={"tel"}
           placeholder="066007789"
           maxLength={parseInt(countryWhereToData?.TelMaxNumber as string)}
+          minLength={parseInt(countryWhereToData?.TelMaxNumber as string)}
         />
         {/* {<p>{"Le numéro doit contenir 9 chiffres!"}</p>} */}
       </div>
