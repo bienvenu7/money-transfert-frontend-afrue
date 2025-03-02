@@ -4,7 +4,6 @@ import { IClientResponse } from "@/types/user";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import React from "react";
-import { AiOutlineArrowDown } from "react-icons/ai";
 
 type Props = {
   el: ITrasanctionResponse;
