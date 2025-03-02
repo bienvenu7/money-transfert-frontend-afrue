@@ -6,67 +6,74 @@ import { getTransactionByClientEmail } from "@/app/actions/transaction";
 import { ITrasanctionResponse } from "@/types/transaction";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
+import {
+  actualMonth,
+  actualYear,
+  localTime,
+  timeCreated,
+} from "@/app/utils/currentTime";
+import CardMobile from "./CardMobile";
 
 const months = [
   {
     id: 1,
     name: "Janvier",
-    publicName: "",
+    publicName: "janvier",
   },
   {
     id: 2,
     name: "Février",
-    publicName: "",
+    publicName: "février",
   },
   {
     id: 3,
     name: "Mars",
-    publicName: "",
+    publicName: "mars",
   },
   {
     id: 4,
     name: "Avril",
-    publicName: "",
+    publicName: "avril",
   },
   {
     id: 5,
     name: "Mai",
-    publicName: "",
+    publicName: "mai",
   },
   {
     id: 6,
     name: "Juin",
-    publicName: "",
+    publicName: "juin",
   },
   {
     id: 7,
     name: "Julliet",
-    publicName: "",
+    publicName: "julliet",
   },
   {
     id: 8,
     name: "Août",
-    publicName: "",
+    publicName: "août",
   },
   {
     id: 9,
     name: "Septembre",
-    publicName: "",
+    publicName: "septembre",
   },
   {
     id: 10,
     name: "Octobre",
-    publicName: "",
+    publicName: "octobre",
   },
   {
     id: 11,
     name: "Novenbre",
-    publicName: "",
+    publicName: "novenbre",
   },
   {
     id: 12,
     name: "Décembre",
-    publicName: "",
+    publicName: "décembre",
   },
 ];
 
@@ -77,7 +84,7 @@ const years = [
   },
   {
     id: 2,
-    year: 2023,
+    year: 2025,
   },
 ];
 
@@ -89,12 +96,14 @@ const Tab = ({ clientData }: Props) => {
   const voyelles = ["e", "a"];
 
   const [transactions, setTransactions] = useState<ITrasanctionResponse[]>([]);
+  const [month, setMonth] = useState<string>(actualMonth);
+  const [year, setYear] = useState<string>(actualYear);
 
   const router = useRouter();
 
   useEffect(() => {
     const getTransactions = async () => {
-      await getTransactionByClientEmail(clientData.email)
+      await getTransactionByClientEmail(clientData.email, month, year)
         .then((el) => {
           setTransactions(el);
         })
@@ -102,25 +111,35 @@ const Tab = ({ clientData }: Props) => {
     };
 
     getTransactions();
-  }, [clientData.email]);
+  }, [clientData.email, month, year]);
 
   return (
     <div className="history__wrapper">
       <div className="history__tab">
         <h2>Historique de transactions pour</h2>
-        <select name="" id="">
+        <select
+          name=""
+          id=""
+          onChange={(e) => setMonth(e.target.value.toLocaleLowerCase())}
+          value={month}
+        >
           {months.map((el) => {
             return (
-              <option key={el.id} value="">
+              <option key={el.id} value={el.publicName}>
                 {el.name}
               </option>
             );
           })}
         </select>
-        <select name="" id="">
+        <select
+          name=""
+          id=""
+          onChange={(e) => setYear(e.target.value.toLocaleLowerCase())}
+          value={year}
+        >
           {years.map((el) => {
             return (
-              <option key={el.id} value="">
+              <option key={el.id} value={el.year}>
                 {el.year}
               </option>
             );
@@ -129,56 +148,10 @@ const Tab = ({ clientData }: Props) => {
       </div>
       <div className="history__histories">
         <div className="history__histories--cards">
-          {transactions.map((el) => {
-            return (
-              <div
-                onClick={() =>
-                  el.status === "uncomfirmed" &&
-                  router.push(`/comfirmation/${el.id}`)
-                }
-                key={el.id}
-                className="history__histories--card"
-              >
-                <div className="history__histories--card__left">
-                  <div className="img">
-                    <Image
-                      src={`https://avatar.iran.liara.run/public/${
-                        voyelles.includes(el.receiverName.split(" ")[1])
-                          ? "girl"
-                          : "boy"
-                      }?username=${el.receiverName.split(" ")[1]}`}
-                      alt=""
-                      fill
-                    />
-                  </div>
-                  <span>{el.receiverName}</span>
-                </div>
-                <div className="history__histories--card__right">
-                  <p>{el.Network.pubicName}</p>
-                  <div className="date">
-                    <p>
-                      {moment(parseInt(el.dateTime)).utc().format("dddd, YYYY")}
-                    </p>
-                    <span>{"el.time"}</span>
-                  </div>
-                  <small className={el.type === "receive" ? "red" : ""}>
-                    {clientData.Country.currency} {el.amountToSend}
-                  </small>
-                  <strong
-                    className={
-                      el.status === "en cours"
-                        ? "yellow"
-                        : el.status === "uncomfirmed"
-                        ? "grey"
-                        : ""
-                    }
-                  >
-                    {el.status === "uncomfirmed" ? "en attente" : el.status}
-                  </strong>
-                </div>
-              </div>
-            );
-          })}
+          {transactions.length >= 1 &&
+            transactions.map((el) => {
+              return <CardMobile clientData={clientData} el={el} key={el.id} />;
+            })}
         </div>
       </div>
     </div>

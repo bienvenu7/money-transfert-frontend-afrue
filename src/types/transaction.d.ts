@@ -23,4 +23,7 @@ export interface ITrasanctionResponse extends ITrasanctionData {
   Rate: IFee;
   Network: INetworkResponse;
   dateTime: string;
+  hour: string;
+  month: string;
+  year: string;
 }

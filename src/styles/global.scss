@@ -1156,9 +1156,15 @@ html {
         gap: 24px;
         width: auto;
 
+        ::-webkit-scrollbar {
+          display: none;
+        }
+
         @include mobile {
           gap: 24px;
-          overflow: scroll;
+          overflow-x: scroll;
+          -ms-overflow-style: none; /* Internet Explorer 10+ */
+          scrollbar-width: none; /* Firefox */
         }
 
         & > p {
@@ -1229,7 +1235,7 @@ html {
           }
 
           @include mobile {
-            min-width: 65px;
+            min-width: max-content;
           }
         }
 
@@ -1258,7 +1264,7 @@ html {
           }
 
           @include mobile {
-            // display: none;
+            min-width: max-content;
           }
         }
       }

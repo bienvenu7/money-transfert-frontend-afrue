@@ -60,12 +60,14 @@ export const getTransactionById = async (
 };
 
 export const getTransactionByClientEmail = async (
-  clientEmail: string
+  clientEmail: string,
+  month: string,
+  year: string
 ): Promise<ITrasanctionResponse[]> => {
   const accessToken = cookies().get("accessToken")?.value;
   try {
     const { data } = await instance.get(
-      `transaction/get/by-client/${clientEmail}`,
+      `transaction/get/by-client/${clientEmail}/${month}/${year}`,
       {
         headers: { Authorization: `Bearer ${accessToken}` },
       }

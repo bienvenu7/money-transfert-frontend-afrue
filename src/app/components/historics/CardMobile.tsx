@@ -1,28 +1,63 @@
+import { timeCreated } from "@/app/utils/currentTime";
+import { ITrasanctionResponse } from "@/types/transaction";
+import { IClientResponse } from "@/types/user";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
 import React from "react";
 import { AiOutlineArrowDown } from "react-icons/ai";
 
-type Props = {};
+type Props = {
+  el: ITrasanctionResponse;
+  clientData: IClientResponse;
+};
 
-const CardMobile = (props: Props) => {
+const CardMobile = ({ el, clientData }: Props) => {
+  const router = useRouter();
+
+  const voyelles = ["e", "a"];
+
   return (
-    <div className="history__histories--transactions__card">
-      <div className="history__histories--transactions__card--picture">
-        <Image
-          src={"https://avatar.iran.liara.run/public/girl?username=albertine"}
-          fill
-          alt=""
-        />
+    <div
+      onClick={() =>
+        el.status === "uncomfirmed" && router.push(`/comfirmation/${el.id}`)
+      }
+      key={el.id}
+      className="history__histories--card"
+    >
+      <div className="history__histories--card__left">
+        <div className="img">
+          <Image
+            src={`https://avatar.iran.liara.run/public/${
+              voyelles.includes(el.receiverName.split(" ")[1]) ? "girl" : "boy"
+            }?username=${el.receiverName.split(" ")[1]}`}
+            alt=""
+            fill
+          />
+        </div>
+        <span>{el.receiverName}</span>
       </div>
-      <div className="history__histories--transactions__card--content">
-        <div className="history__histories--transactions__card--content__up">
-          <h3>Albertine A.E</h3>
-          <AiOutlineArrowDown />
+      <div className="history__histories--card__right">
+        <p>{el.Network.pubicName}</p>
+        <div className="date">
+          <p>{`${el.month}, ${el.year}`}</p>
+          <span>
+            {el.hour === "" ? timeCreated(parseInt(el.dateTime)) : el.hour}
+          </span>
         </div>
-        <div className="history__histories--transactions__card--content__down">
-          <p>12:45 AM</p>
-          <span>XFA 59500</span>
-        </div>
+        <small className={el.type === "receive" ? "red" : ""}>
+          {clientData.Country.currency} {el.amountToSend}
+        </small>
+        <strong
+          className={
+            el.status === "en cours"
+              ? "yellow"
+              : el.status === "uncomfirmed"
+              ? "grey"
+              : ""
+          }
+        >
+          {el.status === "uncomfirmed" ? "en attente" : el.status}
+        </strong>
       </div>
     </div>
   );
