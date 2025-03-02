@@ -82,7 +82,7 @@ const SendForm = () => {
           onChange={(e) => {
             const regex = /^[a-zA-Z\s]+$/;
 
-            if (regex.test(e.target.value)) {
+            if (regex.test(e.target.value) || e.target.value === "") {
               return dispatch(getNameTo(e.target.value));
             }
             return;
