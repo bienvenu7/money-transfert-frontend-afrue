@@ -23,9 +23,11 @@ export class BaseError extends Error {
 export class ValidationError extends BaseError {
   errorData: Record<string, string>[];
   constructor(data: Record<string, string>[]) {
-    super("Validation Error", 400);
+    super("Erreur de validation des données!", 400);
     this.errorData = data;
+    this.statusCode = 400;
     Object.setPrototypeOf(this, ValidationError.prototype);
+    Error.captureStackTrace(this, this.constructor);
   }
 }
 

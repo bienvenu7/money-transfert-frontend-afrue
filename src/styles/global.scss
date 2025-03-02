@@ -1095,6 +1095,7 @@ html {
       justify-content: flex-start;
       padding: 30px;
       border-bottom: 0.6px solid rgba(204, 204, 204, 0.8);
+      cursor: pointer;
 
       @include mobile {
         padding: 30px 10px;
@@ -1223,6 +1224,10 @@ html {
           letter-spacing: -0.28px;
           width: 144px;
 
+          &.receive {
+            color: $red-clr;
+          }
+
           @include mobile {
             min-width: 65px;
           }
@@ -1241,8 +1246,16 @@ html {
           font-family: $main-font;
           font-size: 12px;
           font-style: normal;
-          font-weight: 300;
+          font-weight: 400;
           line-height: 120%; /* 14.4px */
+
+          &.grey {
+            background-color: $line-grey-clr;
+          }
+
+          &.yellow {
+            background-color: $yellow-clr;
+          }
 
           @include mobile {
             // display: none;

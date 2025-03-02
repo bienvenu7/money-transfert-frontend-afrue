@@ -48,7 +48,7 @@ const Confirmation = (props: Props) => {
         </div>
         <div className="transfert__confirmation--content__right--input">
           <label className="confirm" htmlFor="hour">
-            {`Heure précise, ex: 14h : 05`}
+            {`Heure précise, ex: 14h05`}
           </label>
           <input
             id="hour"

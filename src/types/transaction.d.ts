@@ -22,4 +22,5 @@ export interface ITrasanctionDataReady extends ITrasanctionData {
 export interface ITrasanctionResponse extends ITrasanctionData {
   Rate: IFee;
   Network: INetworkResponse;
+  dateTime: string;
 }

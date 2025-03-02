@@ -30,8 +30,6 @@ const Form = ({ pageName }: Props) => {
 
   const [countries, setCountries] = useState<ICountry[]>([]);
 
-  const router = useRouter();
-
   const submit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
@@ -112,7 +110,7 @@ const Form = ({ pageName }: Props) => {
         }
       })
       .catch((error) => {
-        console.error(error);
+        console.log(error.message);
       });
   };
 

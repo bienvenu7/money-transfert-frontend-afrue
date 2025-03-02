@@ -54,7 +54,25 @@ export const getTransactionById = async (
     });
 
     return data;
-  } catch (error) {
+  } catch (error: any) {
+    return errorToSendBack(error);
+  }
+};
+
+export const getTransactionByClientEmail = async (
+  clientEmail: string
+): Promise<ITrasanctionResponse[]> => {
+  const accessToken = cookies().get("accessToken")?.value;
+  try {
+    const { data } = await instance.get(
+      `transaction/get/by-client/${clientEmail}`,
+      {
+        headers: { Authorization: `Bearer ${accessToken}` },
+      }
+    );
+
+    return data;
+  } catch (error: any) {
     return errorToSendBack(error);
   }
 };

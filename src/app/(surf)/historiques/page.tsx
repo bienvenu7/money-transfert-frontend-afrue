@@ -1,7 +1,10 @@
-import Histories from "@/app/components/historics/Histories";
 import Tab from "@/app/components/historics/Tab";
 import Titles from "@/app/components/Titles";
+import { instance } from "@/instance";
+import { IClientResponse } from "@/types/user";
+import { cookies } from "next/headers";
 import Image from "next/image";
+import { redirect } from "next/navigation";
 import React from "react";
 
 type Props = {};
@@ -110,72 +113,27 @@ const stories = [
   },
 ];
 
-const page = (props: Props) => {
-  const voyelles = ["e", "a"];
+const getMe = async () => {
+  const accessToken = cookies().get("accessToken")?.value;
+
+  if (accessToken === undefined) {
+    redirect("/auth/login");
+  }
+
+  const { data } = await instance.get("auth/get-auth", {
+    headers: { Authorization: `Bearer ${accessToken}` },
+  });
+  return data as IClientResponse;
+};
+
+const page = async (props: Props) => {
+  const clientData = await getMe();
 
   return (
     <div className="history__container">
       <div className="history__box">
         <Titles line1="Historique " line2="Afru-Exchange " />
-        <div className="history__wrapper">
-          <div className="history__tab">
-            <h2>Historique de transactions pour</h2>
-            <select name="" id="">
-              {months.map((el) => {
-                return (
-                  <option key={el.id} value="">
-                    {el.name}
-                  </option>
-                );
-              })}
-            </select>
-            <select name="" id="">
-              {years.map((el) => {
-                return (
-                  <option key={el.id} value="">
-                    {el.year}
-                  </option>
-                );
-              })}
-            </select>
-          </div>
-          <div className="history__histories">
-            <div className="history__histories--cards">
-              {stories.map((el) => {
-                return (
-                  <div key={el.id} className="history__histories--card">
-                    <div className="history__histories--card__left">
-                      <div className="img">
-                        <Image
-                          src={`https://avatar.iran.liara.run/public/${
-                            voyelles.includes(el.name.split(" ")[1])
-                              ? "girl"
-                              : "boy"
-                          }?username=${el.name.split(" ")[1]}`}
-                          alt=""
-                          fill
-                        />
-                      </div>
-                      <span>{el.name}</span>
-                    </div>
-                    <div className="history__histories--card__right">
-                      <p>{el.network}</p>
-                      <div className="date">
-                        <p>{el.date}</p>
-                        <span>{el.time}</span>
-                      </div>
-                      <small>{el.amount}</small>
-                      <strong>{el.status}</strong>
-                    </div>
-                  </div>
-                );
-              })}
-            </div>
-          </div>
-        </div>
-        {/* <Tab />
-        <Histories title="Aujourd'hui" />
-        <Histories title="Hier" /> */}
+        <Tab clientData={clientData} />
       </div>
     </div>
   );

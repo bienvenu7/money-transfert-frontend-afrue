@@ -31,10 +31,9 @@ const Transaction = ({ clientData, countries }: Props) => {
     dispatch(getEmail(clientData.email));
     dispatch(getCounties(countries));
     dispatch(getUser(clientData));
-  }, []);
+  }, [countries, clientData, dispatch]);
 
   const step = useSelector(selectStep);
-  const transaction = useSelector(selectTransaction);
 
   const handleTransactionInfos = async (
     event: React.MouseEvent<HTMLButtonElement, MouseEvent>

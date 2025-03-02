@@ -65,7 +65,7 @@ export const reconfirmEmail = async (hash: string) => {
 export const login = async (
   email: string,
   password: string
-): Promise<ISuccessData | IBaseErrorData | IBadResquestErrorData> => {
+): Promise<ISuccessData> => {
   try {
     const { data, status } = await instance.post("auth/login", {
       email,
