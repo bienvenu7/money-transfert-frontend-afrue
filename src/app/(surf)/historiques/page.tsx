@@ -132,7 +132,7 @@ const page = async (props: Props) => {
   return (
     <div className="history__container">
       <div className="history__box">
-        <Titles line1="Historique " line2="Afru-Exchange " />
+        <Titles line1="Votre historique" line2="Afru-Exchange " />
         <Tab clientData={clientData} />
       </div>
     </div>

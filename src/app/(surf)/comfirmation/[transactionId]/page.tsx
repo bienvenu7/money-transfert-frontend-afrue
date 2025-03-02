@@ -7,7 +7,7 @@ const page = (props: Props) => {
   return (
     <div className="transfert__confirmation--container">
       <div className="transfert__confirmation--wrapper">
-        <Titles line1="En attende confirmation" line2="Afru-Exchange" />
+        <Titles line1="En attente de confirmation" line2="Afru-Exchange" />
         <div className="transfert__confirmation--content">
           <div className="transfert__confirmation--content__left">
             <h2>Veillez éffectuer un dépot aux coordonnées ci dessous</h2>

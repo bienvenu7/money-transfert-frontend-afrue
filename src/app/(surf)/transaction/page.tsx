@@ -46,7 +46,7 @@ const Page = async () => {
   return (
     <div className="transfert__container">
       <div className="transfert__box">
-        <Titles line1="Transaction" line2="Afru-Exchange " />
+        <Titles line1="Transférez de l'argent" line2="Afru-Exchange " />
         <Transaction clientData={user} countries={countries} />
       </div>
     </div>

@@ -11,15 +11,11 @@ import { errorToSendBack } from "../utils/errorHandle";
 export const createTransaction = async (
   transaction: ITrasanctionData
 ): Promise<ITrasanctionResponse> => {
-  try {
-    const accessToken = cookies().get("accessToken")?.value;
-    const { data } = await instance.post("transaction/create", transaction, {
-      headers: { Authorization: `Bearer ${accessToken}` },
-    });
-    return data;
-  } catch (error: any) {
-    return errorToSendBack(error);
-  }
+  const accessToken = cookies().get("accessToken")?.value;
+  const { data } = await instance.post("transaction/create", transaction, {
+    headers: { Authorization: `Bearer ${accessToken}` },
+  });
+  return data;
 };
 
 export const updateTransaction = async (

@@ -25,7 +25,7 @@ const Confirmation = (props: Props) => {
       "en cours"
     )
       .then((transaction) => {
-        router.push("/transaction");
+        router.push("/historiques");
         console.table(transaction);
       })
       .catch((err) => console.error(err));

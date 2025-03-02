@@ -3,12 +3,14 @@ import { AiOutlineCheck } from "react-icons/ai";
 import React from "react";
 import { createTransaction } from "@/app/actions/transaction";
 import { useRouter } from "next/navigation";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import {
   selectCountryFromData,
   selectCountryWhereToData,
   selectTransaction,
 } from "@/redux/selector";
+import { getStep } from "@/redux/clientReducer";
+import { AppDispatch } from "@/redux/store";
 
 type Props = {
   setOpenModal: React.Dispatch<React.SetStateAction<boolean>>;
@@ -17,6 +19,8 @@ type Props = {
 
 const Confirm = ({ openModal, setOpenModal }: Props) => {
   const router = useRouter();
+
+  const dispatch = useDispatch<AppDispatch>();
 
   const transactionData = useSelector(selectTransaction);
   const countryFrom = useSelector(selectCountryFromData);
@@ -27,9 +31,16 @@ const Confirm = ({ openModal, setOpenModal }: Props) => {
   ) => {
     event.preventDefault();
     await createTransaction(transactionData)
-      .then((transaction) => router.push(`/comfirmation/${transaction.id}`))
+      .then((transaction) => {
+        setOpenModal(false);
+        dispatch(getStep(1));
+        router.push(`/comfirmation/${transaction.id}`);
+      })
       .catch((el) => console.log(el))
-      .finally(() => setOpenModal(false));
+      .finally(() => {
+        setOpenModal(false);
+        dispatch(getStep(0));
+      });
   };
   return (
     <div className="confirm__container">

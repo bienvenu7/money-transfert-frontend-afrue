@@ -4,16 +4,15 @@ import { instance } from "@/instance";
 import { IFee, INetworkResponse } from "@/types/networks";
 import { errorToSendBack } from "./errorHandle";
 
-export const getNetworksById = async (id: string) => {
+export const getNetworksById = async (
+  id: string
+): Promise<INetworkResponse[]> => {
   "use server";
   try {
-    const { data, status } = await instance.get(`/network/get-networks/${id}`);
-    if (status === 200) {
-      return data as INetworkResponse[];
-    }
-    return { err: "No content found!" };
+    const { data } = await instance.get(`/network/get-networks/${id}`);
+    return data as INetworkResponse[];
   } catch (error: any) {
-    return error.response.data.message;
+    return errorToSendBack(error);
   }
 };
 

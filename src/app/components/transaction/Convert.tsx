@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { IType } from "./Transaction";
 import { errorMessage } from "@/app/utils/notification";
 import { ICountry } from "@/types/country";
@@ -38,10 +38,15 @@ const Convert = ({ isAuthUser, rate }: Props) => {
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     event.preventDefault();
     // Big.DP = 10;
-    const x = new Big(event.target.value === "" ? 0 : event.target.value);
-    const y = new Big(rate);
-    dispatch(getAmountFrom(event.target.value));
-    dispatch(getAmountTo(x.div(y).toString()));
+    const regex = /^[0-9\b]+$/;
+
+    if (regex.test(event.target.value) || event.target.value === "") {
+      const x = new Big(event.target.value === "" ? 0 : event.target.value);
+      const y = new Big(rate);
+      dispatch(getAmountFrom(event.target.value));
+      dispatch(getAmountTo(x.div(y).toString()));
+      return;
+    }
   };
 
   const handleCountry = (event: React.ChangeEvent<HTMLSelectElement>) => {
@@ -62,7 +67,7 @@ const Convert = ({ isAuthUser, rate }: Props) => {
         <div className="block">
           <div>{countryFrom?.currency}</div>
           <input
-            type={"number"}
+            type={"text"}
             placeholder="Vous envoyer"
             value={transaction.amountToSend}
             onChange={handleChange}

@@ -1073,6 +1073,14 @@ html {
     flex-shrink: 0;
     border-radius: 20px;
     background: #fdfcff;
+    overflow-y: scroll;
+    max-height: 370px;
+    -ms-overflow-style: none; /* Internet Explorer 10+ */
+    scrollbar-width: none; /* Firefox */
+
+    &::-webkit-scrollbar {
+      display: none;
+    }
 
     &--cards {
       display: flex;
@@ -1156,7 +1164,7 @@ html {
         gap: 24px;
         width: auto;
 
-        ::-webkit-scrollbar {
+        &::-webkit-scrollbar {
           display: none;
         }
 

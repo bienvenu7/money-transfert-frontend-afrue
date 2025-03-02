@@ -83,35 +83,41 @@ const Form = ({ pageName }: Props) => {
     setEmailError("");
     setPasswordError("");
 
-    //handling login to the server👇🏽
-    await login(email, password)
-      .then((el) => {
-        console.log(el);
-        if (el.statusCode === 200) {
-          setChecking(true);
-          setPasword("");
-          setEmailError("");
-          setEmailError("");
-        } else if (el.statusCode === 400) {
-          const obj = el as IBadResquestErrorData;
-          obj.data?.map((x) => {
-            if (x.message.split(":")[0].includes("email")) {
-              setEmailError(x.message.split(":")[1]);
-            } else if (x.message.split(":")[0].includes("password")) {
-              setPasswordError(x.message.split(":")[1]);
-            }
-          });
-        } else {
-          const obj = el as IBaseErrorData;
-          // if (obj.statusCode === 500) {
-          //   router.push("/500");
-          // }
-          errorMessage(obj.message);
-        }
-      })
-      .catch((error) => {
-        console.log(error.message);
-      });
+    if (password.length < 8) {
+      return errorMessage("Le mote passe doit contenir minimun 8 caraactères!");
+    } else if (!email.includes("@")) {
+      return errorMessage("Entrez un mot de passe valide");
+    } else {
+      //handling login to the server👇🏽
+      await login(email, password)
+        .then((el) => {
+          console.log(el);
+          if (el.statusCode === 200) {
+            setChecking(true);
+            setPasword("");
+            setEmailError("");
+            setEmailError("");
+          } else if (el.statusCode === 400) {
+            const obj = el as IBadResquestErrorData;
+            obj.data?.map((x) => {
+              if (x.message.split(":")[0].includes("email")) {
+                setEmailError(x.message.split(":")[1]);
+              } else if (x.message.split(":")[0].includes("password")) {
+                setPasswordError(x.message.split(":")[1]);
+              }
+            });
+          } else {
+            const obj = el as IBaseErrorData;
+            // if (obj.statusCode === 500) {
+            //   router.push("/500");
+            // }
+            errorMessage(obj.message);
+          }
+        })
+        .catch((error) => {
+          errorMessage("Vos identifiants ne sont pas correctes!");
+        });
+    }
   };
 
   const allCountries = async (): Promise<void> => {

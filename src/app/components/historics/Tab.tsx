@@ -99,8 +99,6 @@ const Tab = ({ clientData }: Props) => {
   const [month, setMonth] = useState<string>(actualMonth);
   const [year, setYear] = useState<string>(actualYear);
 
-  const router = useRouter();
-
   useEffect(() => {
     const getTransactions = async () => {
       await getTransactionByClientEmail(clientData.email, month, year)

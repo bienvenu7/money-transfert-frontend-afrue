@@ -28,7 +28,6 @@ const SendForm = () => {
   const handleNetwork = async (e: React.ChangeEvent<HTMLSelectElement>) => {
     e.preventDefault();
 
-    dispatch(getSelectedNetwork(e.target.value));
     dispatch(
       getNetworkData(networks?.filter((el) => el.id === e.target.value)[0])
     );
@@ -40,6 +39,26 @@ const SendForm = () => {
       .catch((e) => console.error(e));
   };
 
+  const handlePhone = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    e.preventDefault();
+    const regex = /^[0-9\b]+$/;
+
+    if (regex.test(e.target.value) || e.target.value === "") {
+      dispatch(getPhone(e.target.value));
+    }
+    return;
+  };
+
+  const handleName = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    e.preventDefault();
+    const regex = /^[a-zA-Z\s]+$/;
+
+    if (regex.test(e.target.value) || e.target.value === "") {
+      return dispatch(getNameTo(e.target.value));
+    }
+    return;
+  };
+
   return (
     <div className="transfert--send__form">
       <div className="transfert--send__form--input">
@@ -49,9 +68,9 @@ const SendForm = () => {
       <div className="transfert--send__form--input">
         <label htmlFor="operator">Opérateur réseau*</label>
         <select
-          className={operator !== "" ? "colored" : ""}
+          className={transaction.networkId !== "" ? "colored" : ""}
           onChange={handleNetwork}
-          value={operator}
+          value={transaction.networkId}
           id="operator"
         >
           {networks.length > 0 ? (
@@ -79,14 +98,7 @@ const SendForm = () => {
           className={
             transaction.receiverName.length > 3 ? "colored" : "uncolored"
           }
-          onChange={(e) => {
-            const regex = /^[a-zA-Z\s]+$/;
-
-            if (regex.test(e.target.value) || e.target.value === "") {
-              return dispatch(getNameTo(e.target.value));
-            }
-            return;
-          }}
+          onChange={handleName}
           id="name"
           type={"text"}
           placeholder="El Nuntia"
@@ -103,7 +115,7 @@ const SendForm = () => {
               ? "colored"
               : "uncolored"
           }
-          onChange={(e) => dispatch(getPhone(e.target.value))}
+          onChange={handlePhone}
           value={transaction.receiverPhone}
           id="phone"
           type={"tel"}

@@ -22,6 +22,7 @@ import {
 } from "@/redux/transactionReducer";
 import { getNetworksById } from "@/app/utils/network";
 import Image from "next/image";
+import { errorMessage } from "@/app/utils/notification";
 
 type Props = {};
 
@@ -30,12 +31,20 @@ const QuizTwo = () => {
   const type = useSelector(selectTransactionType);
   const countryTo = useSelector(selectCountryWhereToData);
   const countryFrom = useSelector(selectCountryFromData);
+  const transaction = useSelector(selectTransaction);
 
   const handleNetwork = async (
     event: React.MouseEvent<HTMLButtonElement, MouseEvent>
   ) => {
     event.preventDefault();
-    dispatch(getNetworks(await getNetworksById(countryTo?.id as string)));
+    if (transaction.amountToPayOut === "" || transaction.amountToSend === "") {
+      return errorMessage(
+        "Veillez d'abord entrer le montant à envoyer ou soit le montant à recevoir avant de pouvoir avancer!"
+      );
+    }
+    await getNetworksById(countryTo?.id as string)
+      .then((el) => dispatch(getNetworks(el)))
+      .catch((err) => console.log(err));
     dispatch(getCode(`${countryFrom?.name}-${countryTo?.name}`));
     dispatch(getStep(1));
   };

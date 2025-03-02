@@ -18,7 +18,7 @@ const page = async (props: Props) => {
       {clientData ? (
         <div className="profile__container">
           <div className="profile__box">
-            <Titles line1="Profile" line2="Afru-Exchange" />
+            <Titles line1="Votre profile" line2="Afru-Exchange" />
             <div className="profile__wrapper">
               <div className="profile__content">
                 <img

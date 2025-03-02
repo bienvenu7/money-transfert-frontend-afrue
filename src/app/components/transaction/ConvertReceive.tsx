@@ -33,10 +33,15 @@ const ConvertReceive = ({ isAuthUser, rate }: Props) => {
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     event.preventDefault();
     // Big.DP = 10;
-    const x = new Big(event.target.value === "" ? 0 : event.target.value);
-    const y = new Big(rate);
-    dispatch(getAmountTo(event.target.value));
-    dispatch(getAmountFrom(x.times(y).toString()));
+
+    const regex = /^[0-9\b]+$/;
+
+    if (regex.test(event.target.value) || event.target.value === "") {
+      const x = new Big(event.target.value === "" ? 0 : event.target.value);
+      const y = new Big(rate);
+      dispatch(getAmountTo(event.target.value));
+      dispatch(getAmountFrom(x.times(y).toString()));
+    }
   };
 
   const handleCountry = (event: React.ChangeEvent<HTMLSelectElement>) => {
@@ -57,7 +62,7 @@ const ConvertReceive = ({ isAuthUser, rate }: Props) => {
         <div className="block">
           <div>{countryWhereToData?.currency}</div>
           <input
-            type={"number"}
+            type={"text"}
             placeholder="vous recevez"
             value={transaction.amountToPayOut}
             onChange={handleChange}
