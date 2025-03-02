@@ -79,7 +79,14 @@ const SendForm = () => {
           className={
             transaction.receiverName.length > 3 ? "colored" : "uncolored"
           }
-          onChange={(e) => dispatch(getNameTo(e.target.value))}
+          onChange={(e) => {
+            const regex = /^[a-zA-Z\s]+$/;
+
+            if (regex.test(e.target.value)) {
+              return dispatch(getNameTo(e.target.value));
+            }
+            return;
+          }}
           id="name"
           type={"text"}
           placeholder="El Nuntia"
