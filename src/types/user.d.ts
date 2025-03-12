@@ -7,4 +7,5 @@ export interface IClientResponse {
   clientNumber: number;
   whatsappNumber: string;
   Country: ICountry;
+  gender: string;
 }

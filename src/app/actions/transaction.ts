@@ -7,6 +7,7 @@ import {
   ITrasanctionResponse,
 } from "../../types/transaction";
 import { errorToSendBack } from "../utils/errorHandle";
+import { IBadResquestErrorData, IBaseErrorData } from "@/types/fetch";
 
 export const createTransaction = async (
   transaction: ITrasanctionData
@@ -24,7 +25,7 @@ export const updateTransaction = async (
   hour: string,
   reference: string,
   status: string
-): Promise<ITrasanctionResponse> => {
+): Promise<ITrasanctionResponse | IBaseErrorData | IBadResquestErrorData> => {
   try {
     const accessToken = cookies().get("accessToken")?.value;
     const { data } = await instance.patch(
@@ -42,7 +43,7 @@ export const updateTransaction = async (
 
 export const getTransactionById = async (
   transactionId: string
-): Promise<ITrasanctionResponse> => {
+): Promise<ITrasanctionResponse | IBaseErrorData | IBadResquestErrorData> => {
   const accessToken = cookies().get("accessToken")?.value;
   try {
     const { data } = await instance.get(`transaction/get/${transactionId}`, {
@@ -59,7 +60,7 @@ export const getTransactionByClientEmail = async (
   clientEmail: string,
   month: string,
   year: string
-): Promise<ITrasanctionResponse[]> => {
+): Promise<ITrasanctionResponse[] | IBaseErrorData | IBadResquestErrorData> => {
   const accessToken = cookies().get("accessToken")?.value;
   try {
     const { data } = await instance.get(

@@ -21,7 +21,8 @@ export const register = async (
   email: string,
   password: string,
   fullName: string,
-  countryId: string
+  countryId: string,
+  gender: string
 ): Promise<ISuccessData | IBaseErrorData | IBadResquestErrorData> => {
   try {
     const { data, status } = await instance.post("auth/register", {
@@ -29,6 +30,7 @@ export const register = async (
       password,
       fullName,
       countryId,
+      gender,
     });
     return successResponse(data, status);
   } catch (error: any) {
@@ -65,7 +67,7 @@ export const reconfirmEmail = async (hash: string) => {
 export const login = async (
   email: string,
   password: string
-): Promise<ISuccessData> => {
+): Promise<ISuccessData | IBaseErrorData | IBadResquestErrorData> => {
   try {
     const { data, status } = await instance.post("auth/login", {
       email,
@@ -80,7 +82,9 @@ export const login = async (
 export const confirmOtp = async (
   email: string,
   newOtp: string[]
-): Promise<ISuccessOtpCodeResponse> => {
+): Promise<
+  ISuccessOtpCodeResponse | IBaseErrorData | IBadResquestErrorData
+> => {
   let otp = "";
 
   newOtp.map((el) => (otp = otp + el));
@@ -126,15 +130,14 @@ export const resendOtp = async (email: string) => {
 };
 
 export const getAuth = async (): Promise<IClientResponse> => {
-  try {
-    const accessToken = cookies().get("accessToken")?.value;
-    const { data } = await instance.get("auth/get-auth", {
-      headers: { Authorization: `Bearer ${accessToken}` },
-    });
-    return data as IClientResponse;
-  } catch (error: any) {
-    return errorToSendBack(error);
-  }
+  const accessToken = cookies().get("accessToken")?.value;
+  const { data: client } = await instance.get("auth/get-auth", {
+    headers: { Authorization: `Bearer ${accessToken}` },
+  });
+
+  // const d = data as IClientResponse;
+  const data = client as any;
+  return data;
 };
 
 export const getAccesToken = async () => {
@@ -181,4 +184,9 @@ export const logout = async (): Promise<
   } catch (error: any) {
     return errorToSendBack(error);
   }
+};
+
+export const getAcces = async (): Promise<string> => {
+  const accessToken: string = cookies().get("accessToken")?.value as string;
+  return accessToken;
 };

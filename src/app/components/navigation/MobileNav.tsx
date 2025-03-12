@@ -154,7 +154,7 @@ const MobileNav = () => {
               <div className="navbar__mobile--btn__avatar">
                 <Image
                   src={`https://avatar.iran.liara.run/public/${
-                    voyelles.includes(name[name.length - 1]) ? "girl" : "boy"
+                    clientData?.gender === "Femme" ? "girl" : "boy"
                   }?username=${name}`}
                   alt={clientData?.fullName}
                   fill

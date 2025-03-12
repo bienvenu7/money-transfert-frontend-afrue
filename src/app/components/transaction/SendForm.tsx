@@ -16,13 +16,13 @@ import {
   getSelectedNetwork,
 } from "@/redux/transactionReducer";
 import { getNetworkByAmount } from "@/app/utils/network";
+import { IFee } from "@/types/networks";
 
 const SendForm = () => {
   const dispatch = useDispatch<AppDispatch>();
 
   const transaction = useSelector(selectTransaction);
   const networks = useSelector(selectNetworks);
-  const operator = useSelector(selectSelectedNetwork);
   const countryWhereToData = useSelector(selectCountryWhereToData);
 
   const handleNetwork = async (e: React.ChangeEvent<HTMLSelectElement>) => {
@@ -34,7 +34,12 @@ const SendForm = () => {
 
     await getNetworkByAmount(e.target.value, transaction.amountToPayOut)
       .then((el) => {
-        dispatch(getFee(el.amount));
+        const fee = el as IFee;
+        if (fee.id !== undefined) {
+          dispatch(getFee(fee.amount));
+        } else {
+          console.log(el);
+        }
       })
       .catch((e) => console.error(e));
   };

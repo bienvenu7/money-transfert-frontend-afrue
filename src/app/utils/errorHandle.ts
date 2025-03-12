@@ -31,18 +31,19 @@ export class ValidationError extends BaseError {
   }
 }
 
-export const errorToSendBack = (error: any) => {
+export const errorToSendBack = (
+  error: any
+): IBaseErrorData | IBadResquestErrorData => {
+  let err;
   if (error.status === 400) {
-    let err = error.response.data as IBadResquestErrorData;
-    throw new ValidationError(err.data);
+    err = error.response.data as IBadResquestErrorData;
+    return err;
   } else if (error.status === 500 || error.response === undefined) {
-    throw new BaseError(
-      "Désolé, une erreur s'est produite. Veillez ressayer plutard",
-      500
-    );
+    err = error.response.data;
+    return err;
   } else {
     let err = error.response.data as IBaseErrorData;
-    throw new BaseError(err.message, error.status);
+    return err;
   }
 };
 
@@ -62,3 +63,10 @@ export const successResponseOtp = (data: any, status: number) => {
   };
   return newData;
 };
+
+export function isValidPassword(password: string): Boolean {
+  const regex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[A-Za-z\d]{8,}$/;
+
+  console.log({ chexk: regex.test(password), password });
+  return regex.test(password);
+}

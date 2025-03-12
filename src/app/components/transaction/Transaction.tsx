@@ -1,10 +1,8 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { AiOutlineDown } from "react-icons/ai";
 import SendForm from "./SendForm";
-import { IClientResponse } from "@/types/user";
-import { ICountry } from "@/types/country";
 import Modal from "../modals/Modal";
 import Confirm from "../modals/Confirm";
 import QuizOne from "./QuizOne";
@@ -16,30 +14,17 @@ import {
   selectTransaction,
 } from "@/redux/selector";
 import { AppDispatch } from "@/redux/store";
-import { getCounties, getStep, getUser } from "@/redux/clientReducer";
-import { getEmail } from "@/redux/transactionReducer";
+import { getStep } from "@/redux/clientReducer";
 import Image from "next/image";
 import { errorMessage } from "@/app/utils/notification";
 
 export type IType = "send" | "receive";
 
-type Props = {
-  clientData: IClientResponse;
-  countries: ICountry[];
-};
-
-const Transaction = ({ clientData, countries }: Props) => {
+const Transaction = () => {
   const dispatch = useDispatch<AppDispatch>();
   const [openModal, setOpenModal] = useState(false);
   const transaction = useSelector(selectTransaction);
   const countryWhereToData = useSelector(selectCountryWhereToData);
-
-  useEffect(() => {
-    dispatch(getEmail(clientData.email));
-    dispatch(getCounties(countries));
-    dispatch(getUser(clientData));
-  }, [countries, clientData, dispatch]);
-
   const step = useSelector(selectStep);
 
   const handleTransactionInfos = async (

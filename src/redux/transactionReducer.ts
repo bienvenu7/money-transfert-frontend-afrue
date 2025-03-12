@@ -98,6 +98,28 @@ export const transactionSlice = createSlice({
         clientEmail: action.payload,
       };
     },
+
+    resetTransaction: (state) => {
+      state = {
+        transaction: {
+          clientEmail: "",
+          status: "uncomfirmed",
+          type: "",
+          amountToPayOut: "",
+          amountToSend: "",
+          code: "",
+          fees: "",
+          networkId: "",
+          receiverName: "",
+          receiverPhone: "",
+        },
+        countryTo: null,
+        countryFrom: null,
+        networks: [],
+        networkData: null,
+        choosenNetwork: "",
+      };
+    },
   },
 });
 
@@ -116,6 +138,7 @@ export const {
   getCode,
   getFee,
   getEmail,
+  resetTransaction,
 } = transactionSlice.actions;
 
 export default transactionSlice.reducer;

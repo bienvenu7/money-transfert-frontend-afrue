@@ -9,6 +9,7 @@ import { ICountry } from "@/types/country";
 import Image from "next/image";
 import { IBadResquestErrorData, IBaseErrorData } from "@/types/fetch";
 import { useRouter } from "next/navigation";
+import { isValidPassword } from "../utils/errorHandle";
 
 type Props = {
   pageName: string;
@@ -25,7 +26,9 @@ const Form = ({ pageName }: Props) => {
   const [confirmError, setConfirmError] = useState<boolean>(false);
   const [checking, setChecking] = useState<boolean>(false);
   const [country, setCountry] = useState<string>("");
+  const [genre, setGenre] = useState<"Homme" | "Femme" | "">("");
   const [countryError, setCountryError] = useState<boolean>(false);
+  const [genreError, setGenreError] = useState<boolean>(false);
   const [nameError, setNameError] = useState<boolean>(false);
 
   const [countries, setCountries] = useState<ICountry[]>([]);
@@ -38,14 +41,27 @@ const Form = ({ pageName }: Props) => {
     setEmailError("");
     setNameError(false);
     setPasswordError("");
+    setGenreError(false);
 
-    if (confirmPassword !== password) {
+    if (name === "" || name.length <= 3) {
+      setNameError(true);
+    } else if (country === "") {
+      setCountryError(true);
+    } else if (genre === "") {
+      setGenreError(true);
+    } else if (email === "") {
+      setEmailError("Veillez entrer un mail valide!");
+    } else if (password.length < 8 || !isValidPassword(password)) {
+      setPasswordError(
+        "Votre mot de passe doit contenir au moins:<br/>*une lettre majiscule<br/>*une lettre miniscule<br/>*un seul caractère spécial<br/>*un chiffre"
+      );
+    } else if (confirmPassword !== password) {
       setConfirmError(true);
     } else {
       //handling registration with the server👇🏽
-      await register(email, password, name, country)
+      await register(email, password, name, country, genre)
         .then((el) => {
-          if (el.statusCode === 200) {
+          if (el.statusCode === 201) {
             setConfirmError(false);
             setConfirmPassword("");
             setEmail("");
@@ -55,6 +71,7 @@ const Form = ({ pageName }: Props) => {
             successMessage(el.message);
             setNameError(false);
             setCountryError(false);
+            setGenreError(false);
           } else if (el.statusCode === 400) {
             const obj = el as IBadResquestErrorData;
             obj.data?.map((x) => {
@@ -70,6 +87,7 @@ const Form = ({ pageName }: Props) => {
             });
           } else {
             const obj = el as IBaseErrorData;
+            console.log(obj);
             errorMessage(obj.message);
           }
         })
@@ -84,19 +102,18 @@ const Form = ({ pageName }: Props) => {
     setPasswordError("");
 
     if (password.length < 8) {
-      return errorMessage("Le mote passe doit contenir minimun 8 caraactères!");
+      return setPasswordError(
+        "Le mote passe doit contenir minimun 8 caraactères!"
+      );
     } else if (!email.includes("@")) {
-      return errorMessage("Entrez un mot de passe valide");
+      return setEmailError("Votre addresse email n'est pas valide.");
     } else {
       //handling login to the server👇🏽
       await login(email, password)
         .then((el) => {
           console.log(el);
           if (el.statusCode === 200) {
-            setChecking(true);
-            setPasword("");
-            setEmailError("");
-            setEmailError("");
+            return setChecking(true);
           } else if (el.statusCode === 400) {
             const obj = el as IBadResquestErrorData;
             obj.data?.map((x) => {
@@ -106,16 +123,23 @@ const Form = ({ pageName }: Props) => {
                 setPasswordError(x.message.split(":")[1]);
               }
             });
+            return;
           } else {
             const obj = el as IBaseErrorData;
-            // if (obj.statusCode === 500) {
-            //   router.push("/500");
-            // }
-            errorMessage(obj.message);
+            if (obj.message.includes("mot de passe")) {
+              setPasswordError(obj.message);
+            }
           }
         })
         .catch((error) => {
-          errorMessage("Vos identifiants ne sont pas correctes!");
+          errorMessage(
+            "Une erreur inconnue s'est produite, veillez resseyer plutard!"
+          );
+        })
+        .finally(() => {
+          setPasword("");
+          setEmailError("");
+          setEmailError("");
         });
     }
   };
@@ -123,6 +147,8 @@ const Form = ({ pageName }: Props) => {
   const allCountries = async (): Promise<void> => {
     setCountries(await getCountries());
   };
+
+  const genders = ["Homme", "Femme"];
 
   useEffect(() => {
     allCountries();
@@ -149,6 +175,7 @@ const Form = ({ pageName }: Props) => {
                     value={name}
                     type={"text"}
                     placeholder="Votre nom et prénom(s)"
+                    className={nameError ? "underline" : ""}
                   />
                   {nameError && (
                     <p>Veillez entrer votre nom et votre prénom!</p>
@@ -157,7 +184,7 @@ const Form = ({ pageName }: Props) => {
                 <div className="form__input">
                   <label htmlFor="country">Localité</label>
                   <select
-                    className={country !== "" ? "colored" : ""}
+                    className={countryError ? "underline" : ""}
                     onChange={(el) => setCountry(el.target.value)}
                     defaultValue=""
                     id="country"
@@ -171,6 +198,23 @@ const Form = ({ pageName }: Props) => {
                   </select>
                   {countryError && <p>Veillez sélectioner une localité!</p>}
                 </div>
+                <div className="form__input">
+                  <label htmlFor="country">Genre</label>
+                  <select
+                    className={genreError ? "underline" : ""}
+                    onChange={(el) => setGenre(el.target.value as any)}
+                    defaultValue=""
+                    id="country"
+                  >
+                    <option value="">Sélectionez votre genre</option>
+                    {genders.map((el, index) => (
+                      <option value={el} key={index}>
+                        {el}
+                      </option>
+                    ))}
+                  </select>
+                  {genreError && <p>Veillez sélectioner votre genre!</p>}
+                </div>
               </>
             )}
             <div className="form__input">
@@ -181,6 +225,7 @@ const Form = ({ pageName }: Props) => {
                 type={"email"}
                 placeholder="Exemple@mail.com"
                 value={email}
+                className={emailError !== "" ? "underline" : ""}
               />
               {emailError !== "" && <p>{emailError}</p>}
             </div>
@@ -192,8 +237,11 @@ const Form = ({ pageName }: Props) => {
                 type={"password"}
                 placeholder="Mot de passe (Min 8 charactères)"
                 value={password}
+                className={passwordError !== "" ? "underline" : ""}
               />
-              {passwordError !== "" && <p>{passwordError}</p>}
+              {passwordError !== "" && (
+                <p dangerouslySetInnerHTML={{ __html: passwordError }} />
+              )}
             </div>
             {pageName === "S'enregistrer" && (
               <div className="form__input">
@@ -204,8 +252,11 @@ const Form = ({ pageName }: Props) => {
                   value={confirmPassword}
                   type={"password"}
                   placeholder="Confirmer le mot de passe"
+                  className={confirmError ? "underline" : ""}
                 />
-                {confirmError && <p>Veillez saisir le même mot de passe!</p>}
+                {confirmError && (
+                  <p>Veillez saisir le même mot de passe une seconde fois!</p>
+                )}
               </div>
             )}
             {pageName === "Se connecter" && (

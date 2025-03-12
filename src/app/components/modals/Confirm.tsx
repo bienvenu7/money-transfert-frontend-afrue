@@ -11,6 +11,8 @@ import {
 } from "@/redux/selector";
 import { getStep } from "@/redux/clientReducer";
 import { AppDispatch } from "@/redux/store";
+import { resetTransaction } from "@/redux/transactionReducer";
+import { errorMessage } from "@/app/utils/notification";
 
 type Props = {
   setOpenModal: React.Dispatch<React.SetStateAction<boolean>>;
@@ -26,6 +28,8 @@ const Confirm = ({ openModal, setOpenModal }: Props) => {
   const countryFrom = useSelector(selectCountryFromData);
   const countryWhereToData = useSelector(selectCountryWhereToData);
 
+  console.table(transactionData);
+
   const addTransaction = async (
     event: React.MouseEvent<HTMLButtonElement, MouseEvent>
   ) => {
@@ -33,13 +37,18 @@ const Confirm = ({ openModal, setOpenModal }: Props) => {
     await createTransaction(transactionData)
       .then((transaction) => {
         setOpenModal(false);
-        dispatch(getStep(1));
+        dispatch(resetTransaction());
         router.push(`/comfirmation/${transaction.id}`);
       })
-      .catch((el) => console.log(el))
+      .catch((el) => {
+        errorMessage(
+          "Cette operation n'a pas pu être aboutti, veillez s'il vous plait ressayez une prochaine fois!"
+        );
+        console.log(el);
+      })
       .finally(() => {
         setOpenModal(false);
-        dispatch(getStep(0));
+        dispatch(getStep(-2));
       });
   };
   return (

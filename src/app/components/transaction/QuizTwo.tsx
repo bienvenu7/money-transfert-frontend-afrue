@@ -23,6 +23,7 @@ import {
 import { getNetworksById } from "@/app/utils/network";
 import Image from "next/image";
 import { errorMessage } from "@/app/utils/notification";
+import { INetworkResponse } from "@/types/networks";
 
 type Props = {};
 
@@ -43,7 +44,7 @@ const QuizTwo = () => {
       );
     }
     await getNetworksById(countryTo?.id as string)
-      .then((el) => dispatch(getNetworks(el)))
+      .then((el) => dispatch(getNetworks(el as INetworkResponse[])))
       .catch((err) => console.log(err));
     dispatch(getCode(`${countryFrom?.name}-${countryTo?.name}`));
     dispatch(getStep(1));

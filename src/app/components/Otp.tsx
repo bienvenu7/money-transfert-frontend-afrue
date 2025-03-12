@@ -14,7 +14,7 @@ type Props = {
 const Otp = ({ email }: Props) => {
   const [otp, setOtp] = useState<string[]>(new Array(6).fill(""));
   const [disable, setDisable] = useState<boolean>(false);
-  const [count, setCount] = useState(60);
+  const [mistake, setMistake] = useState<boolean>(false);
   const router = useRouter();
 
   useEffect(() => {
@@ -45,14 +45,18 @@ const Otp = ({ email }: Props) => {
     event.preventDefault();
 
     if (!disable) {
+      setMistake(true);
       return;
     }
 
     await confirmOtp(email, otp)
       .then((el) => {
-        router.push("/");
-        console.log(el);
-        setDisable(false);
+        if (el.statusCode === 200) {
+          router.push("/");
+        } else {
+          setMistake(true);
+        }
+        console.log(mistake);
       })
       .catch((error) => {
         setDisable(false);
@@ -97,6 +101,7 @@ const Otp = ({ email }: Props) => {
             onChange={(e) => handleChange(e, index)}
             onFocus={(e) => e.target.select()}
             maxLength={1}
+            className={mistake ? "underline" : ""}
           />
         ))}
       </div>

@@ -103,7 +103,7 @@ const Tab = ({ clientData }: Props) => {
     const getTransactions = async () => {
       await getTransactionByClientEmail(clientData.email, month, year)
         .then((el) => {
-          setTransactions(el);
+          setTransactions(el as ITrasanctionResponse[]);
         })
         .catch((err) => console.log(err));
     };
