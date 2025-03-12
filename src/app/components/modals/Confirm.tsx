@@ -41,6 +41,7 @@ const Confirm = ({ openModal, setOpenModal }: Props) => {
         router.push(`/comfirmation/${transaction.id}`);
       })
       .catch((el) => {
+        dispatch(resetTransaction());
         errorMessage(
           "Cette operation n'a pas pu être aboutti, veillez s'il vous plait ressayez une prochaine fois!"
         );
