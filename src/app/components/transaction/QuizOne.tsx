@@ -7,11 +7,7 @@ import {
   getCountryTo,
   getTransactionType,
 } from "@/redux/transactionReducer";
-import {
-  selectClientData,
-  selectCountries,
-  selectCountry,
-} from "@/redux/selector";
+import { selectClientData, selectCountries } from "@/redux/selector";
 import Image from "next/image";
 import { ICountry } from "@/types/country";
 

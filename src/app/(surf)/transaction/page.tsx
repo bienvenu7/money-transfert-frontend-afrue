@@ -1,11 +1,10 @@
 "use client";
 import React, { useEffect, useState } from "react";
 import Transaction from "@/app/components/transaction/Transaction";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import Titles from "@/app/components/Titles";
 import { SetTransactionDataThunk } from "@/redux/thunk/thunk";
 import { AppDispatch } from "@/redux/store";
-import { selectStep } from "@/redux/selector";
 
 const Page = () => {
   const dispatch = useDispatch<AppDispatch>();

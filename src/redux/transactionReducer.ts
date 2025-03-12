@@ -101,6 +101,7 @@ export const transactionSlice = createSlice({
 
     resetTransaction: (state) => {
       state = {
+        ...state,
         transaction: {
           clientEmail: "",
           status: "uncomfirmed",

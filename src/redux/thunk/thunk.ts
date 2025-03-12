@@ -8,7 +8,6 @@ import { getEmail } from "../transactionReducer";
 export const SetTransactionDataThunk = createAsyncThunk(
   "transactionData/get",
   async (_, thunkApi) => {
-    const token = await getAcces();
     try {
       await getAuth().then((client) => {
         // eslint-disable-next-line no-use-before-define
