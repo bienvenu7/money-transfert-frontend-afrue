@@ -4,6 +4,7 @@ export default function manifest(): MetadataRoute.Manifest {
   return {
     name: "Africa exchange",
     short_name: "AfruE",
+
     description: "AfruE, you platform to send money quickly over sanctions.",
     start_url: "/",
     display: "standalone",
