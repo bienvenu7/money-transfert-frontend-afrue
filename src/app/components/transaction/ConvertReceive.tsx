@@ -36,7 +36,7 @@ const ConvertReceive = ({ isAuthUser, rate }: Props) => {
 
     const regex = /^[0-9\b]+$/;
 
-    if (regex.test(event.target.value) && event.target.value === "") {
+    if (regex.test(event.target.value)) {
       const x = new Big(event.target.value === "" ? 0 : event.target.value);
       const y = new Big(rate);
       dispatch(getAmountTo(event.target.value));
