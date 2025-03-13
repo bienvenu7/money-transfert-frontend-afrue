@@ -100,26 +100,24 @@ export const transactionSlice = createSlice({
     },
 
     resetTransaction: (state) => {
-      state = {
-        ...state,
-        transaction: {
-          clientEmail: "",
-          status: "uncomfirmed",
-          type: "",
-          amountToPayOut: "",
-          amountToSend: "",
-          code: "",
-          fees: "",
-          networkId: "",
-          receiverName: "",
-          receiverPhone: "",
-        },
-        countryTo: null,
-        countryFrom: null,
-        networks: [],
-        networkData: null,
-        choosenNetwork: "",
+      state.transaction = {
+        ...state.transaction,
+        clientEmail: "",
+        status: "uncomfirmed",
+        type: "",
+        amountToPayOut: "",
+        amountToSend: "",
+        code: "",
+        fees: "",
+        networkId: "",
+        receiverName: "",
+        receiverPhone: "",
       };
+      state.countryFrom = null;
+      state.countryTo = null;
+      state.networkData = null;
+      state.choosenNetwork = "";
+      state.networks = [];
     },
   },
 });
