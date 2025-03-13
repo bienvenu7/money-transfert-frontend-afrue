@@ -1,8 +1,5 @@
 "use client";
 import React, { useEffect, useState } from "react";
-import { IType } from "./Transaction";
-import { errorMessage } from "@/app/utils/notification";
-import { ICountry } from "@/types/country";
 import { useDispatch, useSelector } from "react-redux";
 import {
   selectClientData,
@@ -67,7 +64,7 @@ const Convert = ({ isAuthUser, rate }: Props) => {
         <div className="block">
           <div>{countryFrom?.currency}</div>
           <input
-            type={"number"}
+            type={"tel"}
             placeholder="Vous envoyer"
             value={transaction.amountToSend}
             onChange={handleChange}

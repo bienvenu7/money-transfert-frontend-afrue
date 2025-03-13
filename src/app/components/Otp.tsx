@@ -96,7 +96,7 @@ const Otp = ({ email }: Props) => {
         {otp.map((el, index) => (
           <input
             key={index}
-            type={"text"}
+            type={"tel"}
             value={el}
             onChange={(e) => handleChange(e, index)}
             onFocus={(e) => e.target.select()}
