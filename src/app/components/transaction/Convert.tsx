@@ -67,7 +67,7 @@ const Convert = ({ isAuthUser, rate }: Props) => {
         <div className="block">
           <div>{countryFrom?.currency}</div>
           <input
-            type={"text"}
+            type={"number"}
             placeholder="Vous envoyer"
             value={transaction.amountToSend}
             onChange={handleChange}

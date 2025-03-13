@@ -62,7 +62,7 @@ const ConvertReceive = ({ isAuthUser, rate }: Props) => {
         <div className="block">
           <div>{countryWhereToData?.currency}</div>
           <input
-            type={"text"}
+            type={"number"}
             placeholder="vous recevez"
             value={transaction.amountToPayOut}
             onChange={handleChange}
