@@ -78,6 +78,16 @@ html {
       padding: 40px 20px;
     }
 
+    & > p {
+      color: $blue-clr;
+      font-family: $main-font;
+      font-size: 14px;
+      font-style: normal;
+      font-weight: 500;
+      line-height: 22px;
+      letter-spacing: -0.28px;
+    }
+
     &--box {
       width: 100%;
       height: auto;
@@ -1886,6 +1896,10 @@ html {
       gap: 30px;
       align-items: center;
       justify-content: center;
+
+      @include mobile {
+        gap: 0px;
+      }
     }
 
     &--top {
@@ -1919,6 +1933,10 @@ html {
       justify-content: flex-start;
       gap: 20px;
 
+      @include mobile {
+        gap: 0px;
+      }
+
       & > button {
         all: unset;
         display: flex;
@@ -1937,14 +1955,20 @@ html {
         box-shadow: 5px 5px 10px 0px rgba(84, 100, 185, 0.16) inset,
           -5px -5px 10px 0px #fafbff inset;
 
+        @include mobile {
+          padding: 0;
+          width: 30px;
+          height: 30px;
+        }
+
         & > svg {
           width: 28px;
           height: 28px;
           color: rgba($color: #878787, $alpha: 0.4);
 
           @include mobile {
-            width: 24px;
-            height: 24px;
+            width: 18px;
+            height: 18px;
           }
         }
       }
@@ -1956,7 +1980,6 @@ html {
         justify-content: space-between;
         gap: 10px;
         padding: 20px;
-
         border-radius: 20px;
         border: rgba(0, 0, 0, 0.2);
         background: #e7eeff;
@@ -1965,7 +1988,7 @@ html {
           width: 100%;
           flex-direction: column;
           align-items: center;
-          gap: 16px;
+          gap: 10px;
         }
 
         &--left {
@@ -1975,9 +1998,9 @@ html {
           flex-direction: column;
           gap: 10px;
 
-          @include mobile {
-            gap: 16px;
-          }
+          // @include mobile {
+          //   gap: 16px;
+          // }
 
           & > label {
             color: #232323;
@@ -2542,6 +2565,12 @@ html {
       height: auto;
       gap: 10px;
 
+      @include mobile {
+        width: 100%;
+        align-items: center;
+        justify-content: center;
+      }
+
       & > button {
         all: unset;
         display: flex;
@@ -2592,11 +2621,11 @@ html {
         &:nth-child(2) {
           color: $blue-clr;
           background-color: $yellow-clr;
-
-          @include mobile {
-            color: #232323;
-          }
         }
+
+        // @include mobile {
+        //   color: $blue-clr;
+        // }
 
         // &:nth-child(2) {
         //   color: $blue-clr;

@@ -93,8 +93,6 @@ type Props = {
 };
 
 const Tab = ({ clientData }: Props) => {
-  const voyelles = ["e", "a"];
-
   const [transactions, setTransactions] = useState<ITrasanctionResponse[]>([]);
   const [month, setMonth] = useState<string>(actualMonth);
   const [year, setYear] = useState<string>(actualYear);

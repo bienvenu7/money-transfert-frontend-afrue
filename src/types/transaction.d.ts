@@ -26,4 +26,5 @@ export interface ITrasanctionResponse extends ITrasanctionData {
   hour: string;
   month: string;
   year: string;
+  complain: string;
 }

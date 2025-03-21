@@ -131,6 +131,13 @@ export const resendOtp = async (email: string) => {
 
 export const getAuth = async (): Promise<IClientResponse> => {
   const accessToken = cookies().get("accessToken")?.value;
+
+  const app_client = cookies().get("app_client")?.value;
+
+  if (app_client) {
+    const client: IClientResponse = JSON.parse(app_client);
+    return client;
+  }
   const { data: client } = await instance.get("auth/get-auth", {
     headers: { Authorization: `Bearer ${accessToken}` },
   });
@@ -180,6 +187,8 @@ export const logout = async (): Promise<
     });
     cookies().delete("accessToken");
     cookies().delete("refreshToken");
+    cookies().delete("app_client");
+    cookies().delete("public_country");
     return successResponse(data, status);
   } catch (error: any) {
     return errorToSendBack(error);

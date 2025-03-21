@@ -28,8 +28,6 @@ const Confirm = ({ openModal, setOpenModal }: Props) => {
   const countryFrom = useSelector(selectCountryFromData);
   const countryWhereToData = useSelector(selectCountryWhereToData);
 
-  console.table(transactionData);
-
   const addTransaction = async (
     event: React.MouseEvent<HTMLButtonElement, MouseEvent>
   ) => {

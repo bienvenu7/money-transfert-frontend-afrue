@@ -1,4 +1,5 @@
 "use client";
+import Image from "next/image";
 import React, { useEffect, useState } from "react";
 
 const headerData = [
@@ -93,7 +94,7 @@ const Cover = (props: Props) => {
                 key={person.id}
                 className={`main__cover--wrapper__slide ${position}`}
               >
-                <img src={uri} alt="" />
+                <Image src={uri} alt="" fill priority={true} />
               </div>
             );
           })}
@@ -135,13 +136,13 @@ const Cover = (props: Props) => {
           </div>
         </div>
         <div className="main__cover--mobile">
-          <img src="/footer.png" alt="" />
+          <Image src="/footer.png" alt="" width={100} height={100} />
           <div className="main__cover--mobile__content">
             <h1>
               {`Transférer de l’argent en un clic`}
               <span>
                 {`     `}
-                <img src="/gradient.png" />
+                <Image src="/gradient.png" alt="" width={100} height={100} />
               </span>
               depuis le confort de votre salon
             </h1>
@@ -149,7 +150,7 @@ const Cover = (props: Props) => {
               Mode de paiement flexible avec une possibilité de se rendre dans
               nos locaux
             </p>
-            <img src="/coin.png" alt="" />
+            <Image src="/coin.png" alt="" width={100} height={100} />
           </div>
           <div className="main__cover--content__stats">
             {stats.map((stat) => {

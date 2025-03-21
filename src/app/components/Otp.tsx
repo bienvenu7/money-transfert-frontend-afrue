@@ -15,6 +15,7 @@ const Otp = ({ email }: Props) => {
   const [otp, setOtp] = useState<string[]>(new Array(6).fill(""));
   const [disable, setDisable] = useState<boolean>(false);
   const [mistake, setMistake] = useState<boolean>(false);
+  const [success, setSuccess] = useState<boolean>(false);
   const router = useRouter();
 
   useEffect(() => {
@@ -43,6 +44,7 @@ const Otp = ({ email }: Props) => {
     event: React.MouseEvent<HTMLButtonElement, MouseEvent>
   ) => {
     event.preventDefault();
+    setSuccess(false);
 
     if (!disable) {
       setMistake(true);
@@ -53,6 +55,7 @@ const Otp = ({ email }: Props) => {
       .then((el) => {
         if (el.statusCode === 200) {
           router.push("/");
+          setSuccess(true);
         } else {
           setMistake(true);
         }
@@ -108,6 +111,12 @@ const Otp = ({ email }: Props) => {
       <button className="text" onClick={resend}>
         Envoyer un nouveau code
       </button>
+      {success && (
+        <p>
+          {`Veillez patienter, vous serrez redirigé vers la page d'accueil
+          automatiquement`}
+        </p>
+      )}
       <button
         // disabled={disable}
         style={!disable ? { backgroundColor: "rgba(97, 131, 245, .5)" } : {}}

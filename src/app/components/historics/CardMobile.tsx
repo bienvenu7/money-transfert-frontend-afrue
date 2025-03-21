@@ -18,7 +18,8 @@ const CardMobile = ({ el, clientData }: Props) => {
   return (
     <div
       onClick={() =>
-        el.status === "uncomfirmed" && router.push(`/comfirmation/${el.id}`)
+        (el.status === "uncomfirmed" || el.complain !== "") &&
+        router.push(`/comfirmation/${el.id}`)
       }
       key={el.id}
       className="history__histories--card"

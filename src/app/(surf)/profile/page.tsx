@@ -1,7 +1,6 @@
 import { getAuth } from "@/app/actions/auth";
 import Personal from "@/app/components/profile/Personal";
 import Titles from "@/app/components/Titles";
-import { IClientResponse } from "@/types/user";
 import React from "react";
 
 const page = async () => {

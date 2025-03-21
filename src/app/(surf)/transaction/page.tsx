@@ -23,7 +23,7 @@ const Page = () => {
     <div className="transfert__container">
       <div className="transfert__box">
         <Titles line1="Transférez de l'argent" line2="Afru-Exchange " />
-        {loading ? <p>Loading...</p> : <Transaction />}
+        <Transaction />
       </div>
     </div>
   );

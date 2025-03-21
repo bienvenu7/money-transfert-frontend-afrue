@@ -10,7 +10,7 @@ function About({}: Props) {
         <Titles line1="À propos de nous" line2="Afru-Exchange" />
         <div className="main__about--globe">
           <img className="bg" src="/gradientglobe.png" alt="" />
-          <img className="globe" src="globe.png" alt="" />
+          <img className="globe" src="/globe.png" alt="" />
           <div className="main__about--globe__content">
             <p>
               {`Nous sommes une micro-finance qui a pour activité principale le
