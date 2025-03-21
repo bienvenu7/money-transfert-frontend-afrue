@@ -106,8 +106,18 @@ const Tab = ({ clientData }: Props) => {
         .catch((err) => console.log(err));
     };
 
+    // Initial fetch
     getTransactions();
-  }, [clientData.email, month, year]);
+
+    // Set up interval to run the entire effect every 30 seconds
+    const interval = setInterval(() => {
+      console.log("loading transactions");
+      getTransactions();
+    }, 30000);
+
+    // Cleanup interval on unmount
+    return () => clearInterval(interval);
+  }, []); // Remove dependencies so effect runs only on mount and then every 30s
 
   return (
     <div className="history__wrapper">

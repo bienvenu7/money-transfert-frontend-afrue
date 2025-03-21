@@ -27,4 +27,5 @@ export interface ITrasanctionResponse extends ITrasanctionData {
   month: string;
   year: string;
   complain: string;
+  adminCheck: string;
 }

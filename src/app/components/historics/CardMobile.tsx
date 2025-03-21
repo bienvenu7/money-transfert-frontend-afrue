@@ -53,10 +53,18 @@ const CardMobile = ({ el, clientData }: Props) => {
               ? "yellow"
               : el.status === "uncomfirmed"
               ? "grey"
+              : el.status === "en cours" &&
+                el.adminCheck === "second confirmation"
+              ? ""
               : ""
           }
         >
-          {el.status === "uncomfirmed" ? "en attente" : el.status}
+          {el.status === "uncomfirmed"
+            ? "en attente"
+            : el.status === "en cours" &&
+              el.adminCheck === "second comfirmation"
+            ? "éffectuée"
+            : el.status}
         </strong>
       </div>
     </div>
