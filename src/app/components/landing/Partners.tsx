@@ -1,4 +1,4 @@
-import React from "react";
+import React, { forwardRef } from "react";
 import Titles from "../Titles";
 
 const dataPartners = [
@@ -50,7 +50,7 @@ const dataPartners = [
 
 type Props = {};
 
-const Partners = (props: Props) => {
+const Partners = forwardRef<HTMLDivElement, Props>((props, ref) => {
   return (
     <div className="main__partners">
       <div className="main__partners--wrapper">
@@ -83,6 +83,8 @@ const Partners = (props: Props) => {
       </div>
     </div>
   );
-};
+});
+
+Partners.displayName = "Partners";
 
 export default Partners;

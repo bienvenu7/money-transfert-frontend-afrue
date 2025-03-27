@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React, { forwardRef, useState } from "react";
 import CardAdv from "./CardAdv";
 
 const cardAdvantages = [
@@ -49,19 +49,30 @@ const cardAdvantages = [
 
 type Props = {};
 
-const Advantage = (props: Props) => {
+const Advantage = forwardRef<HTMLDivElement, Props>((props, ref) => {
+  const [isActive, setIsActive] = useState<string>("01");
+
   return (
     <div className="main__advantage" id="advantage">
       <div className="main__advantage--wrapper">
         <h2>Avantages</h2>
         <div className="main__advantage--cards">
           {cardAdvantages.map((el, index) => {
-            return <CardAdv el={el} key={index} index={index} />;
+            return (
+              <CardAdv
+                el={el}
+                key={el.id}
+                index={index}
+                isActive={isActive}
+                setIsActive={setIsActive}
+              />
+            );
           })}
         </div>
       </div>
     </div>
   );
-};
+});
 
+Advantage.displayName = "Advantage";
 export default Advantage;

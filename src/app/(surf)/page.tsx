@@ -1,4 +1,4 @@
-import { Metadata } from "next";
+"use client";
 import About from "../components/landing/About";
 import Advantage from "../components/landing/Advantage";
 import Cover from "../components/landing/Cover";
@@ -10,18 +10,18 @@ import Partners from "../components/landing/Partners";
 import Show from "../components/landing/Show";
 import Transfert from "../components/landing/Transfert";
 
-export const metadata: Metadata = {
-  icons: {
-    icon: "https://afrue.com/ico.png",
-  },
-  title: "Africa exchange",
-  description: "AfruE, your platform to send money quickly over sanctions.",
-  openGraph: {
-    images: "https://afrue.com/ico.png",
-    title: "Africa exchange",
-    description: "AfruE, your platform to send money quickly over sanctions.",
-  },
-};
+// export const metadata: Metadata = {
+//   icons: {
+//     icon: "https://afrue.com/ico.png",
+//   },
+//   title: "Africa exchange",
+//   description: "AfruE, your platform to send money quickly over sanctions.",
+//   openGraph: {
+//     images: "https://afrue.com/ico.png",
+//     title: "Africa exchange",
+//     description: "AfruE, your platform to send money quickly over sanctions.",
+//   },
+// };
 
 export default function Home() {
   return (

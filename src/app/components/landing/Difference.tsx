@@ -1,5 +1,6 @@
-import React from "react";
+import React, { forwardRef } from "react";
 import Svgs from "../Svgs";
+import Image from "next/image";
 
 type Props = {};
 
@@ -17,7 +18,7 @@ const cardDatas = [
     svg: <Svgs name="timer-p" />,
   },
   {
-    title: "Lack of transparency in exchange rate",
+    title: "Manque de transparence sur le taux de change",
     svg: <Svgs name="percentage" />,
   },
   {
@@ -25,7 +26,7 @@ const cardDatas = [
     svg: <Svgs name="e-sad" />,
   },
   {
-    title: "Paiement en espèces indisponible",
+    title: "Paiement en espèces non indisponible",
     svg: <Svgs name="w-empty-r" />,
   },
 ];
@@ -44,11 +45,11 @@ const cardDatas2 = [
     svg: <Svgs name="timer-s" />,
   },
   {
-    title: "coin",
+    title: "Taux transparent et clair",
     svg: <Svgs name="percentage" />,
   },
   {
-    title: "C'est stressant",
+    title: "Pas de stress",
     svg: <Svgs name="e-norm" />,
   },
   {
@@ -57,17 +58,24 @@ const cardDatas2 = [
   },
 ];
 
-const Difference = (props: Props) => {
+const Difference = forwardRef<HTMLDivElement, Props>((props, ref) => {
   return (
     <div className="main__difference">
       <div className="main__difference--wrapper">
         <div className="main__difference--card">
-          <img src="/cardG.png" alt="" />
+          <Image
+            priority={true}
+            loading="eager"
+            quality={100}
+            src="/cardG.png"
+            fill
+            alt=""
+          />
           <div className="main__difference--card__heading">
             <div className="main__difference--card__heading--criteria">
               <span>Indéfiniment</span>
               <span>Stress</span>
-              <span>Long</span>
+              <span>Lent</span>
             </div>
             <h2>Sans nous</h2>
           </div>
@@ -83,7 +91,14 @@ const Difference = (props: Props) => {
           </div>
         </div>
         <div className="main__difference--card">
-          <img src="/cardG.png" alt="" />
+          <Image
+            priority={true}
+            loading="eager"
+            quality={100}
+            src="/cardG.png"
+            fill
+            alt=""
+          />
           <div className="main__difference--card__heading">
             <div className="main__difference--card__heading--criteria">
               <span>Sûr</span>
@@ -106,6 +121,8 @@ const Difference = (props: Props) => {
       </div>
     </div>
   );
-};
+});
+
+Difference.displayName = "Difference";
 
 export default Difference;

@@ -3566,6 +3566,7 @@ html {
       flex-shrink: 0;
       border-radius: 40px;
       overflow: hidden;
+      position: relative;
 
       @include mobile {
         height: 552px;

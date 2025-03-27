@@ -94,7 +94,15 @@ const Cover = (props: Props) => {
                 key={person.id}
                 className={`main__cover--wrapper__slide ${position}`}
               >
-                <Image src={uri} alt="" fill priority={true} />
+                <Image
+                  src={uri}
+                  alt=""
+                  fill
+                  priority={true}
+                  loading="eager"
+                  quality={75}
+                  sizes="(max-width: 768px) 100vw, 50vw"
+                />
               </div>
             );
           })}
@@ -136,7 +144,15 @@ const Cover = (props: Props) => {
           </div>
         </div>
         <div className="main__cover--mobile">
-          <Image src="/footer.png" alt="" width={100} height={100} />
+          <Image
+            priority={true}
+            loading="eager"
+            quality={75}
+            src="/footer.png"
+            alt=""
+            width={100}
+            height={100}
+          />
           <div className="main__cover--mobile__content">
             <h1>
               {`Transférer de l’argent en un clic`}

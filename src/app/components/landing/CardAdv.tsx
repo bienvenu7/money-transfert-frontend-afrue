@@ -1,5 +1,6 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import GetWidownDimensoins from "../GetWidownDimensoins";
+import Image from "next/image";
 
 interface IEl {
   id: string;
@@ -11,30 +12,38 @@ interface IEl {
 type Props = {
   el: IEl;
   index: number;
+  isActive: string;
+  setIsActive: React.Dispatch<React.SetStateAction<string>>;
 };
 
-const CardAdv = ({ el, index }: Props) => {
-  const [ishover, setIsHover] = useState(false);
+const CardAdv = ({ el, index, isActive, setIsActive }: Props) => {
+  const [show, setShow] = useState(false);
 
   const { height, width } = GetWidownDimensoins();
 
-  function MouseOver(event: React.MouseEvent<HTMLDivElement, MouseEvent>) {
-    setIsHover(true);
-  }
-  function MouseOut(event: React.MouseEvent<HTMLDivElement, MouseEvent>) {
-    setIsHover(false);
-  }
+  useEffect(() => {
+    if (isActive === el.id && width > 520) {
+      setShow(true);
+    } else {
+      setShow(false);
+    }
+  }, [isActive, el.id, width]);
   return (
     <div
-      className={`main__advantage--card ${
-        ishover && width > 520 ? "active" : ""
-      } `}
-      onMouseOver={MouseOver}
-      onMouseOut={MouseOut}
+      onClick={() => setIsActive(el.id)}
+      className={`main__advantage--card ${show ? "active" : ""} `}
     >
       <h3>{el.title}</h3>
       <p>{el.description}</p>
-      <img src={el.uri} alt="" />
+      <Image
+        priority={true}
+        loading="eager"
+        quality={100}
+        src={el.uri}
+        alt=""
+        width={70}
+        height={70}
+      />
       <span>{el.id}</span>
     </div>
   );
