@@ -16,6 +16,7 @@ const Otp = ({ email }: Props) => {
   const [disable, setDisable] = useState<boolean>(false);
   const [mistake, setMistake] = useState<boolean>(false);
   const [success, setSuccess] = useState<boolean>(false);
+  const [done, setDone] = useState<boolean>(false);
   const router = useRouter();
 
   useEffect(() => {
@@ -71,9 +72,8 @@ const Otp = ({ email }: Props) => {
     event: React.MouseEvent<HTMLButtonElement, MouseEvent>
   ) => {
     event.preventDefault();
-
     await resendOtp(email)
-      .then(() => successMessage("Un nouveau code a été envoyé avec success"))
+      .then(() => setDone(true))
       .catch((error) => console.error(error));
   };
 
@@ -117,6 +117,7 @@ const Otp = ({ email }: Props) => {
           automatiquement`}
         </p>
       )}
+      {done && <p>{`Un nouveau code a été envoyé avec success`}</p>}
       <button
         // disabled={disable}
         style={!disable ? { backgroundColor: "rgba(97, 131, 245, .5)" } : {}}

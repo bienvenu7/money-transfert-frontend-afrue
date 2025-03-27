@@ -120,13 +120,10 @@ export const confirmOtp = async (
 };
 
 export const resendOtp = async (email: string) => {
-  try {
-    const { data, status } = await instance.post("auth/resend-otp");
-    console.log({ data, status });
-  } catch (error: any) {
-    console.log(error.response.data.message);
-    return error.response.data.message;
-  }
+  const response = await instance.post("auth/resend-otp", {
+    email,
+  });
+  return response;
 };
 
 export const getAuth = async (): Promise<IClientResponse> => {
