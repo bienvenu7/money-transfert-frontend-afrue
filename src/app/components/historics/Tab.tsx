@@ -1,5 +1,6 @@
 "use client";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
+import { SlCalender } from "react-icons/sl";
 import moment from "moment";
 import { IClientResponse } from "@/types/user";
 import { getTransactionByClientEmail } from "@/app/actions/transaction";
@@ -16,62 +17,62 @@ import CardMobile from "./CardMobile";
 
 const months = [
   {
-    id: 1,
+    id: "01",
     name: "Janvier",
     publicName: "janvier",
   },
   {
-    id: 2,
+    id: "02",
     name: "Février",
     publicName: "février",
   },
   {
-    id: 3,
+    id: "03",
     name: "Mars",
     publicName: "mars",
   },
   {
-    id: 4,
+    id: "04",
     name: "Avril",
     publicName: "avril",
   },
   {
-    id: 5,
+    id: "05",
     name: "Mai",
     publicName: "mai",
   },
   {
-    id: 6,
+    id: "06",
     name: "Juin",
     publicName: "juin",
   },
   {
-    id: 7,
+    id: "07",
     name: "Julliet",
     publicName: "julliet",
   },
   {
-    id: 8,
+    id: "08",
     name: "Août",
     publicName: "août",
   },
   {
-    id: 9,
+    id: "09",
     name: "Septembre",
     publicName: "septembre",
   },
   {
-    id: 10,
+    id: "10",
     name: "Octobre",
     publicName: "octobre",
   },
   {
-    id: 11,
+    id: "11",
     name: "Novenbre",
     publicName: "novenbre",
   },
   {
-    id: 12,
+    id: "12",
     name: "Décembre",
     publicName: "décembre",
   },
@@ -96,6 +97,22 @@ const Tab = ({ clientData }: Props) => {
   const [transactions, setTransactions] = useState<ITrasanctionResponse[]>([]);
   const [month, setMonth] = useState<string>(actualMonth);
   const [year, setYear] = useState<string>(actualYear);
+
+  const inputRef = useRef<HTMLInputElement>(null);
+  const [selectedDate, setSelectedDate] = useState<string>("");
+
+  const handleLabelClick = () => {
+    inputRef.current?.showPicker(); // Native HTML5 calendar open
+  };
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    e.preventDefault();
+    setSelectedDate(e.target.value);
+    setMonth(
+      months.find((el) => el.id === e.target.value.split("-")[1])
+        ?.publicName as string
+    );
+  };
 
   useEffect(() => {
     const getTransactions = async () => {
@@ -123,20 +140,7 @@ const Tab = ({ clientData }: Props) => {
     <div className="history__wrapper">
       <div className="history__tab">
         <h2>Historique de transactions pour</h2>
-        <select
-          name=""
-          id=""
-          onChange={(e) => setMonth(e.target.value.toLocaleLowerCase())}
-          value={month}
-        >
-          {months.map((el) => {
-            return (
-              <option key={el.id} value={el.publicName}>
-                {el.name}
-              </option>
-            );
-          })}
-        </select>
+        <div className="date">{month}</div>
         <select
           name=""
           id=""
@@ -151,6 +155,17 @@ const Tab = ({ clientData }: Props) => {
             );
           })}
         </select>
+        <div className="history__tab--calandar">
+          <button onClick={handleLabelClick}>
+            <SlCalender />
+          </button>
+          <input
+            type="date"
+            ref={inputRef}
+            onChange={handleChange}
+            className="hidden-date-input"
+          />
+        </div>
       </div>
       <div className="history__histories">
         <div className="history__histories--cards">

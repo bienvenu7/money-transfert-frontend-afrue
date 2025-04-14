@@ -205,6 +205,7 @@ const MobileNav = () => {
                   onClick={() => setOpenMenu(false)}
                   key={index}
                   href={el.uri}
+                  prefetch={true}
                 >
                   {el.icon} <span>{el.name}</span>
                 </Link>

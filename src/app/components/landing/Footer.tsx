@@ -1,3 +1,4 @@
+import Image from "next/image";
 import React from "react";
 
 type Props = {};
@@ -24,7 +25,13 @@ const contactData = [
 const Footer = (props: Props) => {
   return (
     <footer className="main__footer">
-      <img src="/footer.png" alt="" />
+      <Image
+        src="/footer.png"
+        alt=""
+        loading="lazy"
+        width={1920}
+        height={200}
+      />
       <div className="main__footer--wrapper">
         <div className="main__footer__left">
           <div className="main__footer__left--links">
@@ -37,7 +44,13 @@ const Footer = (props: Props) => {
             Mode de paiement flexible avec une possibilité de se rendre dans nos
             locaux
           </p>
-          <img src="/logo.png" alt="" />
+          <Image
+            src="/home/logo.webp"
+            alt=""
+            loading="lazy"
+            width={280}
+            height={80}
+          />
         </div>
         <div className="main__footer__right">
           <h2>Contacts</h2>

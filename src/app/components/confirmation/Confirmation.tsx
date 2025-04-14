@@ -2,6 +2,7 @@
 import { updateTransaction } from "@/app/actions/transaction";
 import { useParams, useRouter } from "next/navigation";
 import React, { useState } from "react";
+import DatePicker from "react-datepicker";
 
 type Props = {};
 
@@ -50,12 +51,18 @@ const Confirmation = (props: Props) => {
           <label className="confirm" htmlFor="hour">
             {`Heure précise, ex: 14h05`}
           </label>
+
           <input
             id="hour"
             onChange={(e) => setHour(e.target.value)}
-            type={"text"}
+            type={"time"}
             placeholder="Heure précise"
             value={hour}
+            style={{
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "space-between",
+            }}
           />
         </div>
       </div>

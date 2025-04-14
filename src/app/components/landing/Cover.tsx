@@ -5,19 +5,19 @@ import React, { useEffect, useState } from "react";
 const headerData = [
   {
     id: 1,
-    uri: "/pic1.png",
+    uri: "/home/pic1.webp",
   },
   {
     id: 2,
-    uri: "/pic2.png",
+    uri: "/home/pic2.webp",
   },
   {
     id: 3,
-    uri: "/pic3.png",
+    uri: "/home/pic3.webp",
   },
   {
     id: 4,
-    uri: "/pic4.png",
+    uri: "/home/pic4.webp",
   },
 ];
 
@@ -98,9 +98,8 @@ const Cover = (props: Props) => {
                   src={uri}
                   alt=""
                   fill
-                  priority={true}
-                  loading="eager"
-                  quality={75}
+                  loading={personIndex === index ? "eager" : "lazy"}
+                  quality={100}
                   sizes="(max-width: 768px) 100vw, 50vw"
                 />
               </div>
@@ -122,7 +121,13 @@ const Cover = (props: Props) => {
               <h1>
                 Transférer de l’argent en un clic{" "}
                 <span>
-                  <img src="/gradient.png" />
+                  <Image
+                    src={"/gradient.png"}
+                    alt=""
+                    width={100}
+                    height={30}
+                    loading="lazy"
+                  />
                 </span>{" "}
                 depuis le confort de votre salon
               </h1>

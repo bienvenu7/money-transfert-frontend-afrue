@@ -1040,7 +1040,8 @@ html {
       }
     }
 
-    & > select {
+    & > select,
+    .date {
       all: unset;
       display: flex;
       width: 251px;
@@ -1059,6 +1060,47 @@ html {
         padding: 12px 20px;
       }
     }
+
+    &--calandar {
+      position: relative;
+
+      & > button {
+        all: unset;
+        cursor: pointer;
+
+        & > svg {
+          width: 28px;
+          height: 28px;
+          stroke-width: 4px;
+          color: $black-clr;
+          position: relative;
+        }
+      }
+
+      & > .hidden-date-input {
+        position: absolute;
+        opacity: 0;
+        pointer-events: none;
+        height: 0;
+        width: 0;
+        left: 0;
+      }
+    }
+
+    /* Label styling */
+
+    // .native-date-label:hover {
+    //   background-color: #eef2ff;
+    //   color: #3730a3;
+    // }
+
+    // .hidden-date-input {
+    //   position: absolute;
+    //   opacity: 0;
+    //   pointer-events: none;
+    //   height: 0;
+    //   width: 0;
+    // }
   }
 
   &__histories {
