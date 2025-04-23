@@ -1,12 +1,15 @@
 "use client";
 import { updateTransaction } from "@/app/actions/transaction";
+import { ICard } from "@/types/networks";
 import { useParams, useRouter } from "next/navigation";
 import React, { useState } from "react";
 import DatePicker from "react-datepicker";
 
-type Props = {};
+type Props = {
+  card: ICard;
+};
 
-const Confirmation = (props: Props) => {
+const Confirmation = ({ card }: Props) => {
   const [hour, setHour] = useState("");
   const [phone, setPhone] = useState("");
 
@@ -22,11 +25,14 @@ const Confirmation = (props: Props) => {
       params.transactionId as string,
       phone,
       hour,
-      "06 660 78 98",
-      "en cours"
+      card.phone,
+      "en cours",
+      card.fullName
     )
       .then((transaction) => {
-        router.push("/historiques");
+        if (transaction.status !== "") {
+          return router.push("/historiques");
+        }
         console.table(transaction);
       })
       .catch((err) => console.error(err));
@@ -55,7 +61,7 @@ const Confirmation = (props: Props) => {
           <input
             id="hour"
             onChange={(e) => setHour(e.target.value)}
-            type={"time"}
+            type={"text"}
             placeholder="Heure précise"
             value={hour}
             style={{

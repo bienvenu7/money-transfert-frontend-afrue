@@ -17,6 +17,7 @@ const Otp = ({ email }: Props) => {
   const [mistake, setMistake] = useState<boolean>(false);
   const [success, setSuccess] = useState<boolean>(false);
   const [done, setDone] = useState<boolean>(false);
+  const [isloading, setIsLoading] = useState<boolean>(false);
   const router = useRouter();
 
   useEffect(() => {
@@ -45,6 +46,7 @@ const Otp = ({ email }: Props) => {
     event: React.MouseEvent<HTMLButtonElement, MouseEvent>
   ) => {
     event.preventDefault();
+    setIsLoading(true);
     setSuccess(false);
 
     if (!disable) {
@@ -65,7 +67,8 @@ const Otp = ({ email }: Props) => {
       .catch((error) => {
         setDisable(false);
         errorMessage(error.message);
-      });
+      })
+      .finally(() => setIsLoading(false));
   };
 
   const resend = async (
@@ -108,9 +111,8 @@ const Otp = ({ email }: Props) => {
           />
         ))}
       </div>
-      <button className="text" onClick={resend}>
-        Envoyer un nouveau code
-      </button>
+      {isloading && <p>Veillez patienter...</p>}
+
       {success && (
         <p>
           {`Veillez patienter, vous serrez redirigé vers la page d'accueil
@@ -118,6 +120,11 @@ const Otp = ({ email }: Props) => {
         </p>
       )}
       {done && <p>{`Un nouveau code a été envoyé avec success`}</p>}
+
+      <button className="text" onClick={resend}>
+        Envoyer un nouveau code
+      </button>
+
       <button
         // disabled={disable}
         style={!disable ? { backgroundColor: "rgba(97, 131, 245, .5)" } : {}}

@@ -1,9 +1,17 @@
+import { getCardsByNetworkId } from "@/app/actions/transaction";
 import Confirmation from "@/app/components/confirmation/Confirmation";
 import Titles from "@/app/components/Titles";
+import { useParams } from "next/navigation";
 
 type Props = {};
 
-const page = (props: Props) => {
+const page = async ({
+  params,
+}: {
+  params: Promise<{ transactionId: string }>;
+}) => {
+  const card = await getCardsByNetworkId((await params).transactionId);
+
   return (
     <div className="transfert__confirmation--container">
       <div className="transfert__confirmation--wrapper">
@@ -14,15 +22,15 @@ const page = (props: Props) => {
             <div className="transfert__confirmation--content__left--cards">
               <div className="transfert__confirmation--content__row">
                 <h3>Methode</h3>
-                <span>Oranfe Congo</span>
+                <span>{card?.network.pubicName}</span>
               </div>
               <div className="transfert__confirmation--content__row">
                 <h3>N° du compte</h3>
-                <span>06 660 78 98</span>
+                <span>{card?.phone}</span>
               </div>
               <div className="transfert__confirmation--content__row">
                 <h3>Nom</h3>
-                <span>Simon Mabanza</span>
+                <span>{card?.fullName}</span>
               </div>
               <div className="transfert__confirmation--content__row">
                 <h3>Montant</h3>
@@ -30,7 +38,7 @@ const page = (props: Props) => {
               </div>
             </div>
           </div>
-          <Confirmation />
+          <Confirmation card={card} />
         </div>
       </div>
     </div>

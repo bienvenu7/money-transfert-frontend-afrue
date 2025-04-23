@@ -28,4 +28,6 @@ export interface ITrasanctionResponse extends ITrasanctionData {
   year: string;
   complain: string;
   adminCheck: string;
+  agencyPhone: string;
+  agencyFullName: string;
 }

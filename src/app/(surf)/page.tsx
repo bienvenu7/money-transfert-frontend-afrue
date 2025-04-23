@@ -1,4 +1,5 @@
 "use client";
+import Image from "next/image";
 import About from "../components/landing/About";
 import Advantage from "../components/landing/Advantage";
 import Cover from "../components/landing/Cover";
@@ -9,6 +10,7 @@ import Mission from "../components/landing/Mission";
 import Partners from "../components/landing/Partners";
 import Show from "../components/landing/Show";
 import Transfert from "../components/landing/Transfert";
+import { useEffect, useState } from "react";
 
 // export const metadata: Metadata = {
 //   icons: {
@@ -24,6 +26,13 @@ import Transfert from "../components/landing/Transfert";
 // };
 
 export default function Home() {
+  const [loading, setLoading] = useState<boolean>(true);
+  useEffect(() => {
+    setTimeout(() => {
+      setLoading(false);
+    }, 2000);
+  });
+
   return (
     <main className="main__container">
       <Cover />
@@ -36,4 +45,22 @@ export default function Home() {
       <Footer />
     </main>
   );
+  // <div className="loader">
+  //   <Image
+  //     className="bg"
+  //     priority={true}
+  //     loading="eager"
+  //     width={500}
+  //     height={500}
+  //     quality={75}
+  //     src="/gradientglobe.png"
+  //     alt=""
+  //   />
+  //   <div className="content">
+  //     <div className="logo">
+  //       <Image src={"/home/logo.webp"} alt="" width={200} height={100} />
+  //     </div>
+  //     <p>Toujours prêt à vous servir</p>
+  //   </div>
+  // </div>
 }

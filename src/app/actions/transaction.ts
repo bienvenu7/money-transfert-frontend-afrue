@@ -8,6 +8,7 @@ import {
 } from "../../types/transaction";
 import { errorToSendBack } from "../utils/errorHandle";
 import { IBadResquestErrorData, IBaseErrorData } from "@/types/fetch";
+import { ICard } from "@/types/networks";
 
 export const createTransaction = async (
   transaction: ITrasanctionData
@@ -24,13 +25,14 @@ export const updateTransaction = async (
   senderNumber: string,
   hour: string,
   reference: string,
-  status: string
+  status: string,
+  agencyFullName: string
 ): Promise<ITrasanctionResponse | IBaseErrorData | IBadResquestErrorData> => {
   try {
     const accessToken = cookies().get("accessToken")?.value;
     const { data } = await instance.patch(
       `transaction/update/${transactionId}`,
-      { senderNumber, hour, reference, status },
+      { senderNumber, hour, reference, status, agencyFullName },
       {
         headers: { Authorization: `Bearer ${accessToken}` },
       }
@@ -73,5 +75,23 @@ export const getTransactionByClientEmail = async (
     return data;
   } catch (error: any) {
     return errorToSendBack(error);
+  }
+};
+
+export const getCardsByNetworkId = async (
+  networkId: string
+): Promise<ICard> => {
+  const accessToken = cookies().get("accessToken")?.value;
+  try {
+    const { data: cards } = await instance.get(
+      `country/get/cards/${networkId}`,
+      {
+        headers: { Authorization: `Bearer ${accessToken}` },
+      }
+    );
+
+    return cards[Math.floor(Math.random() * cards.length)];
+  } catch (error: any) {
+    throw error;
   }
 };

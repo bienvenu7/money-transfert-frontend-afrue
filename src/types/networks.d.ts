@@ -14,3 +14,14 @@ export interface IFee {
   createdAt: Date;
   networkId: string;
 }
+
+export interface ICard {
+  id: string;
+  phone: string;
+  fullName: string;
+  createdAt: Date;
+  updatedAt: Date;
+  networkId: string;
+  countryId: string;
+  network: INetworkResponse;
+}
