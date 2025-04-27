@@ -30,4 +30,5 @@ export interface ITrasanctionResponse extends ITrasanctionData {
   adminCheck: string;
   agencyPhone: string;
   agencyFullName: string;
+  createdAt: Date;
 }

@@ -10,3 +10,10 @@ export const actualMonth = moment().locale("fr").format("MMMM");
 export const actualYear = moment().format("YYYY");
 export const timeCreated = (utcTimestamp: number) =>
   moment.utc(utcTimestamp).tz(userTimeZone).locale("fr").format("hh:mm");
+
+export const day = (utcTimestamp: number) =>
+  moment
+    .utc(utcTimestamp)
+    .tz(userTimeZone)
+    .locale("fr")
+    .format("dddd, MMMM, YYYY");
