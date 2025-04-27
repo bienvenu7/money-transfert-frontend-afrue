@@ -30,6 +30,7 @@ const Form = ({ pageName }: Props) => {
   const [countryError, setCountryError] = useState<boolean>(false);
   const [genreError, setGenreError] = useState<boolean>(false);
   const [nameError, setNameError] = useState<boolean>(false);
+  const [loading, setIsLoading] = useState<boolean>(false);
 
   const [countries, setCountries] = useState<ICountry[]>([]);
 
@@ -98,14 +99,18 @@ const Form = ({ pageName }: Props) => {
   const submitLogin = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
+    setIsLoading(true);
+
     setEmailError("");
     setPasswordError("");
 
     if (password.length < 8) {
+      setIsLoading(false);
       return setPasswordError(
         "Le mote passe doit contenir minimun 8 caraactères!"
       );
     } else if (!email.includes("@")) {
+      setIsLoading(false);
       return setEmailError("Votre addresse email n'est pas valide.");
     } else {
       //handling login to the server👇🏽
@@ -140,6 +145,7 @@ const Form = ({ pageName }: Props) => {
           setPasword("");
           setEmailError("");
           setEmailError("");
+          setIsLoading(false);
         });
     }
   };
@@ -259,11 +265,17 @@ const Form = ({ pageName }: Props) => {
                 )}
               </div>
             )}
+            {loading && (
+              <p style={{ color: "#5063bf" }}>
+                {`En cours de véfication de vos identifiants. Veillez patienter s'il vous plait!
+                ...`}
+              </p>
+            )}
             {pageName === "Se connecter" && (
               <Link href={"/"}>Mot de passe oublié ?</Link>
             )}
 
-            <button type={"submit"}>
+            <button disabled={loading} type={"submit"}>
               {pageName === "S'enregistrer" ? `S'enregistrer` : "Se connecter"}
             </button>
             {pageName === "Se connecter" && (

@@ -46,7 +46,14 @@ const QuizOne = () => {
 
   return (
     <div className="transfert__slides--question">
-      <Image src="/grad.png" alt="" fill />
+      <Image
+        src="/grad.png"
+        alt=""
+        fill
+        priority={true}
+        loading="eager"
+        quality={75}
+      />
       <h2>
         {`Veillez s'il plait choisir le type de transaction que vous voulez
         éffectuer :`}

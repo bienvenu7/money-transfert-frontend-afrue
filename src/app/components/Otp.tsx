@@ -46,13 +46,15 @@ const Otp = ({ email }: Props) => {
     event: React.MouseEvent<HTMLButtonElement, MouseEvent>
   ) => {
     event.preventDefault();
-    setIsLoading(true);
+
     setSuccess(false);
 
     if (!disable) {
       setMistake(true);
       return;
     }
+
+    setIsLoading(true);
 
     await confirmOtp(email, otp)
       .then((el) => {
@@ -111,7 +113,9 @@ const Otp = ({ email }: Props) => {
           />
         ))}
       </div>
-      {isloading && <p>Veillez patienter...</p>}
+      {isloading && (
+        <p>{`En cours de véfication du code entré. Veillez patienter s'il vous plait...`}</p>
+      )}
 
       {success && (
         <p>

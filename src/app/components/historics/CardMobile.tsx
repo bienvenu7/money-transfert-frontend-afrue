@@ -35,6 +35,12 @@ const CardMobile = ({ el, clientData }: Props) => {
           />
         </div>
         <span>{el.receiverName}</span>
+        <div className="date">
+          <p>{`${el.month}, ${el.year}`}</p>
+          <span>
+            {el.hour === "" ? timeCreated(parseInt(el.dateTime)) : el.hour}
+          </span>
+        </div>
       </div>
       <div className="history__histories--card__right">
         <p>{el.Network.pubicName}</p>

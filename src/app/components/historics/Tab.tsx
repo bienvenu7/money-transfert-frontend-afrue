@@ -112,6 +112,8 @@ const Tab = ({ clientData }: Props) => {
       months.find((el) => el.id === e.target.value.split("-")[1])
         ?.publicName as string
     );
+    setYear(e.target.value.split("-")[0]);
+    console.log(e.target.value);
   };
 
   useEffect(() => {
@@ -134,33 +136,21 @@ const Tab = ({ clientData }: Props) => {
 
     // Cleanup interval on unmount
     return () => clearInterval(interval);
-  }, []); // Remove dependencies so effect runs only on mount and then every 30s
+  }, [month, year]); // Remove dependencies so effect runs only on mount and then every 30s
 
   return (
     <div className="history__wrapper">
       <div className="history__tab">
         <h2>Historique de transactions pour</h2>
-        <div className="date">{month}</div>
-        <select
-          name=""
-          id=""
-          onChange={(e) => setYear(e.target.value.toLocaleLowerCase())}
-          value={year}
-        >
-          {years.map((el) => {
-            return (
-              <option key={el.id} value={el.year}>
-                {el.year}
-              </option>
-            );
-          })}
-        </select>
+        <div className="date">
+          {month}, {year}
+        </div>
         <div className="history__tab--calandar">
           <button onClick={handleLabelClick}>
             <SlCalender />
           </button>
           <input
-            type="date"
+            type={"month"}
             ref={inputRef}
             onChange={handleChange}
             className="hidden-date-input"
