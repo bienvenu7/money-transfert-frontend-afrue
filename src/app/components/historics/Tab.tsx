@@ -130,7 +130,6 @@ const Tab = ({ clientData }: Props) => {
 
     // Set up interval to run the entire effect every 30 seconds
     const interval = setInterval(() => {
-      console.log("loading transactions");
       getTransactions();
     }, 30000);
 

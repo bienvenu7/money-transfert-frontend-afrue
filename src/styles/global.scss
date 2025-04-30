@@ -1751,6 +1751,7 @@ html {
         @include mobile {
           width: 100%;
           margin-bottom: 0;
+          gap: 27px;
         }
 
         & > h2 {
@@ -1758,6 +1759,11 @@ html {
           font-size: 18px;
           font-weight: 500;
           font-family: $main-font;
+
+          @include mobile {
+            font-size: 16px;
+            text-align: center;
+          }
         }
 
         @include mobile {
@@ -1782,6 +1788,8 @@ html {
           @include mobile {
             flex-direction: column;
             width: 100%;
+            gap: 10px;
+            padding: 0;
           }
         }
       }
@@ -1805,6 +1813,7 @@ html {
         @include mobile {
           width: 100%;
           margin-bottom: 0;
+          padding: 0;
         }
 
         & > h2 {
@@ -1812,6 +1821,11 @@ html {
           font-size: 18px;
           font-weight: 500;
           font-family: $main-font;
+
+          @include mobile {
+            font-size: 16px;
+            text-align: center;
+          }
         }
 
         @include mobile {
@@ -1821,6 +1835,7 @@ html {
           box-shadow: 0px 0px 2px 0px rgba(0, 0, 0, 0.1),
             0px 4px 4px 0px rgba(0, 0, 0, 0.1);
           padding: 22px 15px 52px 22px;
+          gap: 22px;
         }
 
         &--forms {
@@ -1834,6 +1849,7 @@ html {
             width: 100%;
             flex-direction: column;
             gap: 20px;
+            padding: 0;
           }
         }
 
@@ -1856,10 +1872,14 @@ html {
             gap: 10px;
             align-self: stretch;
             border-radius: 20px;
-            border: 1px solid rgba(0, 0, 0, 0.2);
+            // border: 1px solid rgba(0, 0, 0, 0.2);
             background: #fdfcff;
             box-shadow: 5px 5px 10px 0px rgba(84, 100, 185, 0.16) inset,
               -5px -5px 10px 0px #fafbff inset;
+
+            @include mobile {
+              font-size: 14px;
+            }
           }
 
           & > label {
@@ -1889,13 +1909,13 @@ html {
             0px 4px 4px 0px rgba(0, 0, 0, 0.1);
           cursor: pointer;
 
-          // @include mobile {
-          //   width: 92px;
-          //   height: auto;
-          //   font-size: 12px;
-          //   padding: 8px 10px;
-          //   font-weight: 500;
-          // }
+          @include mobile {
+            width: 92px;
+            height: 28px;
+            font-size: 12px;
+            padding: 8px 10px;
+            font-weight: 500;
+          }
         }
       }
 
@@ -1912,6 +1932,7 @@ html {
 
         @include mobile {
           width: 100%;
+          padding: 14px;
         }
 
         & > h3 {

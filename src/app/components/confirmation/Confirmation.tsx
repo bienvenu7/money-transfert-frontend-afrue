@@ -21,10 +21,12 @@ const Confirmation = ({ card }: Props) => {
   ) => {
     e.preventDefault();
 
+    const myHour = hour.split(":");
+
     await updateTransaction(
       params.transactionId as string,
       phone,
-      hour,
+      `${myHour[0]}h${myHour[1]}`,
       card.phone,
       "en cours",
       card.fullName
@@ -61,7 +63,7 @@ const Confirmation = ({ card }: Props) => {
           <input
             id="hour"
             onChange={(e) => setHour(e.target.value)}
-            type={"text"}
+            type={"time"}
             placeholder="Heure précise"
             value={hour}
             style={{

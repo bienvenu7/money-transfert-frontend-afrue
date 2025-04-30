@@ -1,4 +1,7 @@
-import { getCardsByNetworkId } from "@/app/actions/transaction";
+import {
+  getCardsByNetworkId,
+  getTransactionById,
+} from "@/app/actions/transaction";
 import Confirmation from "@/app/components/confirmation/Confirmation";
 import Titles from "@/app/components/Titles";
 import { useParams } from "next/navigation";
@@ -11,6 +14,8 @@ const page = async ({
   params: Promise<{ transactionId: string }>;
 }) => {
   const card = await getCardsByNetworkId((await params).transactionId);
+  const transaction = await getTransactionById((await params).transactionId);
+  console.log(transaction);
 
   return (
     <div className="transfert__confirmation--container">
@@ -34,7 +39,7 @@ const page = async ({
               </div>
               <div className="transfert__confirmation--content__row">
                 <h3>Montant</h3>
-                <span>1500 xaf</span>
+                <span>{transaction.amountToSend} xaf</span>
               </div>
             </div>
           </div>

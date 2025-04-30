@@ -45,16 +45,19 @@ export const updateTransaction = async (
 
 export const getTransactionById = async (
   transactionId: string
-): Promise<ITrasanctionResponse | IBaseErrorData | IBadResquestErrorData> => {
+): Promise<ITrasanctionResponse> => {
   const accessToken = cookies().get("accessToken")?.value;
   try {
-    const { data } = await instance.get(`transaction/get/${transactionId}`, {
-      headers: { Authorization: `Bearer ${accessToken}` },
-    });
+    const { data } = await instance.get(
+      `transaction/get/by-id/${transactionId}`,
+      {
+        headers: { Authorization: `Bearer ${accessToken}` },
+      }
+    );
 
     return data;
   } catch (error: any) {
-    return errorToSendBack(error);
+    return error;
   }
 };
 
