@@ -27,6 +27,11 @@ const Convertisseur = () => {
       </div>
       <div className="transfert__convert--content">
         <div>
+          <span>Inclure les frais: </span>
+          <label htmlFor="check"></label>
+          <input type={`checkbox`} id="check" />
+        </div>
+        <div>
           <span>Frais :</span>
           <p>1000 RUB</p>
         </div>

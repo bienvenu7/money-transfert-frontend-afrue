@@ -1041,6 +1041,10 @@ html {
     justify-content: flex-start;
     gap: 20px;
 
+    .react-datetime-picker__wrapper {
+      border: unset;
+    }
+
     & > h2 {
       color: #000;
       font-family: $main-font;
@@ -1153,6 +1157,15 @@ html {
       @include mobile {
         gap: 10px;
       }
+
+      &__empty {
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: flex-start;
+        padding: 30px;
+        border-bottom: 0.6px solid rgba(204, 204, 204, 0.8);
+      }
     }
 
     &--card {
@@ -1163,6 +1176,10 @@ html {
       padding: 30px;
       border-bottom: 0.6px solid rgba(204, 204, 204, 0.8);
       cursor: pointer;
+
+      &.out {
+        background-color: $red-clr;
+      }
 
       @include mobile {
         padding: 20px 10px;
@@ -1207,9 +1224,9 @@ html {
               font-weight: 300;
               line-height: 120%; /* 14.4px */
 
-              @include mobile {
-                font-size: 10px;
-              }
+              // @include mobile {
+              //   font-size: 10px;
+              // }
             }
           }
         }

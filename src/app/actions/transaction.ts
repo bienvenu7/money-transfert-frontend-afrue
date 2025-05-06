@@ -63,13 +63,12 @@ export const getTransactionById = async (
 
 export const getTransactionByClientEmail = async (
   clientEmail: string,
-  month: string,
-  year: string
+  date: string
 ): Promise<ITrasanctionResponse[] | IBaseErrorData | IBadResquestErrorData> => {
   const accessToken = cookies().get("accessToken")?.value;
   try {
     const { data } = await instance.get(
-      `transaction/get/by-client/${clientEmail}/${month}/${year}`,
+      `transaction/get/by-client/${clientEmail}/${date}`,
       {
         headers: { Authorization: `Bearer ${accessToken}` },
       }

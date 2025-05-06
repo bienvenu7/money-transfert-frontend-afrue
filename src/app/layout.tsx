@@ -1,5 +1,8 @@
 import { Provider } from "react-redux";
 import "../styles/global.scss";
+import "react-datetime-picker/dist/DateTimePicker.css";
+import "react-calendar/dist/Calendar.css";
+import "react-clock/dist/Clock.css";
 import ToastProvider from "./utils/ToastProvider";
 import { Metadata } from "next";
 import { store } from "@/redux/store";

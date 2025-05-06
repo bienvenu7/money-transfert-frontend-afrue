@@ -1,17 +1,21 @@
 "use client";
 import React, { useEffect, useRef, useState } from "react";
 import { SlCalender } from "react-icons/sl";
+import DateTimePicker from "react-datetime-picker";
 import moment from "moment";
 import { IClientResponse } from "@/types/user";
 import { getTransactionByClientEmail } from "@/app/actions/transaction";
 import { ITrasanctionResponse } from "@/types/transaction";
+import { TfiCalendar } from "react-icons/tfi";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import {
+  actualDate,
   actualMonth,
   actualYear,
   localTime,
   timeCreated,
+  toFormatDate,
 } from "@/app/utils/currentTime";
 import CardMobile from "./CardMobile";
 
@@ -95,30 +99,17 @@ type Props = {
 
 const Tab = ({ clientData }: Props) => {
   const [transactions, setTransactions] = useState<ITrasanctionResponse[]>([]);
-  const [month, setMonth] = useState<string>(actualMonth);
-  const [year, setYear] = useState<string>(actualYear);
+  const [myDate, setMyDate] = useState<string>(actualDate);
 
   const inputRef = useRef<HTMLInputElement>(null);
-  const [selectedDate, setSelectedDate] = useState<string>("");
 
   const handleLabelClick = () => {
     inputRef.current?.showPicker(); // Native HTML5 calendar open
   };
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    e.preventDefault();
-    setSelectedDate(e.target.value);
-    setMonth(
-      months.find((el) => el.id === e.target.value.split("-")[1])
-        ?.publicName as string
-    );
-    setYear(e.target.value.split("-")[0]);
-    console.log(e.target.value);
-  };
-
   useEffect(() => {
     const getTransactions = async () => {
-      await getTransactionByClientEmail(clientData.email, month, year)
+      await getTransactionByClientEmail(clientData.email, toFormatDate(myDate))
         .then((el) => {
           setTransactions(el as ITrasanctionResponse[]);
         })
@@ -135,33 +126,36 @@ const Tab = ({ clientData }: Props) => {
 
     // Cleanup interval on unmount
     return () => clearInterval(interval);
-  }, [month, year]); // Remove dependencies so effect runs only on mount and then every 30s
+  }, [myDate, clientData.email]); // Remove dependencies so effect runs only on mount and then every 30s
 
   return (
     <div className="history__wrapper">
       <div className="history__tab">
         <h2>Historique de transactions pour</h2>
-        <div className="date">
-          {month}, {year}
-        </div>
-        <div className="history__tab--calandar">
-          <button onClick={handleLabelClick}>
-            <SlCalender />
-          </button>
-          <input
-            type={"month"}
-            ref={inputRef}
-            onChange={handleChange}
-            className="hidden-date-input"
-          />
-        </div>
+        <DateTimePicker
+          locale="fr-FR"
+          clearIcon={null}
+          format="dd-MM-yyyy"
+          calendarIcon={<TfiCalendar style={{ width: 20, height: 20 }} />}
+          disableClock={true}
+          className="date"
+          value={myDate}
+          onChange={(e) => {
+            setMyDate(e?.toString() as string);
+          }}
+        />
       </div>
       <div className="history__histories">
         <div className="history__histories--cards">
-          {transactions.length >= 1 &&
+          {transactions.length >= 1 ? (
             transactions.map((el) => {
               return <CardMobile clientData={clientData} el={el} key={el.id} />;
-            })}
+            })
+          ) : (
+            <div className="history__histories--cards__empty">
+              Acune transaction trouvées pour cette date
+            </div>
+          )}
         </div>
       </div>
     </div>

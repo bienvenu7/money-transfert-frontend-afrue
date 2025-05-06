@@ -5,21 +5,12 @@ import Image from "next/image";
 import Link from "next/link";
 import React, { ReactElement, useEffect, useRef, useState } from "react";
 
-import {
-  AiOutlineExpandAlt,
-  AiOutlineHistory,
-  AiOutlineHome,
-  AiOutlineLogin,
-  AiOutlineLogout,
-  AiOutlineMenu,
-  AiOutlineUser,
-} from "react-icons/ai";
+import { AiOutlineLogin, AiOutlineLogout } from "react-icons/ai";
 import HeaderData from "./HeaderData";
 import { useRouter, usePathname } from "next/navigation";
 import HeaderNoData from "./HeaderNoData";
 import { errorMessage } from "@/app/utils/notification";
 import Svgs from "../Svgs";
-import Cookies from "js-cookie";
 
 export interface Ilinks {
   name: string;
@@ -206,6 +197,7 @@ const MobileNav = () => {
                   key={index}
                   href={el.uri}
                   prefetch={true}
+                  shallow={true}
                 >
                   {el.icon} <span>{el.name}</span>
                 </Link>
