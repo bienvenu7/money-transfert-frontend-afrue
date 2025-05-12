@@ -39,6 +39,7 @@ const Confirmation = ({ card }: Props) => {
       })
       .catch((err) => console.error(err));
   };
+
   return (
     <div className="transfert__confirmation--content__right">
       <h2>Informations relatives au depot</h2>

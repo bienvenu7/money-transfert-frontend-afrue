@@ -66,7 +66,11 @@ export const successResponseOtp = (data: any, status: number) => {
 
 export function isValidPassword(password: string): Boolean {
   const regex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[A-Za-z\d]{8,}$/;
-
-  console.log({ chexk: regex.test(password), password });
   return regex.test(password);
 }
+
+export const emailRegex = (email: string) => {
+  const regex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+
+  return regex.test(email);
+};

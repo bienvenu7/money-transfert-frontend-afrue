@@ -1,7 +1,7 @@
 "use server";
 
 import { instance } from "@/instance";
-import { ICountry } from "@/types/country";
+import { ICountry, IRate } from "@/types/country";
 
 export const getCountries = async () => {
   try {
@@ -25,4 +25,9 @@ export const getCountryById = async (id: string) => {
   } catch (error: any) {
     return error;
   }
+};
+
+export const getRate = async (code: string): Promise<IRate> => {
+  const { data } = await instance.get(`/rate/get/rate/${code}`);
+  return data;
 };

@@ -1,6 +1,11 @@
-import React from "react";
+"use client";
+import React, { useState } from "react";
 import CardPersonnel from "./CardPersonnel";
 import { IClientResponse } from "@/types/user";
+import { TfiPencilAlt } from "react-icons/tfi";
+import Modal from "../modals/Modal";
+import Update from "./Update";
+import { ICountry } from "@/types/country";
 
 export interface IPCard {
   title: string;
@@ -19,9 +24,10 @@ const PSCard: IPSecurity[] = [
 type Props = {
   type: string;
   clientData: IClientResponse | null;
+  countries: ICountry[];
 };
 
-const Personal = ({ type, clientData }: Props) => {
+const Personal = ({ type, clientData, countries }: Props) => {
   const PCard: IPCard[] = [
     {
       title: "Client numéro",
@@ -44,19 +50,37 @@ const Personal = ({ type, clientData }: Props) => {
       text: clientData?.Country.pubicName as string,
     },
   ];
+
+  const [openModal, setOpenModal] = useState<boolean>(false);
+
   return (
-    <div className="profile__personel">
-      <h2>{type}</h2>
-      <div className="profile__personel--cards">
-        {type !== "Sécurité"
-          ? PCard.map((el) => (
-              <CardPersonnel title={el.title} text={el.text} key={el.title} />
-            ))
-          : PSCard.map((el) => (
-              <CardPersonnel title={el.title} text={""} key={el.title} />
-            ))}
+    <>
+      <div className="profile__personel">
+        <div className="title">
+          <h2>{type}</h2>
+          {type === "Information personnelle" && (
+            <button onClick={() => setOpenModal(true)}>
+              <TfiPencilAlt />
+            </button>
+          )}
+        </div>
+        <div className="profile__personel--cards">
+          {type !== "Sécurité"
+            ? PCard.map((el) => (
+                <CardPersonnel title={el.title} text={el.text} key={el.title} />
+              ))
+            : PSCard.map((el) => (
+                <CardPersonnel title={el.title} text={""} key={el.title} />
+              ))}
+        </div>
       </div>
-    </div>
+      <Modal onClose={() => setOpenModal(false)} show={openModal}>
+        <Update
+          countries={countries}
+          clientData={clientData as IClientResponse}
+        />
+      </Modal>
+    </>
   );
 };
 

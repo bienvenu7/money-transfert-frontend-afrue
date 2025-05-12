@@ -1,14 +1,29 @@
 "use client";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Convert from "./Convert";
 import { useSelector } from "react-redux";
-import { selectTransactionType } from "@/redux/selector";
+import {
+  selectCountryFromData,
+  selectCountryWhereToData,
+  selectTransactionType,
+} from "@/redux/selector";
 import Svgs from "../Svgs";
 import ConvertReceive from "./ConvertReceive";
+import { getRate } from "@/app/utils/getCountry";
 
 const Convertisseur = () => {
   const transactionType = useSelector(selectTransactionType);
+  const countryWhereToData = useSelector(selectCountryWhereToData);
+  const countryFrom = useSelector(selectCountryFromData);
+
+  const [rate, setRate] = useState("");
   const exchange = "2.5";
+
+  useEffect(() => {
+    const myRate = async () =>
+      await getRate(`${countryFrom?.name}-${countryWhereToData?.name}`);
+    myRate();
+  }, []);
 
   return (
     <div className="transfert__convert--wrapper">
@@ -27,7 +42,7 @@ const Convertisseur = () => {
       </div>
       <div className="transfert__convert--content">
         <div>
-          <span>Inclure les frais: </span>
+          {<span>Inclure les frais: </span>}
           <label htmlFor="check"></label>
           <input type={`checkbox`} id="check" />
         </div>

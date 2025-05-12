@@ -15,7 +15,27 @@ import {
   ISuccessData,
   ISuccessOtpCodeResponse,
 } from "@/types/fetch";
-import { IClientResponse } from "@/types/user";
+import { IClientResponse, IClientUpdate } from "@/types/user";
+
+export const updateClient = async (data: IClientUpdate): Promise<string> => {
+  const accessToken = cookies().get("accessToken")?.value;
+  const { status } = await instance.patch("auth/update/user", data, {
+    headers: {
+      Authorization: `Bearer ${accessToken}`,
+    },
+  });
+
+  if (status === 200) {
+    await instance.get("auth/logout", {
+      headers: { Authorization: `Bearer ${accessToken}` },
+    });
+    cookies().delete("accessToken");
+    cookies().delete("refreshToken");
+    cookies().delete("app_client");
+    cookies().delete("public_country");
+  }
+  return "Vos identifiants ont été mises à jour correctement, vous serez déconnecté dans un instant pour assurer que vos données ont été mise à jour correctement";
+};
 
 export const register = async (
   email: string,
@@ -117,6 +137,22 @@ export const confirmOtp = async (
   } catch (error: any) {
     return errorToSendBack(error);
   }
+};
+
+export const confirmOtpUpdate = async (
+  email: string,
+  newOtp: string[]
+): Promise<number> => {
+  let otp = "";
+
+  newOtp.map((el) => (otp = otp + el));
+
+  const { status } = await instance.post("auth/verify-otp", {
+    email,
+    otp,
+  });
+
+  return status;
 };
 
 export const resendOtp = async (email: string) => {

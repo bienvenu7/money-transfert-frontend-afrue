@@ -1,10 +1,30 @@
 import { getAuth } from "@/app/actions/auth";
 import Personal from "@/app/components/profile/Personal";
 import Titles from "@/app/components/Titles";
+import { getCountries } from "@/app/utils/getCountry";
+import { ICountry } from "@/types/country";
+import { cookies } from "next/headers";
 import React from "react";
+
+const getC = async () => {
+  "use server";
+  let countries;
+  if (cookies().get("public_country")?.value !== undefined) {
+    return JSON.parse(
+      cookies().get("public_country")?.value as string
+    ) as ICountry[];
+  }
+
+  await getCountries().then((el) => {
+    countries = el as ICountry[];
+  });
+  return countries as any;
+};
 
 const page = async () => {
   const clientData = await getAuth();
+
+  const countries: ICountry[] = await getC();
 
   return (
     <>
@@ -24,8 +44,13 @@ const page = async () => {
                   <Personal
                     type="Information personnelle"
                     clientData={clientData}
+                    countries={countries}
                   />
-                  <Personal type="Sécurité" clientData={null} />
+                  <Personal
+                    type="Sécurité"
+                    clientData={null}
+                    countries={countries}
+                  />
                 </div>
               </div>
             </div>

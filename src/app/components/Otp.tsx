@@ -6,6 +6,8 @@ import { useRouter } from "next/navigation";
 import Countdown from "react-countdown";
 import { errorMessage, successMessage } from "../utils/notification";
 import { IBadResquestErrorData } from "@/types/fetch";
+import { getCountries } from "../utils/getCountry";
+import Cookies from "js-cookie";
 
 type Props = {
   email: string;

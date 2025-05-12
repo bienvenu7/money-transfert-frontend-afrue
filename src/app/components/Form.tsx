@@ -10,6 +10,7 @@ import Image from "next/image";
 import { IBadResquestErrorData, IBaseErrorData } from "@/types/fetch";
 import { useRouter } from "next/navigation";
 import { isValidPassword } from "../utils/errorHandle";
+import { FaRegEye, FaRegEyeSlash } from "react-icons/fa6";
 
 type Props = {
   pageName: string;
@@ -31,6 +32,8 @@ const Form = ({ pageName }: Props) => {
   const [genreError, setGenreError] = useState<boolean>(false);
   const [nameError, setNameError] = useState<boolean>(false);
   const [loading, setIsLoading] = useState<boolean>(false);
+  const [showPassword, setShowPassword] = useState<boolean>(false);
+  console.log(showPassword);
 
   const [countries, setCountries] = useState<ICountry[]>([]);
 
@@ -54,7 +57,7 @@ const Form = ({ pageName }: Props) => {
       setEmailError("Veillez entrer un mail valide!");
     } else if (password.length < 8 || !isValidPassword(password)) {
       setPasswordError(
-        "Votre mot de passe doit contenir au moins:<br/>*une lettre majiscule<br/>*une lettre miniscule<br/>*un seul caractère spécial<br/>*un chiffre"
+        "Votre mot de passe doit contenir au moins:<br/>*une lettre majiscule<br/>*une lettre miniscule<br/>*un chiffre"
       );
     } else if (confirmPassword !== password) {
       setConfirmError(true);
@@ -240,11 +243,17 @@ const Form = ({ pageName }: Props) => {
               <input
                 id="password"
                 onChange={(e) => setPasword(e.target.value)}
-                type={"password"}
+                type={!showPassword ? "password" : "text"}
                 placeholder="Mot de passe (Min 8 charactères)"
                 value={password}
                 className={passwordError !== "" ? "underline" : ""}
-              />
+              ></input>
+              <button
+                onClick={() => setShowPassword(!showPassword)}
+                type={"button"}
+              >
+                {showPassword ? <FaRegEye /> : <FaRegEyeSlash />}
+              </button>
               {passwordError !== "" && (
                 <p dangerouslySetInnerHTML={{ __html: passwordError }} />
               )}
@@ -272,7 +281,9 @@ const Form = ({ pageName }: Props) => {
               </p>
             )}
             {pageName === "Se connecter" && (
-              <Link href={"/"}>Mot de passe oublié ?</Link>
+              <Link href={"/auth/recovery"} shallow={true}>
+                Mot de passe oublié ?
+              </Link>
             )}
 
             <button disabled={loading} type={"submit"}>
@@ -281,7 +292,9 @@ const Form = ({ pageName }: Props) => {
             {pageName === "Se connecter" && (
               <p>
                 Pas encore de compte?{" "}
-                <Link href={"/auth/register"}>{"S'enregistrer"}</Link>
+                <Link href={"/auth/register"} shallow={true}>
+                  {"S'enregistrer"}
+                </Link>
               </p>
             )}
             {pageName === "S'enregistrer" ? (

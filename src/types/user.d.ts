@@ -9,3 +9,11 @@ export interface IClientResponse {
   Country: ICountry;
   gender: string;
 }
+
+export interface IClientUpdate {
+  userID: string;
+  username?: string | undefined;
+  phone?: string | undefined;
+  password?: string | undefined;
+  countryId?: string | undefined;
+}

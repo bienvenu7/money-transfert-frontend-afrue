@@ -11,6 +11,7 @@ export interface IInitialTransaction {
   networks: INetworkResponse[];
   choosenNetwork: string;
   networkData: INetworkResponse | null;
+  itineraire: string;
 }
 
 const initialState: IInitialTransaction = {
@@ -31,6 +32,7 @@ const initialState: IInitialTransaction = {
   networks: [],
   networkData: null,
   choosenNetwork: "",
+  itineraire: "",
 };
 
 export const transactionSlice = createSlice({

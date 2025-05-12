@@ -35,7 +35,6 @@ const Confirm = ({ openModal, setOpenModal }: Props) => {
     await createTransaction(transactionData)
       .then((transaction) => {
         setOpenModal(false);
-        dispatch(resetTransaction());
         router.push(`/comfirmation/${transaction.id}`);
       })
       .catch((el) => {
@@ -46,10 +45,12 @@ const Confirm = ({ openModal, setOpenModal }: Props) => {
         console.log(el);
       })
       .finally(() => {
+        dispatch(resetTransaction());
         setOpenModal(false);
         dispatch(getStep(-2));
       });
   };
+
   return (
     <div className="confirm__container">
       <div className="confirm__wrapper">

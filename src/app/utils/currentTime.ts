@@ -18,6 +18,6 @@ export const day = (utcTimestamp: number) =>
     .locale("fr")
     .format("dddd Do MMMM, YYYY");
 
-export const actualDate = moment().toString();
+export const actualDate = moment().utc().toString();
 export const toFormatDate = (dateTime: string) =>
   moment(dateTime).format("DD-MM-YYYY");
