@@ -33,7 +33,6 @@ const Form = ({ pageName }: Props) => {
   const [nameError, setNameError] = useState<boolean>(false);
   const [loading, setIsLoading] = useState<boolean>(false);
   const [showPassword, setShowPassword] = useState<boolean>(false);
-  console.log(showPassword);
 
   const [countries, setCountries] = useState<ICountry[]>([]);
 

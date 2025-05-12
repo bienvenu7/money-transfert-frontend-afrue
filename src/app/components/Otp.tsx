@@ -1,5 +1,5 @@
 "use client";
-import React from "react";
+import React, { useRef } from "react";
 import { useEffect, useState } from "react";
 import { confirmOtp, resendOtp } from "../actions/auth";
 import { useRouter } from "next/navigation";
@@ -84,6 +84,25 @@ const Otp = ({ email }: Props) => {
       .catch((error) => console.error(error));
   };
 
+  const countRef = useRef(60);
+  const intervalRef = useRef<NodeJS.Timeout | null>(null);
+  const [, forceUpdate] = useState(60); // Trigger UI update
+
+  useEffect(() => {
+    intervalRef.current = setInterval(() => {
+      if (countRef.current > 0) {
+        countRef.current -= 1;
+        forceUpdate((n) => n + 1);
+      } else if (intervalRef.current) {
+        clearInterval(intervalRef.current);
+      }
+    }, 1000);
+
+    return () => {
+      if (intervalRef.current) clearInterval(intervalRef.current);
+    };
+  }, []);
+
   return (
     <div className="auth__otp">
       <div className="auth__otp--box">
@@ -131,8 +150,14 @@ const Otp = ({ email }: Props) => {
       )}
       {done && <p>{`Un nouveau code a été envoyé avec success`}</p>}
 
-      <button className="text" onClick={resend}>
-        Envoyer un nouveau code
+      <button
+        disabled={countRef.current > 0 ? true : false}
+        className="text"
+        onClick={resend}
+      >
+        {countRef.current > 0
+          ? `Vous pourrez demander un nouveau code après: ${countRef.current}s`
+          : "Recevoir un nouveau code"}
       </button>
 
       <button
