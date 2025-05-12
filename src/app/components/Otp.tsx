@@ -113,6 +113,7 @@ const Otp = ({ email }: Props) => {
               e.target.select();
               document.body.style.transform = "scale(1.0)";
             }}
+            onPointerOut={() => (document.body.style.transform = "scale(1.0)")}
             maxLength={1}
             className={mistake ? "underline" : ""}
           />
