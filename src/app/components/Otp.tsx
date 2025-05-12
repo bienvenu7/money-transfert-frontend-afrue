@@ -109,7 +109,10 @@ const Otp = ({ email }: Props) => {
             type={"tel"}
             value={el}
             onChange={(e) => handleChange(e, index)}
-            onFocus={(e) => e.target.select()}
+            onFocus={(e) => {
+              e.target.select();
+              document.body.style.transform = "scale(1.0)";
+            }}
             maxLength={1}
             className={mistake ? "underline" : ""}
           />
