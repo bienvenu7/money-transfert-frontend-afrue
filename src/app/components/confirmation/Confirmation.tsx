@@ -1,6 +1,7 @@
 "use client";
 import { updateTransaction } from "@/app/actions/transaction";
 import { ICard } from "@/types/networks";
+import { Status } from "@/types/transaction";
 import { useParams, useRouter } from "next/navigation";
 import React, { useState } from "react";
 import DatePicker from "react-datepicker";
@@ -28,7 +29,7 @@ const Confirmation = ({ card }: Props) => {
       phone,
       `${myHour[0]}h${myHour[1]}`,
       card.phone,
-      "en cours",
+      "INPROGRESS" as any,
       card.fullName
     )
       .then((transaction) => {

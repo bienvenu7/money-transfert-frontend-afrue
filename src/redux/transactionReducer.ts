@@ -17,7 +17,7 @@ export interface IInitialTransaction {
 const initialState: IInitialTransaction = {
   transaction: {
     clientEmail: "",
-    status: "uncomfirmed",
+    status: "WAITING" as any,
     type: "",
     amountToPayOut: "",
     amountToSend: "",
@@ -105,7 +105,7 @@ export const transactionSlice = createSlice({
       state.transaction = {
         ...state.transaction,
         clientEmail: "",
-        status: "uncomfirmed",
+        status: "WAITING" as any,
         type: "",
         amountToPayOut: "",
         amountToSend: "",

@@ -1399,6 +1399,14 @@ html {
             background-color: $yellow-clr;
           }
 
+          &.red {
+            background-color: $red-clr;
+          }
+
+          &.green {
+            background-color: #a6ffba;
+          }
+
           @include mobile {
             min-width: max-content;
           }

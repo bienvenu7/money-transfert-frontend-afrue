@@ -1,5 +1,12 @@
 import { IFee, INetworkResponse } from "./networks";
 
+export enum Status {
+  WAITING,
+  INPROGRESS,
+  CONFIRMED,
+  ERROR,
+}
+
 export interface ITrasanctionData {
   id?: string;
   code: string;
@@ -9,7 +16,7 @@ export interface ITrasanctionData {
   receiverName: string;
   receiverPhone: string;
   amountToPayOut: string;
-  status: string;
+  status: Status;
   networkId: string;
   fees: string;
 }

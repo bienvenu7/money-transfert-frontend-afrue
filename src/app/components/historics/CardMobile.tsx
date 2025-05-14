@@ -1,5 +1,5 @@
 import { day, timeCreated } from "@/app/utils/currentTime";
-import { ITrasanctionResponse } from "@/types/transaction";
+import { ITrasanctionResponse, Status } from "@/types/transaction";
 import { IClientResponse } from "@/types/user";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
@@ -18,7 +18,7 @@ const CardMobile = ({ el, clientData }: Props) => {
   return (
     <div
       onClick={() =>
-        (el.status === "uncomfirmed" || el.complain !== "") &&
+        (el.status === ("WAITING" as any) || el.status === ("ERROR" as any)) &&
         router.push(`/comfirmation/${el.id}`)
       }
       key={el.id}
@@ -53,22 +53,26 @@ const CardMobile = ({ el, clientData }: Props) => {
         </small>
         <strong
           className={
-            el.status === "en cours"
+            el.status === ("INPROGRESS" as any)
               ? "yellow"
-              : el.status === "uncomfirmed"
+              : el.status === ("WAITING" as any)
               ? "grey"
-              : el.status === "en cours" &&
-                el.adminCheck === "second confirmation"
-              ? ""
+              : el.status === ("ERROR" as any)
+              ? "red"
+              : el.status === ("CONFIRMED" as any)
+              ? "green"
               : ""
           }
         >
-          {el.status === "uncomfirmed"
-            ? "en attente"
-            : el.status === "en cours" &&
-              el.adminCheck === "second comfirmation"
-            ? "éffectuée"
-            : el.status}
+          {el.status === ("INPROGRESS" as any)
+            ? "En cours"
+            : el.status === ("WAITING" as any)
+            ? "En attente"
+            : el.status === ("ERROR" as any)
+            ? "Erreur"
+            : el.status === ("CONFIRMED" as any)
+            ? "Confirmée"
+            : ""}
         </strong>
       </div>
     </div>

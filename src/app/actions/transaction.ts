@@ -5,6 +5,7 @@ import { instance } from "@/instance";
 import {
   ITrasanctionData,
   ITrasanctionResponse,
+  Status,
 } from "../../types/transaction";
 import { errorToSendBack } from "../utils/errorHandle";
 import { IBadResquestErrorData, IBaseErrorData } from "@/types/fetch";
@@ -25,7 +26,7 @@ export const updateTransaction = async (
   senderNumber: string,
   hour: string,
   reference: string,
-  status: string,
+  status: Status,
   agencyFullName: string
 ): Promise<ITrasanctionResponse | IBaseErrorData | IBadResquestErrorData> => {
   try {
