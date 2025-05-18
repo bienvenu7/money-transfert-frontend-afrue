@@ -59,7 +59,7 @@ const CardMobile = ({ el, clientData }: Props) => {
               ? "grey"
               : el.status === ("ERROR" as any)
               ? "red"
-              : el.status === ("CONFIRMED" as any)
+              : el.status === ("FINISH" as any)
               ? "green"
               : ""
           }
@@ -70,8 +70,8 @@ const CardMobile = ({ el, clientData }: Props) => {
             ? "En attente"
             : el.status === ("ERROR" as any)
             ? "Erreur"
-            : el.status === ("CONFIRMED" as any)
-            ? "Confirmée"
+            : el.status === ("FINISH" as any)
+            ? "Efféctuée"
             : ""}
         </strong>
       </div>
