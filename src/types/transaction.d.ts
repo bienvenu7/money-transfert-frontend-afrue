@@ -5,6 +5,7 @@ export enum Status {
   INPROGRESS,
   CONFIRMED,
   ERROR,
+  FINISH,
 }
 
 export interface ITrasanctionData {

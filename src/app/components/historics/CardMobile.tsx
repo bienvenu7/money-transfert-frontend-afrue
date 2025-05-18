@@ -53,7 +53,8 @@ const CardMobile = ({ el, clientData }: Props) => {
         </small>
         <strong
           className={
-            el.status === ("INPROGRESS" as any)
+            el.status === ("INPROGRESS" as any) ||
+            el.status === ("CONFIRMED" as any)
               ? "yellow"
               : el.status === ("WAITING" as any)
               ? "grey"
@@ -64,7 +65,8 @@ const CardMobile = ({ el, clientData }: Props) => {
               : ""
           }
         >
-          {el.status === ("INPROGRESS" as any)
+          {el.status === ("INPROGRESS" as any) ||
+          el.status === ("CONFIRMED" as any)
             ? "En cours"
             : el.status === ("WAITING" as any)
             ? "En attente"
