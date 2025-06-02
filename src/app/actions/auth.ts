@@ -167,13 +167,15 @@ export const getAuth = async (): Promise<IClientResponse> => {
 
   const app_client = cookies().get("app_client")?.value;
 
-  if (app_client) {
+  if (app_client !== undefined) {
     const client: IClientResponse = JSON.parse(app_client);
     return client;
   }
   const { data: client } = await instance.get("auth/get-auth", {
     headers: { Authorization: `Bearer ${accessToken}` },
   });
+
+  cookies().set("app_client", JSON.stringify(client as any));
 
   // const d = data as IClientResponse;
   const data = client as any;

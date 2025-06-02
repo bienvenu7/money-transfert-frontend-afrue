@@ -28,6 +28,7 @@ export const getCountryById = async (id: string) => {
 };
 
 export const getRate = async (code: string): Promise<IRate> => {
+  console.log(code);
   const { data } = await instance.get(`/rate/get/rate/${code}`);
   return data;
 };

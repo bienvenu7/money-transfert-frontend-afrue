@@ -5,6 +5,8 @@ import type { NextRequest } from "next/server";
 const privateRoute = [
   "/profile",
   "/historiques",
+  "/send",
+  "/receive",
   "/transaction",
   "/transaction/send",
   "/transaction/receive",
@@ -35,5 +37,7 @@ export const config = {
     "/auth/register",
     "/transaction/send",
     "/transaction/receive",
+    "/send",
+    "/receive",
   ],
 };

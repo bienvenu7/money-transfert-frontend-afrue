@@ -11,6 +11,7 @@ import { useRouter, usePathname } from "next/navigation";
 import HeaderNoData from "./HeaderNoData";
 import { errorMessage } from "@/app/utils/notification";
 import Svgs from "../Svgs";
+import Cookies from "js-cookie";
 
 export interface Ilinks {
   name: string;
@@ -31,9 +32,19 @@ const links: Ilinks[] = [
   },
   {
     icon: <Svgs name="h-t-d" />,
-    name: "Transaction",
-    uri: "/transaction",
+    name: "Envoyer",
+    uri: "/send",
   },
+  {
+    icon: <Svgs name="h-t-d" />,
+    name: "Recevoir",
+    uri: "/receive",
+  },
+  // {
+  //   icon: <Svgs name="h-t-d" />,
+  //   name: "Transaction",
+  //   uri: "/transaction",
+  // },
   {
     name: "Historiques",
     uri: "/historiques",
@@ -83,6 +94,7 @@ const MobileNav = () => {
 
   const getClientData = async () => {
     setClientData((await getAuth()) as IClientResponse);
+    // Cookies.set("app_client", JSON.stringify(clientData));
   };
 
   useEffect(() => {
