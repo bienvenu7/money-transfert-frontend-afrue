@@ -332,15 +332,17 @@ const Page = (props: Props) => {
                     {`Le taux de change varie en fonction du mode d'envoi et de
               paiement.`}
                   </p>
-                  <div className="frais">
-                    <input
-                      type="checkbox"
-                      name=""
-                      id="frais"
-                      onChange={(e) => setWithFees(e.target.checked)}
-                    />
-                    <label htmlFor="frais">Inclure les frais</label>
-                  </div>
+                  {rate?.iltineraire === "Congo-Russie" && (
+                    <div className="frais">
+                      <input
+                        type="checkbox"
+                        name=""
+                        id="frais"
+                        onChange={(e) => setWithFees(e.target.checked)}
+                      />
+                      <label htmlFor="frais">Inclure les frais</label>
+                    </div>
+                  )}
                 </div>
               </div>
               <div className="transfert__content__convert">
@@ -379,11 +381,9 @@ const Page = (props: Props) => {
                     </div>
                   </div>
                   <p>
-                    Lorem, ipsum dolor sit amet consectetur adipisicing elit.
-                    Magnam iste ratione beatae, repellat laudantium mollitia
-                    soluta! Libero asperiores dolor, laboriosam praesentium
-                    repellat nihil odio iure accusantium quas, harum ipsam
-                    ratione!
+                    Veillez noter que ces informations peuvent être demandé pour
+                    des raisons de vérification en cas de problemes avec la
+                    transaction.
                   </p>
                 </div>
               </div>
@@ -449,6 +449,12 @@ const Page = (props: Props) => {
               {selectedCountry?.currency}
             </span>
           </div>
+          <button
+            className={pending ? "load" : ""}
+            onClick={createTransactions}
+          >
+            {pending ? "Veillez patientez" : "Continuer"}
+          </button>
         </div>
       </div>
     </div>
