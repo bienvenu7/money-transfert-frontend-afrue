@@ -1366,7 +1366,7 @@ html {
           letter-spacing: -0.28px;
           width: 144px;
 
-          &.receive {
+          &.red {
             color: $red-clr;
           }
 
@@ -5172,6 +5172,296 @@ html {
         font-size: 18px;
         font-weight: 500;
         color: $black-clr;
+      }
+    }
+  }
+
+  &__confirmation {
+    &--container {
+      width: 100vw;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding-top: 140px;
+    }
+
+    &--wrapper {
+      width: 1280px;
+      display: flex;
+      align-items: flex-start;
+      justify-content: flex-start;
+      flex-direction: column;
+      gap: 20px;
+
+      @include mobile {
+        width: $mobile-width;
+      }
+    }
+
+    &--content {
+      width: 100%;
+      height: auto;
+      background-color: $background-Card_body;
+      border-radius: 20px;
+      padding: 60px 30px;
+      display: flex;
+      flex-direction: column;
+      gap: 60px;
+
+      &__row {
+        width: calc((100% - 20px) / 2);
+        display: flex;
+        align-items: flex-start;
+        justify-content: flex-start;
+        background-color: #f4f4f4;
+        border-radius: 20px;
+        padding: 20px;
+        box-shadow: 5px 5px 10px 0px rgba(84, 100, 185, 0.16) inset,
+          -5px -5px 10px 0px #fafbff inset;
+        flex-direction: column;
+        gap: 10px;
+
+        & > h3 {
+          font-size: 16px;
+          font-weight: 500;
+          color: $black-clr;
+        }
+
+        & > span {
+          font-size: 16px;
+          font-weight: 700;
+          color: $black-clr;
+        }
+
+        @include mobile {
+          width: 100%;
+          padding: 14px;
+        }
+      }
+
+      &__left {
+        width: 100%;
+        display: flex;
+        align-items: flex-start;
+        justify-content: space-between;
+
+        @include mobile {
+          flex-direction: column;
+          gap: 20px;
+        }
+
+        &__first {
+          display: flex;
+          flex-direction: column;
+          gap: 20px;
+          width: calc((100% - 20px) / 3);
+          border: 1px solid $yellow-clr;
+          padding: 20px;
+          border-radius: 20px;
+          opacity: 1;
+          transition: all 300ms ease-out;
+
+          @include mobile {
+            width: 100%;
+          }
+
+          &.hide {
+            opacity: 0;
+            transition: all 300ms ease-out;
+          }
+
+          & > button {
+            all: unset;
+            display: flex;
+            width: auto;
+            height: auto;
+            padding: 15px 60px;
+            justify-content: center;
+            align-items: center;
+            gap: 15px;
+            border-radius: 20px;
+            transition: all 250ms linear;
+            background-color: transparent;
+            border: 1px solid $blue-clr;
+
+            color: $blue-clr;
+            font-family: $main-font;
+            font-size: 18px;
+            font-style: normal;
+            font-weight: 500;
+            line-height: 135%; /* 32.4px */
+            cursor: pointer;
+            transition: all 250ms ease-out;
+
+            &:hover {
+              background-color: $blue-clr;
+              color: $white-clr;
+            }
+          }
+
+          & > h2 {
+            font-size: 22px;
+            font-weight: 500;
+            color: $black-clr;
+          }
+        }
+
+        &--cards {
+          display: flex;
+          align-items: flex-start;
+          justify-content: space-between;
+          flex-wrap: wrap;
+          gap: 20px;
+        }
+
+        & > p {
+          font-size: 18px;
+          font-weight: 400;
+          color: $black-clr;
+        }
+      }
+
+      &__right {
+        &--forms {
+          display: flex;
+          width: 100%;
+          align-items: flex-start;
+          justify-content: flex-start;
+          flex-direction: column;
+          gap: 20px;
+
+          @include mobile {
+            width: 100%;
+            flex-direction: column;
+            gap: 20px;
+            padding: 0;
+          }
+        }
+
+        &--input {
+          display: flex;
+          flex-direction: column;
+          gap: 5px;
+          width: 100%;
+
+          @include mobile {
+            width: 100%;
+          }
+
+          & > input {
+            all: unset;
+            display: flex;
+            font-family: $main-font;
+            padding: 12px 20px;
+            align-items: center;
+            gap: 10px;
+            align-self: stretch;
+            border-radius: 20px;
+            // border: 1px solid rgba(0, 0, 0, 0.2);
+            background: #fdfcff;
+            box-shadow: 5px 5px 10px 0px rgba(84, 100, 185, 0.16) inset,
+              -5px -5px 10px 0px #fafbff inset;
+            font-size: 18px;
+
+            @include mobile {
+              font-size: 14px;
+            }
+          }
+
+          & > label {
+            color: $black-clr;
+            font-family: $main-font;
+            font-size: 14px;
+            font-style: normal;
+            font-weight: 400;
+            line-height: 120%; /* 14.4px */
+            z-index: 1;
+          }
+        }
+
+        & > button {
+          all: unset;
+          display: flex;
+          width: 146px;
+          height: 38px;
+          padding: 8px 20px;
+          justify-content: center;
+          align-items: center;
+          gap: 10px;
+          flex-shrink: 0;
+          border-radius: 40px;
+          background: #e2be68;
+          box-shadow: 0px 0px 2px 0px rgba(0, 0, 0, 0.1),
+            0px 4px 4px 0px rgba(0, 0, 0, 0.1);
+          cursor: pointer;
+
+          @include mobile {
+            width: 92px;
+            height: 28px;
+            font-size: 12px;
+            padding: 8px 10px;
+            font-weight: 500;
+          }
+        }
+      }
+    }
+
+    &--count {
+      margin: auto;
+      width: 420px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 15px;
+      background-color: transparent;
+      border: 1px solid $yellow-clr;
+      border-left: none;
+      border-right: none;
+      border-radius: 20px;
+      position: relative;
+
+      @include mobile {
+        width: 100%;
+        display: none;
+      }
+
+      & > .line {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        background-color: $yellow-clr;
+        z-index: 0;
+        border-left: none;
+        border-right: none;
+        border-radius: 50px;
+        transform: scaleX(0);
+        transform-origin: left;
+        transition: all 1000ms ease-in-out;
+
+        &.two {
+          transform: scaleX(0.5);
+        }
+
+        &.three {
+          transform: scaleX(1);
+        }
+      }
+
+      & > .number {
+        width: 60px;
+        height: 60px;
+        background-color: $yellow-clr;
+        border: 1px solid $yellow-clr;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        z-index: 1;
+
+        & > span {
+          font-size: 18px;
+          font-weight: 600;
+        }
       }
     }
   }
