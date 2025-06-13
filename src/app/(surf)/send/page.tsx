@@ -44,6 +44,48 @@ const countries = [
     flag: "/static/flags/ru.png",
     currency: "RUB",
   },
+  {
+    id: "rca",
+    name: "République centrafricaine",
+    flag: "/static/flags/rca.png",
+    currency: "XAF",
+  },
+  {
+    id: "gab",
+    name: "Gabon",
+    flag: "/static/flags/gab.png",
+    currency: "XAF",
+  },
+  {
+    id: "tchad",
+    name: "Tchad",
+    flag: "/static/flags/tchad.png",
+    currency: "XAF",
+  },
+  {
+    id: "mali",
+    name: "Mali",
+    flag: "/static/flags/mali.png",
+    currency: "XOF",
+  },
+  {
+    id: "gib",
+    name: "Guinée bissau",
+    flag: "/static/flags/gib.png",
+    currency: "XOF",
+  },
+  {
+    id: "buf",
+    name: "Burkina Fasso",
+    flag: "/static/flags/buf.png",
+    currency: "XOF",
+  },
+  {
+    id: "nr",
+    name: "Niger",
+    flag: "/static/flags/nr.png",
+    currency: "XOF",
+  },
 ];
 
 const flagNetwork = [
@@ -133,8 +175,15 @@ const Page = (props: Props) => {
     const fetchRates = async () => {
       if (!userData || !selectedCountry) return;
 
+      let codeTo =
+        selectedCountry?.currency === "XAF" && selectedCountry.id !== "cg"
+          ? "cam"
+          : selectedCountry?.currency === "XOF"
+          ? "sen"
+          : selectedCountry?.id;
+
       try {
-        const code = `${userData.Country.name}-${selectedCountry.id}`;
+        const code = `${userData.Country.name}-${codeTo}`;
         const rateData = await getRate(code);
         if (isMounted) setRate(rateData);
       } catch (err) {
@@ -147,16 +196,23 @@ const Page = (props: Props) => {
     const fecthNetwork = async () => {
       if (!userData) return;
 
+      let codeTo =
+        selectedCountry?.currency === "XAF" && selectedCountry.id !== "cg"
+          ? "cam"
+          : selectedCountry?.currency === "XOF"
+          ? "sen"
+          : selectedCountry?.id;
+
       try {
         const cts = (await getCountries()) as ICountry[];
         const myCt = cts.find(
-          (el) => el.name === selectedCountry?.id
+          (el) => el.name === (codeTo as string)
         ) as ICountry;
         await getNetworksById(myCt.id as string).then((el) => {
           setNetworks(el as INetworkResponse[]);
         });
       } catch (error) {
-        console.error("Fetch network error", error);
+        console.log("Fetch network error", error);
       } finally {
         if (isMounted) setLoading(false);
       }
@@ -193,7 +249,16 @@ const Page = (props: Props) => {
     event: React.MouseEvent<HTMLButtonElement, MouseEvent>
   ) => {
     event.preventDefault();
+
+    let codeTo =
+      selectedCountry?.currency === "XAF" && selectedCountry.id !== "cg"
+        ? "cam"
+        : selectedCountry?.currency === "XOF"
+        ? "sen"
+        : selectedCountry?.id;
+
     setPending(true);
+
     const transaction: ITrasanctionData = {
       amountToSend: amount.toString(),
       amountToPayOut: amountToReceive.toString(),
@@ -203,9 +268,11 @@ const Page = (props: Props) => {
       type: "send",
       receiverPhone: phone as string,
       receiverName: name,
-      code: `${userData?.Country.name}-${selectedCountry?.id}`,
+      code: `${userData?.Country.name}-${codeTo}-${selectedCountry?.id}`,
       status: "WAITING" as any,
     };
+
+    console.log(transaction);
 
     await createTransaction(transaction)
       .then((t) => {

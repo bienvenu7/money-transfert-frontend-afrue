@@ -4788,6 +4788,12 @@ html {
           transition: all 250ms ease-out;
           opacity: 1;
           z-index: 1;
+          max-height: 260px;
+          overflow-y: scroll;
+
+          @include mobile {
+            max-height: 190px;
+          }
 
           &.close {
             opacity: 0;
