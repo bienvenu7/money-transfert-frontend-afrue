@@ -11,6 +11,9 @@ import Partners from "../components/landing/Partners";
 import Show from "../components/landing/Show";
 import Transfert from "../components/landing/Transfert";
 import { useEffect, useState } from "react";
+import { ICountry } from "@/types/country";
+import { getCountries } from "../utils/getCountry";
+import Cookies from "js-cookie";
 
 // export const metadata: Metadata = {
 //   icons: {
@@ -26,12 +29,14 @@ import { useEffect, useState } from "react";
 // };
 
 export default function Home() {
-  const [loading, setLoading] = useState<boolean>(true);
   useEffect(() => {
-    setTimeout(() => {
-      setLoading(false);
-    }, 2000);
-  });
+    const getCountriesList = async () => {
+      await getCountries()
+        .then((el) => Cookies.set("list", JSON.stringify(el as ICountry[])))
+        .catch((el) => console.log(el));
+    };
+    getCountriesList();
+  }, []);
 
   return (
     <main className="main__container">

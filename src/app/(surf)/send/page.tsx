@@ -137,6 +137,15 @@ const Page = (props: Props) => {
     }
   });
 
+  const [countryList] = useState<ICountry[] | null>(() => {
+    try {
+      const listData = Cookies.get("list");
+      return listData ? JSON.parse(listData) : null;
+    } catch (error) {
+      console.log(error);
+    }
+  });
+
   // Compare country IDs instead of ID vs name
   const [selectedCountry, setSelectedCountry] = useState<{
     id: string;
@@ -161,8 +170,9 @@ const Page = (props: Props) => {
   const [phone, setPhone] = useState<string>("");
   const [fee, setFee] = useState<string>("");
   const [withFees, setWithFees] = useState<boolean>(false);
-  const [netId, setNetId] = useState<string>("");
+  const [netId, setNetId] = useState<INetworkResponse | null>(null);
   const [pending, setPending] = useState<boolean>(false);
+  const [coutryData, setCountryData] = useState<ICountry | null>(null);
 
   const router = useRouter();
 
@@ -181,6 +191,12 @@ const Page = (props: Props) => {
           : selectedCountry?.currency === "XOF"
           ? "sen"
           : selectedCountry?.id;
+
+      setCountryData(
+        countryList?.find(
+          (el) => (el.name as string) === (codeTo as string)
+        ) as ICountry
+      );
 
       try {
         const code = `${userData.Country.name}-${codeTo}`;
@@ -205,9 +221,7 @@ const Page = (props: Props) => {
 
       try {
         const cts = (await getCountries()) as ICountry[];
-        const myCt = cts.find(
-          (el) => el.name === (codeTo as string)
-        ) as ICountry;
+        const myCt = cts.find((el) => el.name === codeTo) as ICountry;
         await getNetworksById(myCt.id as string).then((el) => {
           setNetworks(el as INetworkResponse[]);
         });
@@ -224,16 +238,16 @@ const Page = (props: Props) => {
     return () => {
       isMounted = false;
     };
-  }, [selectedCountry, userData]); // Added dependencies
+  }, [selectedCountry, userData, countryList]); // Added dependencies
 
   const handleNetwork = async (
     event: React.MouseEvent<HTMLImageElement, MouseEvent>,
-    id: string
+    net: INetworkResponse
   ) => {
     event.preventDefault();
-    setNetId(id);
+    setNetId(net);
 
-    await getNetworkByAmount(id, amount.toString())
+    await getNetworkByAmount(net.id, amount.toString())
       .then((el) => {
         const fee = el as IFee;
         if (fee.id !== undefined) {
@@ -257,6 +271,10 @@ const Page = (props: Props) => {
         ? "sen"
         : selectedCountry?.id;
 
+    if (parseInt(coutryData?.TelMaxNumber as string) !== phone.length) {
+      return errorMessage(`Veillez entrer un numéro valide!`);
+    }
+
     setPending(true);
 
     const transaction: ITrasanctionData = {
@@ -264,21 +282,20 @@ const Page = (props: Props) => {
       amountToPayOut: amountToReceive.toString(),
       clientEmail: userData?.email as string,
       fees: fee,
-      networkId: netId,
+      networkId: netId?.id as string,
       type: "send",
       receiverPhone: phone as string,
       receiverName: name,
-      code: `${userData?.Country.name}-${codeTo}-${selectedCountry?.id}`,
+      code: `${userData?.Country.name}-${codeTo}`,
       status: "WAITING" as any,
+      origin: selectedCountry?.id as string,
     };
-
-    console.log(transaction);
 
     await createTransaction(transaction)
       .then((t) => {
         router.push(`/comfirmation/${t.id}`);
         setAmount(0), setAmountToReceive(0), setFee("");
-        setNetId("");
+        setNetId(null);
         setPhone("");
         setName("");
       })
@@ -425,7 +442,12 @@ const Page = (props: Props) => {
                         type="text"
                         placeholder="Mavoungou Mabiala"
                         value={name}
-                        onChange={(e) => setName(e.target.value)}
+                        onChange={(e) => {
+                          const regex = /^[A-Za-z\s]+$/;
+                          if (regex.test(e.target.value)) {
+                            setName(e.target.value);
+                          }
+                        }}
                       />
                     </div>
                     <div>
@@ -435,6 +457,8 @@ const Page = (props: Props) => {
                         type={"tel"}
                         placeholder="000 000 00 00"
                         value={phone}
+                        minLength={parseInt(coutryData?.TelMaxNumber as string)}
+                        maxLength={parseInt(coutryData?.TelMaxNumber as string)}
                         onChange={(e) => {
                           let regex = /^\d+$/;
                           if (
@@ -463,6 +487,9 @@ const Page = (props: Props) => {
                     return (
                       <Image
                         key={el.id}
+                        className={
+                          (netId?.id as string) === el.id ? "active" : ""
+                        }
                         src={
                           flagNetwork.find((e) => e.id === el.name)
                             ?.flag as string
@@ -470,18 +497,18 @@ const Page = (props: Props) => {
                         alt=""
                         width={120}
                         height={120}
-                        onClick={(e) => handleNetwork(e, networks[index].id)}
+                        onClick={(e) => handleNetwork(e, el)}
                       />
                     );
                   })}
                 </div>
-                <hr />
+                {/* <hr />
                 <button
                   className={pending ? "load" : ""}
                   onClick={createTransactions}
                 >
                   {pending ? "Veillez patientez" : "Continuer"}
-                </button>
+                </button> */}
               </div>
             </>
           )}
@@ -516,6 +543,24 @@ const Page = (props: Props) => {
               {selectedCountry?.currency}
             </span>
           </div>
+          <hr />
+          <h2>Destinataire</h2>
+          <hr />
+          <div className="transfert__details--row">
+            <h3>Nom et prénoms</h3>
+            <span>{name}</span>
+          </div>
+          <div className="transfert__details--row">
+            <h3>Numéro</h3>
+            <span>
+              {coutryData?.TelIndex} {phone}
+            </span>
+          </div>
+          <div className="transfert__details--row">
+            <h3>Réseau</h3>
+            <span>{netId?.pubicName}</span>
+          </div>
+          <hr />
           <button
             className={pending ? "load" : ""}
             onClick={createTransactions}

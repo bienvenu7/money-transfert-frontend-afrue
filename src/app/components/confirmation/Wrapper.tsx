@@ -7,6 +7,8 @@ import Confirmation from "./Confirmation";
 import { updateTransaction } from "@/app/actions/transaction";
 import { useParams, useRouter } from "next/navigation";
 import { successMessage } from "@/app/utils/notification";
+import { ICountry } from "@/types/country";
+import Cookies from "js-cookie";
 
 type Props = {
   card: ICard;
@@ -20,6 +22,17 @@ const Wrapper = ({ card, transaction }: Props) => {
   const params = useParams();
   const router = useRouter();
   const [loading, setLoading] = useState(false);
+  const [country] = useState<ICountry | undefined>(() => {
+    try {
+      let listData;
+      listData = Cookies.get("list");
+      listData = JSON.parse(listData as string) as ICountry[];
+      listData = listData.find((el) => el.id === card.countryId);
+      return listData as ICountry;
+    } catch (error) {
+      console.log(error);
+    }
+  });
 
   const confirmTransaction = async (
     e: React.MouseEvent<HTMLButtonElement, MouseEvent>
@@ -83,7 +96,9 @@ const Wrapper = ({ card, transaction }: Props) => {
             </div>
             <div className="transfert__confirmation--content__row">
               <h3>Montant</h3>
-              <span>{transaction.amountToSend} </span>
+              <span>
+                {transaction.amountToSend} {country?.currency}
+              </span>
             </div>
           </div>
           <Copied
@@ -112,7 +127,10 @@ const Wrapper = ({ card, transaction }: Props) => {
             aperiam vero, reiciendis deserunt distinctio dicta ratione
             repellendus.
           </p>
-          <button onClick={() => setStep(3)}>{`J'ai compris`}</button>
+          <button
+            className={step >= 2 ? "" : "hide"}
+            onClick={() => setStep(3)}
+          >{`J'ai compris`}</button>
         </div>
         <div
           className={`transfert__confirmation--content__left__first ${
@@ -152,7 +170,10 @@ const Wrapper = ({ card, transaction }: Props) => {
               />
             </div>
           </div>
-          <button onClick={confirmTransaction}>
+          <button
+            className={step >= 2 ? "" : "hide"}
+            onClick={confirmTransaction}
+          >
             {loading ? "Veillez patienter..." : "Dépot éffectué"}
           </button>
         </div>

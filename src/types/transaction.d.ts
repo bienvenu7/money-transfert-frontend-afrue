@@ -20,6 +20,7 @@ export interface ITrasanctionData {
   status: Status;
   networkId: string;
   fees: string;
+  origin: string;
 }
 
 export interface ITrasanctionDataReady extends ITrasanctionData {

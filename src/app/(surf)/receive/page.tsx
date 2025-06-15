@@ -44,6 +44,48 @@ const countries = [
     flag: "/static/flags/ru.png",
     currency: "RUB",
   },
+  {
+    id: "rca",
+    name: "République centrafricaine",
+    flag: "/static/flags/rca.png",
+    currency: "XAF",
+  },
+  {
+    id: "gab",
+    name: "Gabon",
+    flag: "/static/flags/gab.png",
+    currency: "XAF",
+  },
+  {
+    id: "tchad",
+    name: "Tchad",
+    flag: "/static/flags/tchad.png",
+    currency: "XAF",
+  },
+  {
+    id: "mali",
+    name: "Mali",
+    flag: "/static/flags/mali.png",
+    currency: "XOF",
+  },
+  {
+    id: "gib",
+    name: "Guinée bissau",
+    flag: "/static/flags/gib.png",
+    currency: "XOF",
+  },
+  {
+    id: "buf",
+    name: "Burkina Fasso",
+    flag: "/static/flags/buf.png",
+    currency: "XOF",
+  },
+  {
+    id: "nr",
+    name: "Niger",
+    flag: "/static/flags/nr.png",
+    currency: "XOF",
+  },
 ];
 
 const flagNetwork = [
@@ -95,6 +137,15 @@ const Page = (props: Props) => {
     }
   });
 
+  const [countryList] = useState<ICountry[] | null>(() => {
+    try {
+      const listData = Cookies.get("list");
+      return listData ? JSON.parse(listData) : null;
+    } catch (error) {
+      console.log(error);
+    }
+  });
+
   // Compare country IDs instead of ID vs name
   const [selectedCountry, setSelectedCountry] = useState<{
     id: string;
@@ -119,8 +170,9 @@ const Page = (props: Props) => {
   const [phone, setPhone] = useState<string>("");
   const [fee, setFee] = useState<string>("");
   const [withFees, setWithFees] = useState<boolean>(false);
-  const [netId, setNetId] = useState<string>("");
+  const [netId, setNetId] = useState<INetworkResponse | null>(null);
   const [pending, setPending] = useState<boolean>(false);
+  const [coutryData, setCountryData] = useState<ICountry | null>(null);
 
   const router = useRouter();
 
@@ -133,8 +185,21 @@ const Page = (props: Props) => {
     const fetchRates = async () => {
       if (!userData || !selectedCountry) return;
 
+      let codeTo =
+        selectedCountry?.currency === "XAF" && selectedCountry.id !== "cg"
+          ? "cam"
+          : selectedCountry?.currency === "XOF"
+          ? "sen"
+          : selectedCountry?.id;
+
+      setCountryData(
+        countryList?.find(
+          (el) => (el.name as string) === userData.Country.name
+        ) as ICountry
+      );
+
       try {
-        const code = `${selectedCountry.id}-${userData.Country.name}`;
+        const code = `${userData.Country.name}-${codeTo}`;
         const rateData = await getRate(code);
         if (isMounted) setRate(rateData);
       } catch (err) {
@@ -147,16 +212,21 @@ const Page = (props: Props) => {
     const fecthNetwork = async () => {
       if (!userData) return;
 
+      let codeTo =
+        selectedCountry?.currency === "XAF" && selectedCountry.id !== "cg"
+          ? "cam"
+          : selectedCountry?.currency === "XOF"
+          ? "sen"
+          : selectedCountry?.id;
+
       try {
         const cts = (await getCountries()) as ICountry[];
-        const myCt = cts.find(
-          (el) => el.name === userData.Country.name
-        ) as ICountry;
-        await getNetworksById(myCt.id as string).then((el) => {
+        const myCt = cts.find((el) => el.name === codeTo) as ICountry;
+        await getNetworksById(userData.Country.id as string).then((el) => {
           setNetworks(el as INetworkResponse[]);
         });
       } catch (error) {
-        console.error("Fetch network error", error);
+        console.log("Fetch network error", error);
       } finally {
         if (isMounted) setLoading(false);
       }
@@ -168,16 +238,16 @@ const Page = (props: Props) => {
     return () => {
       isMounted = false;
     };
-  }, [selectedCountry, userData]); // Added dependencies
+  }, [selectedCountry, userData, countryList]); // Added dependencies
 
   const handleNetwork = async (
     event: React.MouseEvent<HTMLImageElement, MouseEvent>,
-    id: string
+    net: INetworkResponse
   ) => {
     event.preventDefault();
-    setNetId(id);
+    setNetId(net);
 
-    await getNetworkByAmount(id, amount.toString())
+    await getNetworkByAmount(net.id, amount.toString())
       .then((el) => {
         const fee = el as IFee;
         if (fee.id !== undefined) {
@@ -193,25 +263,39 @@ const Page = (props: Props) => {
     event: React.MouseEvent<HTMLButtonElement, MouseEvent>
   ) => {
     event.preventDefault();
+
+    let codeTo =
+      selectedCountry?.currency === "XAF" && selectedCountry.id !== "cg"
+        ? "cam"
+        : selectedCountry?.currency === "XOF"
+        ? "sen"
+        : selectedCountry?.id;
+
+    if (parseInt(coutryData?.TelMaxNumber as string) !== phone.length) {
+      return errorMessage(`Veillez entrer un numéro valide!`);
+    }
+
     setPending(true);
+
     const transaction: ITrasanctionData = {
       amountToSend: amount.toString(),
       amountToPayOut: amountToReceive.toString(),
       clientEmail: userData?.email as string,
       fees: fee,
-      networkId: netId,
+      networkId: netId?.id as string,
       type: "receive",
       receiverPhone: phone as string,
       receiverName: name,
-      code: `${selectedCountry?.id}-${userData?.Country.name}`,
+      code: `${codeTo}-${userData?.Country.name}`,
       status: "WAITING" as any,
+      origin: selectedCountry?.id as string,
     };
 
     await createTransaction(transaction)
       .then((t) => {
         router.push(`/comfirmation/${t.id}`);
         setAmount(0), setAmountToReceive(0), setFee("");
-        setNetId("");
+        setNetId(null);
         setPhone("");
         setName("");
       })
@@ -249,7 +333,7 @@ const Page = (props: Props) => {
                   alt={selectedCountry?.name as string}
                 />
                 <div className="text">
-                  <small>{`Sélectionez le pays de l'expéditeur`}</small>
+                  <small>Sélectionez le pays du bénéficiaire</small>
                   <span>{selectedCountry?.name}</span>
                 </div>
               </div>
@@ -284,7 +368,7 @@ const Page = (props: Props) => {
               <div className="transfert__content__convert">
                 <div className="transfert__content__convert--wrapper">
                   <div className="transfert__content__convert--input">
-                    <label htmlFor="amount">Montant à envoyer</label>
+                    <label htmlFor="amount">Montant envoyé</label>
                     <div>
                       <input
                         id="amount"
@@ -303,14 +387,14 @@ const Page = (props: Props) => {
                         }}
                         placeholder=""
                       />
-                      <span>{userData?.Country.currency}</span>
+                      <span>{selectedCountry?.currency}</span>
                     </div>
                   </div>
                   <button>
                     <Svgs name="exchange" />
                   </button>
                   <div className="transfert__content__convert--input">
-                    <label htmlFor="amount">Montant à recevoir</label>
+                    <label htmlFor="amount">Montant envoyé</label>
                     <div>
                       <input
                         readOnly
@@ -319,7 +403,7 @@ const Page = (props: Props) => {
                         value={amountToReceive}
                         placeholder=""
                       />
-                      <span>{selectedCountry?.currency}</span>
+                      <span>{userData?.Country.currency}</span>
                     </div>
                   </div>
                 </div>
@@ -358,7 +442,12 @@ const Page = (props: Props) => {
                         type="text"
                         placeholder="Mavoungou Mabiala"
                         value={name}
-                        onChange={(e) => setName(e.target.value)}
+                        onChange={(e) => {
+                          const regex = /^[A-Za-z\s]+$/;
+                          if (regex.test(e.target.value)) {
+                            setName(e.target.value);
+                          }
+                        }}
                       />
                     </div>
                     <div>
@@ -368,6 +457,8 @@ const Page = (props: Props) => {
                         type={"tel"}
                         placeholder="000 000 00 00"
                         value={phone}
+                        minLength={parseInt(coutryData?.TelMaxNumber as string)}
+                        maxLength={parseInt(coutryData?.TelMaxNumber as string)}
                         onChange={(e) => {
                           let regex = /^\d+$/;
                           if (
@@ -396,6 +487,9 @@ const Page = (props: Props) => {
                     return (
                       <Image
                         key={el.id}
+                        className={
+                          (netId?.id as string) === el.id ? "active" : ""
+                        }
                         src={
                           flagNetwork.find((e) => e.id === el.name)
                             ?.flag as string
@@ -403,18 +497,11 @@ const Page = (props: Props) => {
                         alt=""
                         width={120}
                         height={120}
-                        onClick={(e) => handleNetwork(e, networks[index].id)}
+                        onClick={(e) => handleNetwork(e, el)}
                       />
                     );
                   })}
                 </div>
-                <hr />
-                <button
-                  className={pending ? "load" : ""}
-                  onClick={createTransactions}
-                >
-                  {pending ? "Veillez patientez" : "Continuer"}
-                </button>
               </div>
             </>
           )}
@@ -425,30 +512,48 @@ const Page = (props: Props) => {
           <div className="transfert__details--row">
             <h3>Montant du transfert</h3>
             <span>
-              {amount} {userData?.Country.currency}
+              {amount} {selectedCountry?.currency}
             </span>
           </div>
           <div className="transfert__details--row">
             <h3>Frais de transfert</h3>
             <span>
               {(amount * parseInt(rate?.frais as string)) / 100}{" "}
-              {userData?.Country.currency}
+              {selectedCountry?.currency}
             </span>
           </div>
           <div className="transfert__details--row">
             <h3>Total du transfert</h3>
             <span>
               {amount + frais}
-              {userData?.Country.currency}
+              {selectedCountry?.currency}
             </span>
           </div>
           <div className="transfert__details--row">
             <h3>Total Le bénéficiaire reçoit</h3>
             <span>
               {amount * parseInt(rate?.taux as string)}{" "}
-              {selectedCountry?.currency}
+              {userData?.Country.currency}
             </span>
           </div>
+          <hr />
+          <h2>Destinataire</h2>
+          <hr />
+          <div className="transfert__details--row">
+            <h3>Nom et prénoms</h3>
+            <span>{name}</span>
+          </div>
+          <div className="transfert__details--row">
+            <h3>Numéro</h3>
+            <span>
+              {coutryData?.TelIndex} {phone}
+            </span>
+          </div>
+          <div className="transfert__details--row">
+            <h3>Réseau</h3>
+            <span>{netId?.pubicName}</span>
+          </div>
+          <hr />
           <button
             className={pending ? "load" : ""}
             onClick={createTransactions}

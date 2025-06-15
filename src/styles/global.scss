@@ -4660,6 +4660,7 @@ html {
     display: flex;
     align-items: center;
     justify-content: center;
+    padding-bottom: 40px;
   }
 
   &__wrapper {
@@ -5104,6 +5105,10 @@ html {
           height: calc(($mobile-width - 30px) / 3);
         }
 
+        &.active {
+          opacity: 0.5;
+        }
+
         &:hover {
           opacity: 0.5;
         }
@@ -5136,11 +5141,6 @@ html {
       color: $white-clr;
       font-size: 16px;
       font-weight: 400;
-      display: none;
-
-      @include mobile {
-        display: flex;
-      }
 
       &.load {
         background-color: rgba($color: $blue-clr, $alpha: 0.5);
@@ -5298,6 +5298,10 @@ html {
             line-height: 135%; /* 32.4px */
             cursor: pointer;
             transition: all 250ms ease-out;
+
+            &.hide {
+              display: none;
+            }
 
             &:hover {
               background-color: $blue-clr;

@@ -16,7 +16,7 @@ const page = async ({
 }) => {
   const card = await getCardsByNetworkId((await params).transactionId);
   const transaction = await getTransactionById((await params).transactionId);
-
+  //
   return (
     <div className="transfert__confirmation--container">
       <div className="transfert__confirmation--wrapper">

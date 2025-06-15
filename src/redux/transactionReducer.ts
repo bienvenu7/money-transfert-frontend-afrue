@@ -26,6 +26,7 @@ const initialState: IInitialTransaction = {
     networkId: "",
     receiverName: "",
     receiverPhone: "",
+    origin: "",
   },
   countryTo: null,
   countryFrom: null,
