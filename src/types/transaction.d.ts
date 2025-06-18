@@ -21,6 +21,7 @@ export interface ITrasanctionData {
   networkId: string;
   fees: string;
   origin: string;
+  dateTime: string;
 }
 
 export interface ITrasanctionDataReady extends ITrasanctionData {

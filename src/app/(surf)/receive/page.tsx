@@ -3,12 +3,13 @@ import { createTransaction } from "@/app/actions/transaction";
 import Svgs from "@/app/components/Svgs";
 import { getCountries, getRate } from "@/app/utils/getCountry";
 import { getNetworkByAmount, getNetworksById } from "@/app/utils/network";
-import { errorMessage } from "@/app/utils/notification";
+import { errorMessage, infoMessage } from "@/app/utils/notification";
 import { ICountry, IRate } from "@/types/country";
 import { IFee, INetworkResponse } from "@/types/networks";
 import { ITrasanctionData } from "@/types/transaction";
 import { IClientResponse } from "@/types/user";
 import Cookies from "js-cookie";
+import moment from "moment";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
@@ -264,6 +265,12 @@ const Page = (props: Props) => {
   ) => {
     event.preventDefault();
 
+    if (phone === "" || name === "" || amount === 0 || netId === null) {
+      return infoMessage(
+        "S'il vous plait, vérifiez que vous aviez correctement remplis le formulaire d'envoie!"
+      );
+    }
+
     let codeTo =
       selectedCountry?.currency === "XAF" && selectedCountry.id !== "cg"
         ? "cam"
@@ -272,7 +279,7 @@ const Page = (props: Props) => {
         : selectedCountry?.id;
 
     if (parseInt(coutryData?.TelMaxNumber as string) !== phone.length) {
-      return errorMessage(`Veillez entrer un numéro valide!`);
+      return infoMessage(`Veillez s'il vous plait entrer un numéro valide`);
     }
 
     setPending(true);
@@ -289,6 +296,7 @@ const Page = (props: Props) => {
       code: `${codeTo}-${userData?.Country.name}`,
       status: "WAITING" as any,
       origin: selectedCountry?.id as string,
+      dateTime: moment().format("DD-MM-YYYY"),
     };
 
     await createTransaction(transaction)
@@ -301,7 +309,7 @@ const Page = (props: Props) => {
       })
       .catch((el) => {
         errorMessage(
-          "Ops! vérifiez que toutes les informations ont été remplies avec succes."
+          "Ops! une érreur s'est produite lors de l'enregustrement de votre transaction. Veillez ressayer plutard"
         );
       })
       .finally(() => setPending(false));
