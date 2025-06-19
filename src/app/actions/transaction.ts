@@ -15,11 +15,9 @@ export const createTransaction = async (
   transaction: ITrasanctionData
 ): Promise<ITrasanctionResponse> => {
   const accessToken = cookies().get("accessToken")?.value;
-  console.log(transaction);
   const { data } = await instance.post("transaction/create", transaction, {
     headers: { Authorization: `Bearer ${accessToken}` },
   });
-  console.log(data);
   return data;
 };
 

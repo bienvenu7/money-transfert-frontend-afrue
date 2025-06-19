@@ -6,7 +6,7 @@ import { ITrasanctionResponse } from "@/types/transaction";
 import Confirmation from "./Confirmation";
 import { updateTransaction } from "@/app/actions/transaction";
 import { useParams, useRouter } from "next/navigation";
-import { successMessage } from "@/app/utils/notification";
+import { infoMessage, successMessage } from "@/app/utils/notification";
 import { ICountry } from "@/types/country";
 import Cookies from "js-cookie";
 
@@ -38,6 +38,17 @@ const Wrapper = ({ card, transaction }: Props) => {
     e: React.MouseEvent<HTMLButtonElement, MouseEvent>
   ) => {
     e.preventDefault();
+
+    if (phone.length !== parseInt(country?.TelMaxNumber as string)) {
+      return infoMessage("Le numéro d'envoie n'est pas correcte");
+    }
+
+    if (hour === "") {
+      return infoMessage(
+        "Veillez s'il vous plait selectionner une heure précise!"
+      );
+    }
+
     setLoading(true);
 
     const myHour = hour.split(":");
@@ -149,6 +160,7 @@ const Wrapper = ({ card, transaction }: Props) => {
                 type={"tel"}
                 placeholder="Numero d'envoie"
                 value={phone}
+                maxLength={parseInt(country?.TelMaxNumber as string)}
               />
             </div>
             <div className="transfert__confirmation--content__right--input">

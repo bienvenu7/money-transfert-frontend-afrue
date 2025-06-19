@@ -27,6 +27,7 @@ const initialState: IInitialTransaction = {
     receiverName: "",
     receiverPhone: "",
     origin: "",
+    dateTime: "",
   },
   countryTo: null,
   countryFrom: null,

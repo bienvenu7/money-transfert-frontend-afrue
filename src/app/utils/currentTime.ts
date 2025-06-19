@@ -8,8 +8,8 @@ export const localTime = (utcTimestamp: number) =>
 
 export const actualMonth = moment().locale("fr").format("MMMM");
 export const actualYear = moment().format("YYYY");
-export const timeCreated = (utcTimestamp: number) =>
-  moment.utc(utcTimestamp).tz(userTimeZone).locale("fr").format("hh:mm a");
+export const timeCreated = (utcTimestamp: Date) =>
+  moment(utcTimestamp).tz(userTimeZone).locale("fr").format("hh:mm a");
 
 export const day = (utcTimestamp: number) =>
   moment
@@ -21,3 +21,6 @@ export const day = (utcTimestamp: number) =>
 export const actualDate = moment().utc().toString();
 export const toFormatDate = (dateTime: string) =>
   moment(dateTime).format("DD-MM-YYYY");
+
+export const fromDate = (date: string) =>
+  moment(date, "DDMMYYYY").locale("fr").format("dddd Do MMMM, YYYY");

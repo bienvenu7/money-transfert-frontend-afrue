@@ -1,4 +1,4 @@
-import { day, timeCreated } from "@/app/utils/currentTime";
+import { day, fromDate, timeCreated } from "@/app/utils/currentTime";
 import { ITrasanctionResponse, Status } from "@/types/transaction";
 import { IClientResponse } from "@/types/user";
 import Image from "next/image";
@@ -36,17 +36,15 @@ const CardMobile = ({ el, clientData }: Props) => {
         </div>
         <span>{el.receiverName}</span>
         <div className="date">
-          <p>{`${day(parseInt(el.dateTime))}`}</p>
-          <span>{timeCreated(parseInt(el.dateTime))}</span>
+          <p>{`${fromDate(el.dateTime)}`}</p>
+          <span>{timeCreated(el.createdAt)}</span>
         </div>
       </div>
       <div className="history__histories--card__right">
         <p>{el.Network.pubicName}</p>
         <div className="date">
-          <p>{`${day(parseInt(el.dateTime))}`}</p>
-          <span>
-            {el.hour === "" ? timeCreated(parseInt(el.dateTime)) : el.hour}
-          </span>
+          <p>{`${fromDate(el.dateTime)}`}</p>
+          <span>{el.hour === "" ? timeCreated(el.createdAt) : el.hour}</span>
         </div>
         <small className={el.type === "receive" ? "" : "red"}>
           {clientData.Country.currency} {el.amountToSend}
