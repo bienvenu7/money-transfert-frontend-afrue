@@ -44,7 +44,7 @@ const CardMobile = ({ el, clientData }: Props) => {
         <p>{el.Network.pubicName}</p>
         <div className="date">
           <p>{`${fromDate(el.dateTime)}`}</p>
-          <span>{el.hour === "" ? timeCreated(el.createdAt) : el.hour}</span>
+          <span>{timeCreated(el.createdAt)}</span>
         </div>
         <small className={el.type === "receive" ? "" : "red"}>
           {clientData.Country.currency} {el.amountToSend}

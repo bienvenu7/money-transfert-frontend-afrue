@@ -14,6 +14,8 @@ import { useEffect, useState } from "react";
 import { ICountry } from "@/types/country";
 import { getCountries } from "../utils/getCountry";
 import Cookies from "js-cookie";
+import { motion, Variants } from "framer-motion";
+import { TfiComment } from "react-icons/tfi";
 
 // export const metadata: Metadata = {
 //   icons: {
@@ -28,6 +30,29 @@ import Cookies from "js-cookie";
 //   },
 // };
 
+// Animation variants
+const sectionVariants: Variants = {
+  hidden: { opacity: 0, y: 50 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: {
+      duration: 0.6,
+      ease: "easeOut",
+    },
+  },
+};
+
+// Configuration du viewport avec typage
+const viewportConfig: {
+  once: boolean;
+  margin?: string;
+  amount?: "some" | "all" | number;
+} = {
+  once: true,
+  margin: "-100px",
+};
+
 export default function Home() {
   useEffect(() => {
     const getCountriesList = async () => {
@@ -40,13 +65,53 @@ export default function Home() {
 
   return (
     <main className="main__container">
+      {/* help button */}
+      <button className="help__button">
+        <TfiComment />
+      </button>
       <Cover />
-      <About />
-      <Difference />
-      <Advantage />
+      <motion.section
+        initial="hidden"
+        whileInView="visible"
+        viewport={viewportConfig}
+        variants={sectionVariants}
+      >
+        <About />
+      </motion.section>
+      <motion.section
+        initial="hidden"
+        whileInView="visible"
+        viewport={viewportConfig}
+        variants={sectionVariants}
+      >
+        <Difference />
+      </motion.section>
+      <motion.section
+        initial="hidden"
+        whileInView="visible"
+        viewport={viewportConfig}
+        variants={sectionVariants}
+      >
+        <Advantage />
+      </motion.section>
+      <motion.section
+        initial="hidden"
+        whileInView="visible"
+        viewport={viewportConfig}
+        variants={sectionVariants}
+      >
+        <Show />
+      </motion.section>
+      <motion.section
+        initial="hidden"
+        whileInView="visible"
+        viewport={viewportConfig}
+        variants={sectionVariants}
+      >
+        <Partners />
+      </motion.section>
       {/* <Faq /> */}
-      <Show />
-      <Partners />
+
       <Footer />
     </main>
   );

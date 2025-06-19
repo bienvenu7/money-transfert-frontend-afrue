@@ -318,7 +318,9 @@ const Page = (props: Props) => {
   // Removed console.logs for production
 
   let frais = (amount * parseInt(rate?.frais as string)) / 100;
-  let total = frais + amount * (1 + parseInt(rate?.taux as string));
+  let total = !withFees
+    ? amount * parseInt(rate?.taux as string)
+    : (amount - frais) * parseInt(rate?.taux as string);
 
   return (
     <div className="transfert__container">
@@ -341,7 +343,7 @@ const Page = (props: Props) => {
                   alt={selectedCountry?.name as string}
                 />
                 <div className="text">
-                  <small>Sélectionez le pays du bénéficiaire</small>
+                  <small>{`Sélectionez le pays de l'expéditeur`}</small>
                   <span>{selectedCountry?.name}</span>
                 </div>
               </div>
@@ -376,7 +378,7 @@ const Page = (props: Props) => {
               <div className="transfert__content__convert">
                 <div className="transfert__content__convert--wrapper">
                   <div className="transfert__content__convert--input">
-                    <label htmlFor="amount">Montant envoyé</label>
+                    <label htmlFor="amount">Montant à envoyer</label>
                     <div>
                       <input
                         id="amount"
@@ -402,7 +404,7 @@ const Page = (props: Props) => {
                     <Svgs name="exchange" />
                   </button>
                   <div className="transfert__content__convert--input">
-                    <label htmlFor="amount">Montant envoyé</label>
+                    <label htmlFor="amount">Montant à recevoir</label>
                     <div>
                       <input
                         readOnly
@@ -526,7 +528,7 @@ const Page = (props: Props) => {
           <div className="transfert__details--row">
             <h3>Frais de transfert</h3>
             <span>
-              {(amount * parseInt(rate?.frais as string)) / 100}{" "}
+              {withFees ? "0" : frais}
               {selectedCountry?.currency}
             </span>
           </div>
@@ -540,8 +542,7 @@ const Page = (props: Props) => {
           <div className="transfert__details--row">
             <h3>Total Le bénéficiaire reçoit</h3>
             <span>
-              {amount * parseInt(rate?.taux as string)}{" "}
-              {userData?.Country.currency}
+              {total} {userData?.Country.currency}
             </span>
           </div>
           <hr />

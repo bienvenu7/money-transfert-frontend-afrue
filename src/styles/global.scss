@@ -3103,12 +3103,75 @@ html {
 .main {
   &__container {
     width: 100vw;
-    height: auto;
+    height: 100vh;
     display: flex;
     align-items: center;
-    justify-content: center;
+    justify-content: flex-start;
     flex-direction: column;
     overflow: hidden;
+    overflow-y: scroll;
+    position: relative;
+    scroll-behavior: smooth;
+
+    /* styles/globals.css */
+    &::-webkit-scrollbar {
+      width: 10px; /* Largeur de la scrollbar */
+      height: 50px; /* Hauteur pour la scrollbar horizontale */
+    }
+
+    &::-webkit-scrollbar-track {
+      background: transparent; /* Couleur de la piste */
+      border-radius: 10px;
+    }
+
+    &::-webkit-scrollbar-thumb {
+      background: $blue-clr; /* Couleur du curseur */
+      border-radius: 10px;
+    }
+
+    &::-webkit-scrollbar-thumb:hover {
+      background: #555; /* Couleur au survol */
+    }
+
+    & > .help {
+      &__button {
+        all: unset;
+        width: 72px;
+        height: 72px;
+        border-radius: 50%;
+        background: rgba(255, 255, 255, 0.4);
+        backdrop-filter: blur(10px);
+        position: fixed !important;
+        bottom: 50px;
+        right: 50px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        z-index: 5;
+        cursor: pointer;
+        transition: all 300ms ease-in;
+
+        @include mobile {
+          bottom: 20px;
+          right: 10px;
+        }
+
+        &:hover {
+          background: rgba($color: $blue-clr, $alpha: 0.5);
+          transition: all 300ms ease-out;
+
+          & > svg {
+            color: $white-clr;
+          }
+        }
+
+        & > svg {
+          width: 26px;
+          height: 26px;
+          color: $blue-clr;
+        }
+      }
+    }
   }
 
   &__wrapper {
@@ -3118,7 +3181,7 @@ html {
 
   &__cover {
     width: 100%;
-    height: 100vh;
+    min-height: 100vh;
     background-color: #fff;
 
     @include mobile {
@@ -4972,6 +5035,13 @@ html {
           display: flex;
           gap: 10px;
           align-items: center;
+
+          & > input {
+            width: 22px;
+            height: 22px;
+            border-radius: 50% !important;
+            background-color: none;
+          }
 
           & > label {
             font-size: 16px;
