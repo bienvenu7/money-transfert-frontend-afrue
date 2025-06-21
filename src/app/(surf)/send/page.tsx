@@ -463,7 +463,7 @@ const Page = (props: Props) => {
                           const regex = /^[A-Za-z\s]+$/;
                           if (
                             regex.test(e.target.value) ||
-                            e.target.value === " "
+                            e.target.value === ""
                           ) {
                             setName(e.target.value);
                           }

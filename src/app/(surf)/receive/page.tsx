@@ -454,7 +454,10 @@ const Page = (props: Props) => {
                         value={name}
                         onChange={(e) => {
                           const regex = /^[A-Za-z\s]+$/;
-                          if (regex.test(e.target.value)) {
+                          if (
+                            regex.test(e.target.value) ||
+                            e.target.value === ""
+                          ) {
                             setName(e.target.value);
                           }
                         }}
