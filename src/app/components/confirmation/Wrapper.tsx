@@ -63,7 +63,7 @@ const Wrapper = ({ card, transaction }: Props) => {
 
     await updateTransaction(
       params.transactionId as string,
-      phone,
+      `${country?.name === "ru" ? name : phone}`,
       `${myHour[0]}h${myHour[1]}`,
       card.phone,
       "INPROGRESS" as any,
@@ -170,7 +170,7 @@ const Wrapper = ({ card, transaction }: Props) => {
                   value={name}
                   onChange={(e) => {
                     const regex = /^[A-Za-z\s]+$/;
-                    if (regex.test(e.target.value)) {
+                    if (regex.test(e.target.value) || e.target.value === " ") {
                       setName(e.target.value);
                     }
                   }}
