@@ -278,7 +278,12 @@ const Page = (props: Props) => {
         ? "sen"
         : selectedCountry?.id;
 
-    if (parseInt(coutryData?.TelMaxNumber as string) !== phone.length) {
+    if (
+      parseInt(
+        countryList?.find((el) => el.name === selectedCountry?.id)
+          ?.TelMaxNumber as string
+      ) !== phone.length
+    ) {
       return infoMessage(`Veillez s'il vous plait entrer un numéro valide`);
     }
 
