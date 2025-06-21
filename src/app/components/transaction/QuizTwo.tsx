@@ -28,44 +28,18 @@ import { INetworkResponse } from "@/types/networks";
 type Props = {};
 
 const QuizTwo = () => {
-  const dispatch = useDispatch<AppDispatch>();
-  const type = useSelector(selectTransactionType);
-  const countryTo = useSelector(selectCountryWhereToData);
-  const countryFrom = useSelector(selectCountryFromData);
-  const transaction = useSelector(selectTransaction);
-
-  const handleNetwork = async (
-    event: React.MouseEvent<HTMLButtonElement, MouseEvent>
-  ) => {
-    event.preventDefault();
-    if (transaction.amountToPayOut === "" || transaction.amountToSend === "") {
-      return errorMessage(
-        "Veillez d'abord entrer le montant à envoyer ou soit le montant à recevoir avant de pouvoir avancer!"
-      );
-    }
-    await getNetworksById(countryTo?.id as string)
-      .then((el) => dispatch(getNetworks(el as INetworkResponse[])))
-      .catch((err) => console.log(err));
-    dispatch(getCode(`${countryFrom?.name}-${countryTo?.name}`));
-    dispatch(getStep(1));
-  };
-
   return (
     <div className="transfert__slides--first">
       <Image src="/grad.png" alt="" fill />
-      <h2>{`Entrez le montant que vous souhaiter ${
-        type === "send" ? "envoyer" : "recevoir"
-      }  pour pouvoir avoir l'aperçu de la somme à ${
-        type === "send" ? "recevoir" : "envoyer"
-      } :`}</h2>
+      <h2>{`Entrez le montant que vous souhaiter`}</h2>
       <div className="transfert__convert">
         <Convertisseur />
       </div>
       <div className="btns">
-        <button onClick={() => dispatch(getStep(-1))} type={"button"}>
+        <button type={"button"}>
           <AiOutlineDown />
         </button>
-        <button onClick={handleNetwork} type={"button"}>
+        <button type={"button"}>
           <AiOutlineDown />
         </button>
       </div>

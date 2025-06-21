@@ -12,33 +12,14 @@ import ConvertReceive from "./ConvertReceive";
 import { getRate } from "@/app/utils/getCountry";
 
 const Convertisseur = () => {
-  const transactionType = useSelector(selectTransactionType);
-  const countryWhereToData = useSelector(selectCountryWhereToData);
-  const countryFrom = useSelector(selectCountryFromData);
-
-  const [rate, setRate] = useState("");
-  const exchange = "2.5";
-
-  useEffect(() => {
-    const myRate = async () =>
-      await getRate(`${countryFrom?.name}-${countryWhereToData?.name}`);
-    myRate();
-  }, []);
-
   return (
     <div className="transfert__convert--wrapper">
       <div className="transfert__convert--list">
-        <Convert
-          rate={exchange}
-          isAuthUser={transactionType === "send" ? true : false}
-        />
+        <Convert />
         <button>
           <Svgs name="exchange" />
         </button>
-        <ConvertReceive
-          rate={exchange}
-          isAuthUser={transactionType === "receive" ? true : false}
-        />
+        <ConvertReceive />
       </div>
       <div className="transfert__convert--content">
         <div>

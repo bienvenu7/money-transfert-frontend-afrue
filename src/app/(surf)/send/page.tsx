@@ -470,7 +470,11 @@ const Page = (props: Props) => {
                         placeholder="000 000 00 00"
                         value={phone}
                         minLength={parseInt(coutryData?.TelMaxNumber as string)}
-                        maxLength={parseInt(coutryData?.TelMaxNumber as string)}
+                        maxLength={parseInt(
+                          countryList?.find(
+                            (el) => el.name === selectedCountry?.id
+                          )?.TelMaxNumber as string
+                        )}
                         onChange={(e) => {
                           let regex = /^\d+$/;
                           if (

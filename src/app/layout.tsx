@@ -7,6 +7,9 @@ import ToastProvider from "./utils/ToastProvider";
 import { Metadata } from "next";
 import { store } from "@/redux/store";
 import manifest from "@/seo/manifest";
+import { getCountries } from "./utils/getCountry";
+import { ICountry } from "@/types/country";
+import { cookies } from "next/headers";
 
 export const metadata: Metadata = {
   icons: {
@@ -17,7 +20,7 @@ export const metadata: Metadata = {
   manifest: "/seo/manifest.json",
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;

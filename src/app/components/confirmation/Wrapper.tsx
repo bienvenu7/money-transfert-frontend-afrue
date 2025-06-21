@@ -19,6 +19,7 @@ const Wrapper = ({ card, transaction }: Props) => {
   const [step, setStep] = useState<number>(1);
   const [hour, setHour] = useState("");
   const [phone, setPhone] = useState("");
+  const [name, setName] = useState("");
   const params = useParams();
   const router = useRouter();
   const [loading, setLoading] = useState(false);
@@ -39,7 +40,14 @@ const Wrapper = ({ card, transaction }: Props) => {
   ) => {
     e.preventDefault();
 
-    if (phone.length !== parseInt(country?.TelMaxNumber as string)) {
+    if (
+      country?.name !== "ru" &&
+      phone.length !== parseInt(country?.TelMaxNumber as string)
+    ) {
+      return infoMessage("Le numéro d'envoie n'est pas correcte");
+    }
+
+    if (country?.name === "ru" && name === "") {
       return infoMessage("Le numéro d'envoie n'est pas correcte");
     }
 
@@ -150,19 +158,39 @@ const Wrapper = ({ card, transaction }: Props) => {
         >
           <h2>Informations relatives au depot</h2>
           <div className="transfert__confirmation--content__right--forms">
-            <div className="transfert__confirmation--content__right--input">
-              <label className="confirm" htmlFor="phone">
-                {`Numero d'envoie, ex: 066779090`}
-              </label>
-              <input
-                id="phone"
-                onChange={(e) => setPhone(e.target.value)}
-                type={"tel"}
-                placeholder="Numero d'envoie"
-                value={phone}
-                maxLength={parseInt(country?.TelMaxNumber as string)}
-              />
-            </div>
+            {country?.name === "ru" ? (
+              <div className="transfert__confirmation--content__right--input">
+                <label className="confirm" htmlFor="name">
+                  {`Nom rélié au compte, ex: El Nuntia`}
+                </label>
+                <input
+                  id="name"
+                  type="text"
+                  placeholder="Nom rélié au compte"
+                  value={name}
+                  onChange={(e) => {
+                    const regex = /^[A-Za-z\s]+$/;
+                    if (regex.test(e.target.value)) {
+                      setName(e.target.value);
+                    }
+                  }}
+                />
+              </div>
+            ) : (
+              <div className="transfert__confirmation--content__right--input">
+                <label className="confirm" htmlFor="phone">
+                  {`Numero d'envoie, ex: 066779090`}
+                </label>
+                <input
+                  id="phone"
+                  onChange={(e) => setPhone(e.target.value)}
+                  type={"tel"}
+                  placeholder="Numero d'envoie"
+                  value={phone}
+                  maxLength={parseInt(country?.TelMaxNumber as string)}
+                />
+              </div>
+            )}
             <div className="transfert__confirmation--content__right--input">
               <label className="confirm" htmlFor="hour">
                 {`Heure précise, ex: 14h05`}

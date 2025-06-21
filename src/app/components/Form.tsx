@@ -11,6 +11,7 @@ import { IBadResquestErrorData, IBaseErrorData } from "@/types/fetch";
 import { useRouter } from "next/navigation";
 import { isValidPassword } from "../utils/errorHandle";
 import { FaRegEye, FaRegEyeSlash } from "react-icons/fa6";
+import Cookies from "js-cookie";
 
 type Props = {
   pageName: string;
@@ -115,6 +116,11 @@ const Form = ({ pageName }: Props) => {
       setIsLoading(false);
       return setEmailError("Votre addresse email n'est pas valide.");
     } else {
+      //country saving
+      await getCountries()
+        .then((el) => Cookies.set("list", JSON.stringify(el as ICountry[])))
+        .catch((el) => console.log(el));
+
       //handling login to the server👇🏽
       await login(email, password)
         .then((el) => {

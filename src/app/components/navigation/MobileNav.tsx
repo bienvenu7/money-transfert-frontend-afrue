@@ -150,7 +150,7 @@ const MobileNav = () => {
           <ul className="navbar__mobile--list">
             <a href="/#about">A propos</a>
             <a href="/#advantage">Avantages</a>
-            <a href="">Transaction</a>
+            <a href="">Convertisseur</a>
             <a href="/#faq">FAQ</a>
           </ul>
           <div className="navbar__mobile--btn">

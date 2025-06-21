@@ -16,6 +16,7 @@ import { getCountries } from "../utils/getCountry";
 import Cookies from "js-cookie";
 import { motion, Variants } from "framer-motion";
 import { TfiComment } from "react-icons/tfi";
+import QuizTwo from "../components/transaction/QuizTwo";
 
 // export const metadata: Metadata = {
 //   icons: {
@@ -65,10 +66,6 @@ export default function Home() {
 
   return (
     <main className="main__container">
-      {/* help button */}
-      <button className="help__button">
-        <TfiComment />
-      </button>
       <Cover />
       <motion.section
         initial="hidden"
@@ -77,6 +74,20 @@ export default function Home() {
         variants={sectionVariants}
       >
         <About />
+      </motion.section>
+      <motion.section
+        initial="hidden"
+        whileInView="visible"
+        viewport={viewportConfig}
+        variants={sectionVariants}
+      >
+        <div className="transfert__slides">
+          <div className="transfert__slides--wrapper">
+            <div className="transfert__slides--box">
+              <QuizTwo />
+            </div>
+          </div>
+        </div>
       </motion.section>
       <motion.section
         initial="hidden"
