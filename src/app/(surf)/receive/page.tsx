@@ -302,6 +302,7 @@ const Page = (props: Props) => {
     }
 
     setPending(true);
+    //why it is not working
 
     const transaction: ITrasanctionData = {
       amountToSend: totalSend.toString(),
