@@ -174,6 +174,7 @@ const Page = (props: Props) => {
   const [netId, setNetId] = useState<INetworkResponse | null>(null);
   const [pending, setPending] = useState<boolean>(false);
   const [coutryData, setCountryData] = useState<ICountry | null>(null);
+  const [errAmount, setErrAmount] = useState<boolean>(false);
 
   const router = useRouter();
 
@@ -269,6 +270,18 @@ const Page = (props: Props) => {
       return infoMessage(
         "S'il vous plait, vérifiez que vous aviez correctement remplis le formulaire d'envoie!"
       );
+    }
+
+    if (
+      amount < parseInt(rate?.intervalMin as string) ||
+      amount > parseInt(rate?.intervalMax as string)
+    ) {
+      infoMessage(
+        `le montant à envoyer doit être compris entre ${
+          (rate?.intervalMin as string) + " " + selectedCountry?.currency
+        } et ${(rate?.intervalMax as string) + " " + selectedCountry?.currency}`
+      );
+      return setErrAmount(true);
     }
 
     let codeTo =
@@ -377,17 +390,35 @@ const Page = (props: Props) => {
             <>
               <div className="transfert__content__convert">
                 <div className="transfert__content__convert--wrapper">
-                  <div className="transfert__content__convert--input">
+                  <div
+                    className={
+                      errAmount
+                        ? "transfert__content__convert--input err"
+                        : "transfert__content__convert--input"
+                    }
+                  >
                     <label htmlFor="amount">Montant à envoyer</label>
                     <div>
                       <input
                         id="amount"
                         type="text"
                         value={amount}
+                        className={errAmount ? "err" : ""}
                         onChange={(el) => {
                           if (el.target.value === "") {
                             setAmount(0);
                           } else {
+                            if (
+                              parseInt(el.target.value) <
+                                parseInt(rate?.intervalMin as string) ||
+                              parseInt(el.target.value) >
+                                parseInt(rate?.intervalMax as string)
+                            ) {
+                              setErrAmount(true);
+                            } else {
+                              setErrAmount(false);
+                            }
+
                             setAmount(parseInt(el.target.value));
                             setAmountToReceive(
                               parseInt(el.target.value) *

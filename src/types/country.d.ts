@@ -15,4 +15,6 @@ export interface IRate {
   Total: string;
   frais: string;
   taux: string;
+  intervalMin: string;
+  intervalMax: string;
 }

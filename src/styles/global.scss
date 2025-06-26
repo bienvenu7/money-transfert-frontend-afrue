@@ -4922,6 +4922,10 @@ html {
         gap: 5px;
         width: 300px;
 
+        &.err {
+          border: 1px solid $red-clr;
+        }
+
         @include mobile {
           width: 100%;
           padding: 15px 20px;
@@ -4947,6 +4951,10 @@ html {
             font-size: 16px;
             font-weight: 600;
             width: 100%;
+
+            &.err {
+              color: $red-clr;
+            }
 
             @include mobile {
               font-size: 18px;

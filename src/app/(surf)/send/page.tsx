@@ -174,6 +174,7 @@ const Page = (props: Props) => {
   const [netId, setNetId] = useState<INetworkResponse | null>(null);
   const [pending, setPending] = useState<boolean>(false);
   const [coutryData, setCountryData] = useState<ICountry | null>(null);
+  const [errAmount, setErrAmount] = useState<boolean>(false);
 
   const router = useRouter();
 
@@ -202,7 +203,10 @@ const Page = (props: Props) => {
       try {
         const code = `${userData.Country.name}-${codeTo}`;
         const rateData = await getRate(code);
-        if (isMounted) setRate(rateData);
+        if (isMounted) {
+          setRate(rateData);
+          setAmount(parseInt(rateData.intervalMin));
+        }
       } catch (err) {
         console.error("Fetch rates error", err);
       } finally {
@@ -269,6 +273,20 @@ const Page = (props: Props) => {
       return infoMessage(
         "S'il vous plait, vérifiez que vous aviez correctement remplis le formulaire d'envoie!"
       );
+    }
+
+    if (
+      amount < parseInt(rate?.intervalMin as string) ||
+      amount > parseInt(rate?.intervalMax as string)
+    ) {
+      infoMessage(
+        `le montant à envoyer doit être compris entre ${
+          (rate?.intervalMin as string) + " " + userData?.Country.currency
+        } et ${
+          (rate?.intervalMax as string) + " " + userData?.Country.currency
+        }`
+      );
+      return setErrAmount(true);
     }
 
     let codeTo =
@@ -384,17 +402,35 @@ const Page = (props: Props) => {
             <>
               <div className="transfert__content__convert">
                 <div className="transfert__content__convert--wrapper">
-                  <div className="transfert__content__convert--input">
-                    <label htmlFor="amount">Montant envoyé</label>
+                  <div
+                    className={
+                      errAmount
+                        ? "transfert__content__convert--input err"
+                        : "transfert__content__convert--input"
+                    }
+                  >
+                    <label htmlFor="amount">Montant à envoyer</label>
                     <div>
                       <input
                         id="amount"
                         type="text"
                         value={amount}
+                        className={errAmount ? "err" : ""}
                         onChange={(el) => {
                           if (el.target.value === "") {
                             setAmount(0);
                           } else {
+                            if (
+                              parseInt(el.target.value) <
+                                parseInt(rate?.intervalMin as string) ||
+                              parseInt(el.target.value) >
+                                parseInt(rate?.intervalMax as string)
+                            ) {
+                              setErrAmount(true);
+                            } else {
+                              setErrAmount(false);
+                            }
+
                             setAmount(parseInt(el.target.value));
                             setAmountToReceive(
                               parseInt(el.target.value) *
@@ -411,7 +447,7 @@ const Page = (props: Props) => {
                     <Svgs name="exchange" />
                   </button>
                   <div className="transfert__content__convert--input">
-                    <label htmlFor="amount">Montant envoyé</label>
+                    <label htmlFor="amount">Montant à recevoir</label>
                     <div>
                       <input
                         readOnly
