@@ -201,7 +201,7 @@ const Page = (props: Props) => {
       );
 
       try {
-        const code = `${userData.Country.name}-${codeTo}`;
+        const code = `${codeTo}-${userData.Country.name}`;
         const rateData = await getRate(code);
         if (isMounted) setRate(rateData);
       } catch (err) {
