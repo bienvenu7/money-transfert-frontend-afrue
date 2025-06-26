@@ -434,7 +434,7 @@ const Page = (props: Props) => {
                             setAmount(parseInt(el.target.value));
                             setAmountToReceive(
                               parseInt(el.target.value) *
-                                parseInt(rate?.taux as string)
+                                parseFloat(rate?.taux as string)
                             );
                           }
                         }}
