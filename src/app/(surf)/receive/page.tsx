@@ -261,6 +261,12 @@ const Page = (props: Props) => {
       .catch((e) => console.error(e));
   };
 
+  let frais = (amount * parseInt(rate?.frais as string)) / 100;
+  let totalSend = !withFees ? frais + amount : amount - frais;
+  let amountToreceive = !withFees
+    ? amount * parseFloat(rate?.taux as string)
+    : parseFloat(rate?.taux as string) * (amount - frais);
+
   const createTransactions = async (
     event: React.MouseEvent<HTMLButtonElement, MouseEvent>
   ) => {
@@ -298,8 +304,8 @@ const Page = (props: Props) => {
     setPending(true);
 
     const transaction: ITrasanctionData = {
-      amountToSend: amount.toString(),
-      amountToPayOut: amountToReceive.toString(),
+      amountToSend: totalSend.toString(),
+      amountToPayOut: amountToreceive.toString(),
       clientEmail: userData?.email as string,
       fees: fee,
       networkId: netId?.id as string,
@@ -329,11 +335,6 @@ const Page = (props: Props) => {
   };
 
   // Removed console.logs for production
-
-  let frais = (amount * parseInt(rate?.frais as string)) / 100;
-  let total = !withFees
-    ? amount * parseInt(rate?.taux as string)
-    : (amount - frais) * parseInt(rate?.taux as string);
 
   return (
     <div className="transfert__container">
@@ -457,17 +458,15 @@ const Page = (props: Props) => {
                     {`Le taux de change varie en fonction du mode d'envoi et de
               paiement.`}
                   </p>
-                  {rate?.iltineraire === "Congo-Russie" && (
-                    <div className="frais">
-                      <input
-                        type="checkbox"
-                        name=""
-                        id="frais"
-                        onChange={(e) => setWithFees(e.target.checked)}
-                      />
-                      <label htmlFor="frais">Inclure les frais</label>
-                    </div>
-                  )}
+                  <div className="frais">
+                    <input
+                      type="checkbox"
+                      name=""
+                      id="frais"
+                      onChange={(e) => setWithFees(e.target.checked)}
+                    />
+                    <label htmlFor="frais">Inclure les frais</label>
+                  </div>
                 </div>
               </div>
               <div className="transfert__content__convert">
@@ -562,21 +561,22 @@ const Page = (props: Props) => {
           <div className="transfert__details--row">
             <h3>Frais de transfert</h3>
             <span>
-              {withFees ? "0" : frais}
+              {withFees ? "-" : ""}
+              {(amount * parseInt(rate?.frais as string)) / 100}{" "}
               {selectedCountry?.currency}
             </span>
           </div>
           <div className="transfert__details--row">
             <h3>Total du transfert</h3>
             <span>
-              {amount + frais}
+              {totalSend}
               {selectedCountry?.currency}
             </span>
           </div>
           <div className="transfert__details--row">
             <h3>Total Le bénéficiaire reçoit</h3>
             <span>
-              {total} {userData?.Country.currency}
+              {amountToreceive} {userData?.Country.currency}
             </span>
           </div>
           <hr />
