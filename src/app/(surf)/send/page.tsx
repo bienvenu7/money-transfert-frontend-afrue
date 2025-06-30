@@ -426,6 +426,7 @@ const Page = (props: Props) => {
                         onChange={(el) => {
                           if (el.target.value === "") {
                             setAmount(0);
+                            setAmountToReceive(0);
                           } else {
                             if (
                               parseInt(el.target.value) <
