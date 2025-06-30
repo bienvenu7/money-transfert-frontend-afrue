@@ -205,7 +205,11 @@ const Page = (props: Props) => {
         const rateData = await getRate(code);
         if (isMounted) {
           setRate(rateData);
-          setAmount(parseInt(rateData.intervalMin));
+          setAmount(parseInt(rateData?.intervalMin));
+          setAmountToReceive(
+            parseInt(rateData?.intervalMin) *
+              parseFloat(rateData?.taux as string)
+          );
         }
       } catch (err) {
         console.error("Fetch rates error", err);
@@ -453,11 +457,34 @@ const Page = (props: Props) => {
                     <label htmlFor="amount">Montant à recevoir</label>
                     <div>
                       <input
-                        readOnly
                         id="amount"
                         type="text"
                         value={amountToReceive}
                         placeholder=""
+                        onChange={(event) => {
+                          if (event.target.value === "") {
+                            setAmount(0);
+                            setAmountToReceive(0);
+                          } else {
+                            if (
+                              parseInt(event.target.value) <
+                                parseInt(rate?.intervalMin as string) ||
+                              parseInt(event.target.value) >
+                                parseInt(rate?.intervalMax as string)
+                            ) {
+                              setErrAmount(true);
+                            } else {
+                              setErrAmount(false);
+                            }
+                            setAmount(
+                              Math.round(
+                                parseInt(event.target.value) /
+                                  parseFloat(rate?.taux as string)
+                              )
+                            );
+                            setAmountToReceive(parseInt(event.target.value));
+                          }
+                        }}
                       />
                       <span>{selectedCountry?.currency}</span>
                     </div>
