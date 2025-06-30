@@ -264,7 +264,7 @@ const Page = (props: Props) => {
       .catch((e) => console.error(e));
   };
 
-  let frais = (amount * parseInt(rate?.frais as string)) / 100;
+  let frais = (amount * parseFloat(rate?.frais as string)) / 100;
   let totalSend = !withFees ? frais + amount : amount - frais;
   let amountToreceive = !withFees
     ? amount * parseFloat(rate?.taux as string)
@@ -587,7 +587,7 @@ const Page = (props: Props) => {
             <h3>Frais de transfert</h3>
             <span>
               {withFees ? "-" : ""}
-              {(amount * parseInt(rate?.frais as string)) / 100}{" "}
+              {(amount * parseFloat(rate?.frais as string)) / 100}{" "}
               {userData?.Country.currency}
             </span>
           </div>
