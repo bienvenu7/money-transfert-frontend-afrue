@@ -1,5 +1,6 @@
 "use client";
 import { infoMessage, successMessage } from "@/app/utils/notification";
+import { useClipboard } from "use-clipboard-copy";
 import React, { useState } from "react";
 
 type Props = {
@@ -13,14 +14,22 @@ type Props = {
 const Copied = ({ method, motant, name, phone, setStep }: Props) => {
   const [copied, setCopied] = useState<boolean>(false);
 
+  const clipboard = useClipboard({
+    copiedTimeout: 1000, // Délai en ms pour le message "copié"
+  });
+
   const handleCopied = async () => {
     const textCopied = `Nom: ${name}\nNuméro: ${phone}\nMontant: ${motant}\nRéseau: ${method}`;
+
     try {
-      await navigator.clipboard.writeText(textCopied);
+      console.log(textCopied);
+
+      // await navigator.clipboard.writeText(textCopied);
+      clipboard.copy(textCopied);
       setCopied(true);
-      setStep(2);
       infoMessage("Les informations ont été copié avec succèss");
       setTimeout(() => setCopied(false), 2000);
+      setStep(2);
     } catch (error) {
       console.error("Copy failed:", error);
     }

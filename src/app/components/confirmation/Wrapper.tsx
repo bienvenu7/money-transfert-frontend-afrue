@@ -11,11 +11,10 @@ import { ICountry } from "@/types/country";
 import Cookies from "js-cookie";
 
 type Props = {
-  card: ICard;
   transaction: ITrasanctionResponse;
 };
 
-const Wrapper = ({ card, transaction }: Props) => {
+const Wrapper = ({ transaction }: Props) => {
   const [step, setStep] = useState<number>(1);
   const [hour, setHour] = useState("");
   const [phone, setPhone] = useState("");
@@ -28,12 +27,14 @@ const Wrapper = ({ card, transaction }: Props) => {
       let listData;
       listData = Cookies.get("list");
       listData = JSON.parse(listData as string) as ICountry[];
-      listData = listData.find((el) => el.id === card.countryId);
+      listData = listData.find((el) => el.id === transaction.card.countryId);
       return listData as ICountry;
     } catch (error) {
       console.log(error);
     }
   });
+
+  console.log(transaction);
 
   const confirmTransaction = async (
     e: React.MouseEvent<HTMLButtonElement, MouseEvent>
@@ -65,9 +66,7 @@ const Wrapper = ({ card, transaction }: Props) => {
       params.transactionId as string,
       `${country?.name === "ru" ? name : phone}`,
       `${myHour[0]}h${myHour[1]}`,
-      card.phone,
-      "INPROGRESS" as any,
-      card.fullName
+      "INPROGRESS" as any
     )
       .then((transaction) => {
         if (transaction.status !== "") {
@@ -103,15 +102,15 @@ const Wrapper = ({ card, transaction }: Props) => {
           <div className="transfert__confirmation--content__left--cards">
             <div className="transfert__confirmation--content__row">
               <h3>Methode</h3>
-              <span>{card?.network.pubicName}</span>
+              <span>{transaction.card?.network.pubicName}</span>
             </div>
             <div className="transfert__confirmation--content__row">
               <h3>N° du compte</h3>
-              <span>{card?.phone}</span>
+              <span>{transaction.card?.phone}</span>
             </div>
             <div className="transfert__confirmation--content__row">
               <h3>Nom</h3>
-              <span>{card?.fullName}</span>
+              <span>{transaction.card?.fullName}</span>
             </div>
             <div className="transfert__confirmation--content__row">
               <h3>Montant</h3>
@@ -121,10 +120,10 @@ const Wrapper = ({ card, transaction }: Props) => {
             </div>
           </div>
           <Copied
-            method={card?.network.pubicName}
+            method={transaction.card?.network.pubicName}
             motant={transaction.amountToSend}
-            name={card?.fullName}
-            phone={card?.phone}
+            name={transaction.card?.fullName}
+            phone={transaction.card?.phone}
             setStep={setStep}
           />
         </div>

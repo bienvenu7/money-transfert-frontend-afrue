@@ -2,7 +2,7 @@ import axios from "axios";
 
 export const baseURL =
   process.env.NODE_ENV === "production"
-    ? "https://afrue-api.onrender.com/v1/"
+    ? "http://82.146.49.197/v1/"
     : "http://localhost:9090/v1/";
 
 export const instance = axios.create({

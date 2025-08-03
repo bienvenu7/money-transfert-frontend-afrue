@@ -14,7 +14,6 @@ const page = async ({
 }: {
   params: Promise<{ transactionId: string }>;
 }) => {
-  const card = await getCardsByNetworkId((await params).transactionId);
   const transaction = await getTransactionById((await params).transactionId);
 
   //
@@ -22,7 +21,7 @@ const page = async ({
     <div className="transfert__confirmation--container">
       <div className="transfert__confirmation--wrapper">
         <Titles line1="En attente de confirmation" line2="Afru-Exchange" />
-        <Wrapper card={card} transaction={transaction} />
+        <Wrapper transaction={transaction} />
       </div>
     </div>
   );

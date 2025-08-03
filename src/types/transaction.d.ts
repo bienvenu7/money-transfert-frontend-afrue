@@ -1,4 +1,4 @@
-import { IFee, INetworkResponse } from "./networks";
+import { ICard, IFee, INetworkResponse } from "./networks";
 
 export enum Status {
   WAITING,
@@ -41,4 +41,5 @@ export interface ITrasanctionResponse extends ITrasanctionData {
   agencyPhone: string;
   agencyFullName: string;
   createdAt: Date;
+  card: ICard;
 }

@@ -25,15 +25,13 @@ export const updateTransaction = async (
   transactionId: string,
   senderNumber: string,
   hour: string,
-  reference: string,
-  status: Status,
-  agencyFullName: string
+  status: Status
 ): Promise<ITrasanctionResponse | IBaseErrorData | IBadResquestErrorData> => {
   try {
     const accessToken = cookies().get("accessToken")?.value;
     const { data } = await instance.patch(
       `transaction/update/${transactionId}`,
-      { senderNumber, hour, reference, status, agencyFullName },
+      { senderNumber, hour, status },
       {
         headers: { Authorization: `Bearer ${accessToken}` },
       }
