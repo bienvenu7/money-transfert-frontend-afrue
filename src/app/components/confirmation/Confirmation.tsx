@@ -28,9 +28,7 @@ const Confirmation = ({ card }: Props) => {
       params.transactionId as string,
       phone,
       `${myHour[0]}h${myHour[1]}`,
-      card.phone,
-      "INPROGRESS" as any,
-      card.fullName
+      "INPROGRESS" as any
     )
       .then((transaction) => {
         if (transaction.status !== "") {
