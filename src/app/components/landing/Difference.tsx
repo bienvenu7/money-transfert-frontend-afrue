@@ -1,6 +1,7 @@
 import React, { forwardRef } from "react";
 import Svgs from "../Svgs";
 import Image from "next/image";
+import { motion, useAnimation } from "framer-motion";
 
 type Props = {};
 
@@ -80,14 +81,23 @@ const Difference = forwardRef<HTMLDivElement, Props>((props, ref) => {
             <h2>Sans nous</h2>
           </div>
           <div className="main__difference--card__content">
-            {cardDatas.map((el, i) => {
-              return (
-                <div key={i} className="main__difference--card__content--line">
-                  <button>{el.svg}</button>
-                  <span>{el.title}</span>
-                </div>
-              );
-            })}
+            {cardDatas.map((el, i) => (
+              <motion.div
+                key={i}
+                className="main__difference--card__content--line"
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, amount: 0.2 }}
+                transition={{
+                  duration: 0.5,
+                  delay: i * 0.15,
+                  ease: [0.17, 0.67, 0.83, 0.67],
+                }}
+              >
+                <button>{el.svg}</button>
+                <span>{el.title}</span>
+              </motion.div>
+            ))}
           </div>
         </div>
         <div className="main__difference--card">
@@ -108,14 +118,23 @@ const Difference = forwardRef<HTMLDivElement, Props>((props, ref) => {
             <h2>Avec nous</h2>
           </div>
           <div className="main__difference--card__content">
-            {cardDatas2.map((el, i) => {
-              return (
-                <div key={i} className="main__difference--card__content--line">
-                  <button>{el.svg}</button>
-                  <span>{el.title}</span>
-                </div>
-              );
-            })}
+            {cardDatas2.map((el, i) => (
+              <motion.div
+                key={i}
+                className="main__difference--card__content--line"
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, amount: 0.2 }}
+                transition={{
+                  duration: 0.5,
+                  delay: i * 0.15,
+                  ease: [0.17, 0.67, 0.83, 0.67],
+                }}
+              >
+                <button>{el.svg}</button>
+                <span>{el.title}</span>
+              </motion.div>
+            ))}
           </div>
         </div>
       </div>

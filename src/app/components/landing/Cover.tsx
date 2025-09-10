@@ -1,6 +1,7 @@
 "use client";
 import Image from "next/image";
 import React, { useEffect, useState } from "react";
+import Convertion from "./Convertion";
 
 const headerData = [
   {
@@ -146,6 +147,7 @@ const Cover = (props: Props) => {
                 );
               })}
             </div>
+            <Convertion />
           </div>
         </div>
         <div className="main__cover--mobile">
@@ -183,6 +185,7 @@ const Cover = (props: Props) => {
               );
             })}
           </div>
+          <Convertion />
         </div>
       </div>
     </div>

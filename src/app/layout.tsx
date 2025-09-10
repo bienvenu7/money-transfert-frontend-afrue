@@ -4,6 +4,7 @@ import "react-datetime-picker/dist/DateTimePicker.css";
 import "react-calendar/dist/Calendar.css";
 import "react-clock/dist/Clock.css";
 import ToastProvider from "./utils/ToastProvider";
+import ErrorBoundary from "./components/ErrorBoundary";
 import { Metadata } from "next";
 import { store } from "@/redux/store";
 import manifest from "@/seo/manifest";
@@ -34,7 +35,9 @@ export default async function RootLayout({
         />
       </head>
       <body className={""}>
-        <ToastProvider>{children}</ToastProvider>
+        <ErrorBoundary>
+          <ToastProvider>{children}</ToastProvider>
+        </ErrorBoundary>
       </body>
     </html>
   );

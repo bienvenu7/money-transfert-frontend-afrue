@@ -1,5 +1,6 @@
 "use client";
 import { updateTransaction } from "@/app/actions/transaction";
+import { errorMessage, successMessage } from "@/app/utils/notification";
 import { ICard } from "@/types/networks";
 import { Status } from "@/types/transaction";
 import { useParams, useRouter } from "next/navigation";
@@ -31,12 +32,16 @@ const Confirmation = ({ card }: Props) => {
       "INPROGRESS" as any
     )
       .then((transaction) => {
-        if (transaction.status !== "") {
-          return router.push("/historiques");
-        }
         console.table(transaction);
+        successMessage("La transaction a été confirmé avec succès!");
+        return router.push("/historiques");
       })
-      .catch((err) => console.error(err));
+      .catch((err) => {
+        errorMessage(
+          "Une erreur s'est produite lors de la confirmation de la transaction"
+        );
+        console.error(err);
+      });
   };
 
   return (

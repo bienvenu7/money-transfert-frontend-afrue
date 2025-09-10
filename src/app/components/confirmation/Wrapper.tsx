@@ -1,12 +1,16 @@
 "use client";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Copied from "./Copied";
 import { ICard } from "@/types/networks";
 import { ITrasanctionResponse } from "@/types/transaction";
 import Confirmation from "./Confirmation";
 import { updateTransaction } from "@/app/actions/transaction";
 import { useParams, useRouter } from "next/navigation";
-import { infoMessage, successMessage } from "@/app/utils/notification";
+import {
+  errorMessage,
+  infoMessage,
+  successMessage,
+} from "@/app/utils/notification";
 import { ICountry } from "@/types/country";
 import Cookies from "js-cookie";
 
@@ -22,17 +26,26 @@ const Wrapper = ({ transaction }: Props) => {
   const params = useParams();
   const router = useRouter();
   const [loading, setLoading] = useState(false);
-  const [country] = useState<ICountry | undefined>(() => {
+  const [country, setCountry] = useState<ICountry | undefined>(undefined);
+  const [isClient, setIsClient] = useState(false);
+
+  // Initialize client-side data after hydration
+  useEffect(() => {
+    setIsClient(true);
+
     try {
-      let listData;
-      listData = Cookies.get("list");
-      listData = JSON.parse(listData as string) as ICountry[];
-      listData = listData.find((el) => el.id === transaction.card.countryId);
-      return listData as ICountry;
+      const listData = Cookies.get("list");
+      if (listData) {
+        const parsedData = JSON.parse(listData) as ICountry[];
+        const foundCountry = parsedData.find(
+          (el) => el.id === transaction.card.countryId
+        );
+        setCountry(foundCountry);
+      }
     } catch (error) {
-      console.log(error);
+      console.log("Error parsing country data", error);
     }
-  });
+  }, [transaction.card.countryId]);
 
   console.log(transaction);
 
@@ -69,14 +82,16 @@ const Wrapper = ({ transaction }: Props) => {
       "INPROGRESS" as any
     )
       .then((transaction) => {
-        if (transaction.status !== "") {
-          successMessage("La transaction a été confirmé avec succès!");
-          return router.push("/historiques");
-        }
         console.table(transaction);
-        return;
+        successMessage("La transaction a été confirmé avec succès!");
+        return router.push("/historiques");
       })
-      .catch((err) => console.error(err))
+      .catch((err) => {
+        errorMessage(
+          "Une erreur s'est produite lors de la confirmation de la transaction"
+        );
+        console.error(err);
+      })
       .finally(() => setLoading(false));
   };
 

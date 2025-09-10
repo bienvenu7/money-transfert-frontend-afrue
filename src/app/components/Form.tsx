@@ -323,7 +323,7 @@ const Form = ({ pageName }: Props) => {
           </div>
         </form>
       ) : (
-        <Otp email={email} />
+        <Otp email={email} password={null} />
       )}
     </>
   );

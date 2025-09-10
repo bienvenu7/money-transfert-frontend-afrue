@@ -99,9 +99,22 @@ export const login = async (
   }
 };
 
+export const updatePassword = async (email: string, password: string) => {
+  try {
+    const { data } = await instance.patch("auth/update-password", {
+      email,
+      password,
+    });
+    return data;
+  } catch (error: any) {
+    return error;
+  }
+};
+
 export const confirmOtp = async (
   email: string,
-  newOtp: string[]
+  newOtp: string[],
+  password: string | null
 ): Promise<
   ISuccessOtpCodeResponse | IBaseErrorData | IBadResquestErrorData
 > => {
@@ -117,21 +130,23 @@ export const confirmOtp = async (
       otp,
     });
 
-    cookies().set({
-      name: "accessToken",
-      value: data.accessToken,
-      httpOnly: true,
-      maxAge: 60 * 60 * 24,
-      path: "/",
-    });
+    if (password === null) {
+      cookies().set({
+        name: "accessToken",
+        value: data.accessToken,
+        httpOnly: true,
+        maxAge: 60 * 60 * 24,
+        path: "/",
+      });
 
-    cookies().set({
-      name: "refreshToken",
-      value: data.refreshToken,
-      httpOnly: true,
-      maxAge: 60 * 60 * 24 * 2,
-      path: "/",
-    });
+      cookies().set({
+        name: "refreshToken",
+        value: data.refreshToken,
+        httpOnly: true,
+        maxAge: 60 * 60 * 24 * 2,
+        path: "/",
+      });
+    }
 
     return successResponseOtp(data, status);
   } catch (error: any) {

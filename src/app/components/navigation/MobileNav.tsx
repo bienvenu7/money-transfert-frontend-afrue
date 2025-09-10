@@ -65,8 +65,15 @@ const MobileNav = () => {
 
   const [show, setShow] = useState(true);
   const [lastScrollY, setLastScrollY] = useState(0);
+  const [isClient, setIsClient] = useState(false);
+
+  useEffect(() => {
+    setIsClient(true);
+  }, []);
 
   const controlNavbar = () => {
+    if (typeof window === "undefined") return;
+
     if (window.scrollY <= lastScrollY) {
       // if scroll down hide the navbar
       setShow(false);
@@ -80,13 +87,15 @@ const MobileNav = () => {
   };
 
   useEffect(() => {
+    if (!isClient) return;
+
     window.addEventListener("scroll", controlNavbar);
 
     // cleanup function
     return () => {
       window.removeEventListener("scroll", controlNavbar);
     };
-  }, [lastScrollY]);
+  }, [lastScrollY, isClient]);
 
   const modalRef = useRef<HTMLDivElement>(null);
 
@@ -220,7 +229,7 @@ const MobileNav = () => {
                 <AiOutlineLogout /> <span>Se déconnecter</span>
               </button>
             ) : (
-              <button onClick={() => router.push("/auth/login")}>
+              <button onClick={() => (window.location.href = "/auth/login")}>
                 <AiOutlineLogin /> <span>Se connecter</span>
               </button>
             )}

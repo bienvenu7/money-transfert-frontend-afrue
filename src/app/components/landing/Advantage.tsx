@@ -1,6 +1,7 @@
 "use client";
 import React, { forwardRef, useState } from "react";
 import CardAdv from "./CardAdv";
+import { motion, useAnimation } from "framer-motion";
 
 const cardAdvantages = [
   {
@@ -57,17 +58,27 @@ const Advantage = forwardRef<HTMLDivElement, Props>((props, ref) => {
       <div className="main__advantage--wrapper">
         <h2>Avantages</h2>
         <div className="main__advantage--cards">
-          {cardAdvantages.map((el, index) => {
-            return (
+          {cardAdvantages.map((el, index) => (
+            <motion.div
+              key={el.id}
+              initial={{ opacity: 0, scale: 0.95 }}
+              whileInView={{ opacity: 1, scale: 1 }}
+              viewport={{ once: true, amount: 0.2 }}
+              transition={{
+                duration: 0.6,
+                delay: index * 0.15,
+                ease: [0.17, 0.67, 0.83, 0.67],
+              }}
+              style={{ width: "100%" }}
+            >
               <CardAdv
                 el={el}
-                key={el.id}
                 index={index}
                 isActive={isActive}
                 setIsActive={setIsActive}
               />
-            );
-          })}
+            </motion.div>
+          ))}
         </div>
       </div>
     </div>

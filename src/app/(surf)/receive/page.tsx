@@ -1,6 +1,7 @@
 "use client";
 import { createTransaction } from "@/app/actions/transaction";
 import Svgs from "@/app/components/Svgs";
+import { LoadingSkeleton } from "@/app/components/Loading";
 import { getCountries, getRate } from "@/app/utils/getCountry";
 import { getNetworkByAmount, getNetworksById } from "@/app/utils/network";
 import { errorMessage, infoMessage } from "@/app/utils/notification";
@@ -127,25 +128,33 @@ const flagNetwork = [
 type Props = {};
 
 const Page = (props: Props) => {
-  const [userData] = useState<IClientResponse | null>(() => {
-    // Safely parse cookie with try-catch
+  const [userData, setUserData] = useState<IClientResponse | null>(null);
+  const [countryList, setCountryList] = useState<ICountry[] | null>(null);
+  const [isClient, setIsClient] = useState(false);
+
+  // Initialize client-side data after hydration
+  useEffect(() => {
+    setIsClient(true);
+
+    // Safely parse cookies on client side
     try {
       const cookieData = Cookies.get("app_client");
-      return cookieData ? JSON.parse(cookieData) : null;
+      if (cookieData) {
+        setUserData(JSON.parse(cookieData));
+      }
     } catch (error) {
       console.error("Error parsing user cookie", error);
-      return null;
     }
-  });
 
-  const [countryList] = useState<ICountry[] | null>(() => {
     try {
       const listData = Cookies.get("list");
-      return listData ? JSON.parse(listData) : null;
+      if (listData) {
+        setCountryList(JSON.parse(listData));
+      }
     } catch (error) {
-      console.log(error);
+      console.log("Error parsing country list cookie", error);
     }
-  });
+  }, []);
 
   // Compare country IDs instead of ID vs name
   const [selectedCountry, setSelectedCountry] = useState<{
@@ -153,13 +162,17 @@ const Page = (props: Props) => {
     name: string;
     flag: string;
     currency: string;
-  } | null>(() => {
-    if (!userData?.Country?.id) return null;
-    // Find first country that doesn't match user's country ID
-    return (
-      countries.find((country) => country.id !== userData.Country.name) ?? null
-    );
-  });
+  } | null>(null);
+
+  // Set initial selected country after userData is loaded
+  useEffect(() => {
+    if (userData?.Country?.id && isClient) {
+      const initialCountry =
+        countries.find((country) => country.id !== userData.Country.name) ??
+        null;
+      setSelectedCountry(initialCountry);
+    }
+  }, [userData, isClient]);
 
   const [isOption, setIsOption] = useState<boolean>(false);
   const [rate, setRate] = useState<IRate | null>(null);
@@ -343,6 +356,17 @@ const Page = (props: Props) => {
   };
 
   // Removed console.logs for production
+
+  // Show loading state until client-side data is ready
+  if (!isClient || !userData) {
+    return (
+      <div className="transfert__container">
+        <div className="transfert__wrapper">
+          <LoadingSkeleton />
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="transfert__container">

@@ -26,20 +26,17 @@ export const updateTransaction = async (
   senderNumber: string,
   hour: string,
   status: Status
-): Promise<ITrasanctionResponse | IBaseErrorData | IBadResquestErrorData> => {
-  try {
-    const accessToken = cookies().get("accessToken")?.value;
-    const { data } = await instance.patch(
-      `transaction/update/${transactionId}`,
-      { senderNumber, hour, status },
-      {
-        headers: { Authorization: `Bearer ${accessToken}` },
-      }
-    );
-    return data;
-  } catch (error: any) {
-    return errorToSendBack(error);
-  }
+): Promise<ITrasanctionResponse> => {
+  const accessToken = cookies().get("accessToken")?.value;
+  const { data } = await instance.patch(
+    `transaction/update/${transactionId}`,
+    { senderNumber, hour, status },
+    {
+      headers: { Authorization: `Bearer ${accessToken}` },
+    }
+  );
+
+  return data;
 };
 
 export const getTransactionById = async (

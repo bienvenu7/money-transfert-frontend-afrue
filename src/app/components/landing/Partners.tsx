@@ -59,27 +59,59 @@ const Partners = forwardRef<HTMLDivElement, Props>((props, ref) => {
           line2="Afru-Exchange "
         />
       </div>
-      <div className="main__partners--pics">
-        {dataPartners.map((el, index) => {
-          return (
+      {/* Infinity scroll animation for partners */}
+      <div
+        className="main__partners--pics"
+        style={{ overflow: "hidden", width: "100%" }}
+      >
+        <div
+          style={{
+            display: "flex",
+            width: "max-content",
+            animation: "partners-infinite-scroll 30s linear infinite",
+          }}
+        >
+          {[...dataPartners, ...dataPartners].map((el, index) => (
             <img
               className={
-                index === 7
+                index % dataPartners.length === 7
                   ? "wave"
-                  : index === 8
+                  : index % dataPartners.length === 8
                   ? "orange"
-                  : index === 9
+                  : index % dataPartners.length === 9
                   ? "airtel"
-                  : index === 10
+                  : index % dataPartners.length === 10
                   ? "mtn"
                   : ""
               }
               src={el.uri}
               alt={el.name}
               key={index}
+              style={{
+                marginRight: 40,
+                height: 60,
+                width: "auto",
+                objectFit: "contain",
+                flexShrink: 0,
+              }}
             />
-          );
-        })}
+          ))}
+        </div>
+        <style>
+          {`
+            @keyframes partners-infinite-scroll {
+              0% {
+                transform: translateX(0);
+              }
+              100% {
+                transform: translateX(-50%);
+              }
+            }
+            .main__partners--pics > div {
+              will-change: transform;
+            }
+          `}
+        </style>
       </div>
     </div>
   );

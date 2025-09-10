@@ -1,7 +1,7 @@
 "use client";
 import React, { useRef } from "react";
 import { useEffect, useState } from "react";
-import { confirmOtp, resendOtp } from "../actions/auth";
+import { confirmOtp, resendOtp, updatePassword } from "../actions/auth";
 import { useRouter } from "next/navigation";
 import Countdown from "react-countdown";
 import { errorMessage, successMessage } from "../utils/notification";
@@ -11,9 +11,10 @@ import Cookies from "js-cookie";
 
 type Props = {
   email: string;
+  password: string | null;
 };
 
-const Otp = ({ email }: Props) => {
+const Otp = ({ email, password }: Props) => {
   const [otp, setOtp] = useState<string[]>(new Array(6).fill(""));
   const [disable, setDisable] = useState<boolean>(false);
   const [mistake, setMistake] = useState<boolean>(false);
@@ -58,11 +59,21 @@ const Otp = ({ email }: Props) => {
 
     setIsLoading(true);
 
-    await confirmOtp(email, otp)
-      .then((el) => {
+    await confirmOtp(email, otp, password)
+      .then(async (el) => {
         if (el.statusCode === 200) {
-          router.push("/");
-          setSuccess(true);
+          if (password !== null) {
+            await updatePassword(email, password as string)
+              .then(() => {
+                successMessage("Votre mot de passe a été changé avec success");
+                window.location.href = "/auth/login";
+                setSuccess(true);
+              })
+              .catch((e) => console.log(e));
+          } else {
+            window.location.href = "/";
+            setSuccess(true);
+          }
         } else {
           setMistake(true);
         }
