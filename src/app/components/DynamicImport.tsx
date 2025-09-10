@@ -12,7 +12,7 @@ export function withNoSSR<T extends object>(
 ) {
   return dynamic(() => Promise.resolve(Component), {
     ssr: false,
-    loading: fallback ? () => <fallback /> : () => null,
+    loading: fallback ? () => <></> : () => null,
   });
 }
 
@@ -26,7 +26,7 @@ export function withClientOnly<T extends object>(
   return dynamic(() => Promise.resolve(Component), {
     ssr: false,
     loading: fallback
-      ? () => <fallback />
+      ? () => <></>
       : () => (
           <div className="loading__skeleton">
             <div className="loading__skeleton--top"></div>
