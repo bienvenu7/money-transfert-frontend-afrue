@@ -36,6 +36,7 @@ const Form = ({ pageName }: Props) => {
   const [showPassword, setShowPassword] = useState<boolean>(false);
 
   const [countries, setCountries] = useState<ICountry[]>([]);
+  const [countriesLoading, setCountriesLoading] = useState<boolean>(true);
 
   const submit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -159,7 +160,16 @@ const Form = ({ pageName }: Props) => {
   };
 
   const allCountries = async (): Promise<void> => {
-    setCountries(await getCountries());
+    try {
+      setCountriesLoading(true);
+      const countriesData = await getCountries();
+      setCountries(countriesData as ICountry[]);
+    } catch (error) {
+      console.error("Error fetching countries:", error);
+      setCountries([]);
+    } finally {
+      setCountriesLoading(false);
+    }
   };
 
   const genders = ["Homme", "Femme"];
@@ -202,8 +212,13 @@ const Form = ({ pageName }: Props) => {
                     onChange={(el) => setCountry(el.target.value)}
                     defaultValue=""
                     id="country"
+                    disabled={countriesLoading}
                   >
-                    <option value="">Sélectionez votre localité</option>
+                    <option value="">
+                      {countriesLoading
+                        ? "Chargement des localités..."
+                        : "Sélectionez votre localité"}
+                    </option>
                     {countries?.map((el) => (
                       <option value={el.id} key={el.id}>
                         {el.pubicName}
