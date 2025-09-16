@@ -2,7 +2,7 @@
 import React, { useEffect, useState } from "react";
 import Svgs from "../Svgs";
 import { IRate } from "@/types/country";
-import { getRate } from "@/app/actions/rate";
+import { getRate } from "@/app/utils/getCountry";
 
 const countries = [
   {
