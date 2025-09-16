@@ -147,7 +147,7 @@ const Cover = (props: Props) => {
                 );
               })}
             </div>
-            <Convertion />
+            {/* <Convertion /> */}
           </div>
         </div>
         <div className="main__cover--mobile">
@@ -185,7 +185,7 @@ const Cover = (props: Props) => {
               );
             })}
           </div>
-          <Convertion />
+          {/* <Convertion /> */}
         </div>
       </div>
     </div>

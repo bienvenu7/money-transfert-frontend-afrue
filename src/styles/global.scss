@@ -3323,7 +3323,7 @@ html {
 
     &--content {
       width: 680px;
-      height: 600px;
+      height: 500px;
       flex-shrink: 0;
       z-index: 2;
       border-radius: 40px;
@@ -3333,7 +3333,8 @@ html {
       margin: 0 0 40px 80px;
       display: flex;
       flex-direction: column;
-      // gap: 180px;
+      justify-content: space-between;
+      // gap: 80px;
 
       &__heading {
         display: flex;
@@ -3378,6 +3379,7 @@ html {
         background: rgba(245, 244, 244, 0.2);
         box-shadow: 0px 0px 2px 0px rgba(0, 0, 0, 0.1),
           0px 4px 4px 0px rgba(0, 0, 0, 0.1);
+        margin-bottom: 20px;
 
         @include mobile {
           width: $mobile-width;
