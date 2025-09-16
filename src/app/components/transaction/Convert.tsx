@@ -1,39 +1,96 @@
 "use client";
 import React, { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import {
-  selectClientData,
-  selectCountries,
-  selectCountry,
-  selectCountryFromData,
-  selectCountryWhereToData,
-  selectTransaction,
-  selectTransactionType,
-} from "@/redux/selector";
-import { AppDispatch } from "@/redux/store";
-import {
-  getAmountFrom,
-  getCountryTo,
-  getAmountTo,
-  getCountryfrom,
-} from "@/redux/transactionReducer";
-import Big from "big.js";
+
+const countries = [
+  {
+    id: "cg",
+    name: "République du Congo",
+    flag: "/static/flags/cg.png",
+    currency: "XAF",
+  },
+  {
+    id: "cam",
+    name: "Caméroun",
+    flag: "/static/flags/cam.png",
+    currency: "XAF",
+  },
+  {
+    id: "sen",
+    name: "Sénégal",
+    flag: "/static/flags/sen.png",
+    currency: "XOF",
+  },
+  {
+    id: "civ",
+    name: "Côte d'ivoire",
+    flag: "/static/flags/civ.png",
+    currency: "XOF",
+  },
+  {
+    id: "ru",
+    name: "Fédération de Russie",
+    flag: "/static/flags/ru.png",
+    currency: "RUB",
+  },
+  {
+    id: "rca",
+    name: "République centrafricaine",
+    flag: "/static/flags/rca.png",
+    currency: "XAF",
+  },
+  {
+    id: "gab",
+    name: "Gabon",
+    flag: "/static/flags/gab.png",
+    currency: "XAF",
+  },
+  {
+    id: "tchad",
+    name: "Tchad",
+    flag: "/static/flags/tchad.png",
+    currency: "XAF",
+  },
+  {
+    id: "mali",
+    name: "Mali",
+    flag: "/static/flags/mali.png",
+    currency: "XOF",
+  },
+  {
+    id: "gib",
+    name: "Guinée bissau",
+    flag: "/static/flags/gib.png",
+    currency: "XOF",
+  },
+  {
+    id: "buf",
+    name: "Burkina Fasso",
+    flag: "/static/flags/buf.png",
+    currency: "XOF",
+  },
+  {
+    id: "nr",
+    name: "Niger",
+    flag: "/static/flags/nr.png",
+    currency: "XOF",
+  },
+];
 
 const Convert = () => {
   return (
-    <div className="transfert__convert--list__input">
-      <div className="transfert__convert--list__input--left">
+    <div className="transfertConvert__convert--list__input">
+      <div className="transfertConvert__convert--list__input--left">
         <label htmlFor="send">Montant à envoyer</label>
         <div className="block">
           <div>{`ZAF`}</div>
           <input type={"tel"} placeholder="Vous envoyer" />
         </div>
       </div>
-      <div className="transfert__convert--list__input--right">
+      <div className="transfertConvert__convert--list__input--right">
         <select>
-          {[].map((el) => (
-            <option key={el} value={el}>
-              {el}
+          {countries.map((el) => (
+            <option key={el.id} value={el.id}>
+              {el.name}
             </option>
           ))}
         </select>

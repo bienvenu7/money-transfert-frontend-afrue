@@ -18,15 +18,15 @@ import Big from "big.js";
 
 const ConvertReceive = () => {
   return (
-    <div className="transfert__convert--list__input">
-      <div className="transfert__convert--list__input--left">
+    <div className="transfertConvert__convert--list__input">
+      <div className="transfertConvert__convert--list__input--left">
         <label htmlFor="send">Montant à recevoir</label>
         <div className="block">
           <div>{`CSF`}</div>
           <input type={"tel"} placeholder="vous recevez" />
         </div>
       </div>
-      <div className="transfert__convert--list__input--right">
+      <div className="transfertConvert__convert--list__input--right">
         <select>
           {[].map((el) => (
             <option key={el} value={el}>

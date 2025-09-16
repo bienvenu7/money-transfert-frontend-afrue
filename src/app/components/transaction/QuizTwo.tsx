@@ -24,24 +24,20 @@ import { getNetworksById } from "@/app/utils/network";
 import Image from "next/image";
 import { errorMessage } from "@/app/utils/notification";
 import { INetworkResponse } from "@/types/networks";
+import Link from "next/link";
 
 type Props = {};
 
 const QuizTwo = () => {
   return (
-    <div className="transfert__slides--first">
+    <div className="transfertConvert__slides--first">
       <Image src="/grad.png" alt="" fill />
-      <h2>{`Entrez le montant que vous souhaiter`}</h2>
-      <div className="transfert__convert">
+      <div className="transfertConvert__convert">
         <Convertisseur />
       </div>
       <div className="btns">
-        <button type={"button"}>
-          <AiOutlineDown />
-        </button>
-        <button type={"button"}>
-          <AiOutlineDown />
-        </button>
+        <Link href={"/send"}>Envoyer</Link>
+        <Link href={"/receive"}>Recevoir</Link>
       </div>
     </div>
   );

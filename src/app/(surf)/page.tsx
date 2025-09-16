@@ -14,6 +14,8 @@ import { motion, useAnimation } from "framer-motion";
 import { useInView } from "react-intersection-observer";
 import dynamic from "next/dynamic";
 import { useEffect, useState } from "react";
+import Convertisseur from "../components/transaction/Convertisseur";
+import QuizTwo from "../components/transaction/QuizTwo";
 
 // Helper component for reveal on scroll
 const RevealOnScroll = dynamic(
@@ -108,6 +110,9 @@ export default function Home() {
         <Show />
       </RevealOnScroll>
       <RevealOnScroll delay={0.5}>
+        <QuizTwo />
+      </RevealOnScroll>
+      <RevealOnScroll delay={0.6}>
         <Partners />
       </RevealOnScroll>
       <Footer />
