@@ -30,7 +30,7 @@ const Page = (props: Props) => {
   };
 
   useEffect(() => {
-    if (!initialized.current) {
+    if (!initialized.current && hash) {
       initialized.current = true;
       emailConfirmation();
     }

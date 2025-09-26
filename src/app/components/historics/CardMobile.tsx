@@ -18,7 +18,7 @@ const CardMobile = ({ el, clientData }: Props) => {
   return (
     <div
       onClick={() =>
-        (el.status === ("WAITING" as any) || el.status === ("ERROR" as any)) &&
+        // (el.status === ("WAITING" as any) || el.status === ("ERROR" as any)) &&
         router.push(`/comfirmation/${el.id}`)
       }
       key={el.id}
