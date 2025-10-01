@@ -65,7 +65,7 @@ export const metadata: Metadata = {
       "AfruE facilite les transferts d'argent entre la Russie et l'Afrique (CEMAC, UEMOA). Transactions rapides en 5 minutes, frais compétitifs, sécurité maximale.",
     images: [
       {
-        url: "/home/logo.webp",
+        url: "/icon.png",
         width: 1200,
         height: 630,
         alt: "AfruE - Plateforme de transfert d'argent Russie-Afrique",
