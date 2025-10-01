@@ -85,7 +85,7 @@ export const metadata: Metadata = {
     title: "AfruE - Transfert d'argent Russie-Afrique | Rapide, Sécurisé",
     description:
       "Facilitez vos transferts d'argent entre la Russie et l'Afrique. Transactions en 5 minutes, frais compétitifs, sécurité maximale.",
-    images: ["/home/logo.webp"],
+    images: ["/icon.png"],
   },
   robots: {
     index: true,
@@ -102,7 +102,7 @@ export const metadata: Metadata = {
   classification: "Financial Services",
   icons: {
     icon: [
-      { url: "/ico.png", sizes: "any" },
+      { url: "/icon.png", sizes: "any" },
       { url: "/icon.png", sizes: "32x32", type: "image/png" },
       { url: "/icon.svg", type: "image/svg+xml" },
     ],
