@@ -16,6 +16,7 @@ import dynamic from "next/dynamic";
 import { useEffect, useState } from "react";
 import Convertisseur from "../components/transaction/Convertisseur";
 import QuizTwo from "../components/transaction/QuizTwo";
+import LoadingScreen from "../components/LoadingScreen";
 
 // Helper component for reveal on scroll
 const RevealOnScroll = dynamic(
@@ -65,6 +66,8 @@ const RevealOnScroll = dynamic(
 export default function Home() {
   // Hydration-safe state for client-only code
   const [hydrated, setHydrated] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
+  const [countriesLoaded, setCountriesLoaded] = useState(false);
 
   useEffect(() => {
     setHydrated(true);
@@ -79,43 +82,72 @@ export default function Home() {
             JSON.stringify(countriesData as ICountry[])
           );
         }
+        setCountriesLoaded(true);
       } catch (error) {
         // eslint-disable-next-line no-console
         console.error("Error fetching countries:", error);
+        setCountriesLoaded(true); // Continue même en cas d'erreur
       }
     };
     getCountriesList();
   }, []);
 
+  // Masquer l'écran de chargement quand tout est prêt
+  useEffect(() => {
+    if (hydrated && countriesLoaded) {
+      // Délai minimum pour que l'utilisateur puisse voir l'animation
+      const timer = setTimeout(() => {
+        setIsLoading(false);
+      }, 2000); // 2 secondes minimum
+
+      return () => clearTimeout(timer);
+    }
+  }, [hydrated, countriesLoaded]);
+
+  const handleLoadingComplete = () => {
+    setIsLoading(false);
+  };
+
   if (!hydrated) {
-    // Avoid rendering until after hydration to prevent mismatch
-    return null;
+    // Afficher l'écran de chargement pendant l'hydratation
+    return (
+      <LoadingScreen
+        isLoading={true}
+        onLoadingComplete={handleLoadingComplete}
+      />
+    );
   }
 
   return (
-    <main className="main__container">
-      <RevealOnScroll delay={0}>
-        <Cover />
-      </RevealOnScroll>
-      <RevealOnScroll delay={0.1}>
-        <About />
-      </RevealOnScroll>
-      <RevealOnScroll delay={0.2}>
-        <Difference />
-      </RevealOnScroll>
-      <RevealOnScroll delay={0.3}>
-        <Advantage />
-      </RevealOnScroll>
-      <RevealOnScroll delay={0.4}>
-        <Show />
-      </RevealOnScroll>
-      <RevealOnScroll delay={0.5}>
-        <QuizTwo />
-      </RevealOnScroll>
-      <RevealOnScroll delay={0.6}>
-        <Partners />
-      </RevealOnScroll>
-      <Footer />
-    </main>
+    <>
+      <LoadingScreen
+        isLoading={isLoading}
+        onLoadingComplete={handleLoadingComplete}
+      />
+      <main className="main__container">
+        <RevealOnScroll delay={0}>
+          <Cover />
+        </RevealOnScroll>
+        <RevealOnScroll delay={0.1}>
+          <About />
+        </RevealOnScroll>
+        <RevealOnScroll delay={0.2}>
+          <Difference />
+        </RevealOnScroll>
+        <RevealOnScroll delay={0.3}>
+          <Advantage />
+        </RevealOnScroll>
+        <RevealOnScroll delay={0.4}>
+          <Show />
+        </RevealOnScroll>
+        <RevealOnScroll delay={0.5}>
+          <QuizTwo />
+        </RevealOnScroll>
+        <RevealOnScroll delay={0.6}>
+          <Partners />
+        </RevealOnScroll>
+        <Footer />
+      </main>
+    </>
   );
 }
