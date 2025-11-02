@@ -1,0 +1,44 @@
+@font-face {
+  font-family: 'SF Pro Display';
+  src: url('../../public/assets/fonts/SFPRODISPLAYREGULAR.OTF') format('OTF');
+  font-weight: normal;
+}
+
+@font-face {
+  font-family: 'SF Pro Display';
+  src: url('../../public/assets/fonts/SFPRODISPLAYMEDIUM.OTF') format('OTF');
+  font-weight: bold;
+}
+
+@font-face {
+  font-family: 'SF Pro Display';
+  src: url('../../public/assets/fonts/SFPRODISPLAYBOLD.OTF') format('OTF');
+  font-weight: bolder;
+}
+
+// all fonts
+$global-font: 'SF Pro Display', sans-serif;
+$title-font: 'Roboto Slab', serif;
+$main-font: 'Poppins', sans-serif;
+$secondary-font: 'Inter', sans-serif;
+//all colors
+$blue-clr: #5063bf;
+$red-clr: rgb(248, 96, 96);
+$black-clr: #151821;
+$grey-clr: #f6f6f6;
+$white-clr: #fff;
+$line-grey-clr: #b1b1b1;
+$yellow-clr: #e2be68;
+
+//new colors
+$background-Card_body: #e7eeff;
+
+//layout sizes
+$mobile-width: calc(100% - 20px);
+
+//sizes
+@mixin mobile {
+  @media screen and (max-width: 520px) {
+    @content;
+  }
+}

@@ -1,0 +1,279 @@
+{
+  "common": {
+    "login": "Se connecter",
+    "loading": "Chargement...",
+    "error": "Erreur",
+    "success": "Succès",
+    "cancel": "Annuler",
+    "confirm": "Confirmer",
+    "next": "Suivant",
+    "previous": "Précédent",
+    "submit": "Soumettre",
+    "save": "Enregistrer",
+    "edit": "Modifier",
+    "delete": "Supprimer",
+    "close": "Fermer",
+    "back": "Retour",
+    "continue": "Continuer",
+    "finish": "Terminer",
+    "emailLabel": "*Entrer l'e-mail",
+    "emailPlaceholder": "Exemple@mail.com",
+    "passwordLabel": "*Entrez votre mot de passe",
+    "passwordPlaceholder": "Mot de passe (Min 8 charactères)",
+    "forgotPassword": "Mot de passe oublié ?",
+    "button": "Se connecter",
+    "noAccount": "Pas encore de compte?",
+    "register": "S'enregistrer",
+    "loading-login": "Veillez patientez...",
+    "loading-login2": "En cours de véfication de vos identifiants. Veillez patienter s'il vous plait!...",
+    "password-error": "Le mote passe doit contenir minimun 8 caraactères!",
+    "error-message-login": "Mot de passe ou email incorrect!",
+    "email-error": "Votre addresse email n'est pas valide!",
+    "otp-error": "Impossible de vérifier l'otp!",
+    "otp-title": "Veillez entrer le code",
+    "loading-,essage-otp": "En cours de véfication du code entré. Veillez patienter s'il vous plait...",
+    "success-otp": "Veillez patienter, vous serrez redirigé vers la page d'accueil automatiquement",
+    "confirm-btn": "Confirmer"
+  },
+  "navigation": {
+    "home": "Accueil",
+    "about": "À propos",
+    "advantages": "Avantages",
+    "transaction": "Transaction",
+    "faq": "FAQ",
+    "contact": "Contact",
+    "profile": "Profil",
+    "history": "Historique",
+    "send": "Envoyer",
+    "receive": "Recevoir"
+  },
+  "hero": {
+    "title": "Transférer de l'argent en un clic",
+    "subtitle": "depuis le confort de votre salon",
+    "description": "Mode de paiement flexible avec une possibilité de se rendre dans nos locaux",
+    "stats": {
+      "countries": "pays",
+      "transactions": "transactions",
+      "clients": "clients",
+      "routes": "itinéraires",
+      "years": "ans de service"
+    }
+  },
+  "about": {
+    "title": "À propos de nous",
+    "subtitle": "Afru-Exchange",
+    "description": "Nous sommes une micro-finance qui a pour activité principale le transfert d'argent entre la Russie et les pays d'Afrique, entre les pays de la CEMAC et l'UEMOA. Notre mission est de faciliter les échanges financiers entre les africains des diasporas et leurs familles à un taux transparent, avantageux, une commission assez basse tout en limitant les intermédiaires, à tous ces avantages s'ajoute la réalisation de la transaction en 5 minutes maximum."
+  },
+  "advantages": {
+    "title": "Avantages",
+    "items": {
+      "security": {
+        "title": "Sécurité des transactions",
+        "description": "Chez AfruE, la sécurité est notre priorité absolue. Nous protégeons la confidentialité et l'intégrité de vos transactions grâce à des mesures de sécurité rigoureuses. Un système de cryptage avancé garantit la confidentialité de vos données et réduit le risque de fraude, garantissant ainsi que vos fonds sont transférés en toute sécurité."
+      },
+      "speed": {
+        "title": "Rapidité et efficacité",
+        "description": "AfruE se distingue par sa rapidité et son efficacité dans le transfert d'argent, en veillant à ce que vos fonds arrivent rapidement à destination grâce à un réseau étendu de partenaires. Nous offrons également des frais compétitifs et un système de suivi transparent pour vous permettre de gérer vos transferts en toute simplicité et avec confiance."
+      },
+      "reliability": {
+        "title": "Fiabilité et transparence",
+        "description": "Chez AfruE, nous offrons un service fiable et transparent pour garantir la confiance dans vos transactions financières. Nous garantissons l'exactitude des informations fournies et veillons à ce que vos fonds soient transférés en toute transparence. De plus, notre équipe de service client dédiée est toujours disponible pour répondre à vos questions et vous assister à chaque étape du processus."
+      },
+      "flexibility": {
+        "title": "Options de transfert flexibles",
+        "description": "AfruE sait que chaque client a des besoins uniques en matière de transfert d'argent. C'est pourquoi nous proposons des options de transfert flexibles, qu'il s'agisse d'un envoi urgent en quelques minutes ou d'un transfert programmé à l'avance. Nous offrons également des taux de change compétitifs et des frais raisonnables pour vous assurer la meilleure valeur pour votre argent."
+      },
+      "expertise": {
+        "title": "Expertise et expérience",
+        "description": "Avec une solide expérience dans l'industrie des transferts d'argent, AfruE met à votre service une expertise approfondie. Notre équipe de professionnels chevronnés maîtrise les complexités des transferts internationaux et utilise sa connaissance des réglementations financières et des systèmes bancaires pour garantir des transferts rapides et efficaces."
+      },
+      "satisfaction": {
+        "title": "Engagement envers la satisfaction du client",
+        "description": "Chez AfruE, la satisfaction client est notre priorité. Nous nous efforçons de dépasser vos attentes à chaque étape du transfert, qu'il s'agisse d'un particulier ou d'une entreprise. Nous nous engageons à offrir un service personnalisé et une expérience exceptionnelle. Vos commentaires et suggestions sont toujours les bienvenus pour nous aider à améliorer nos services et mieux répondre à vos besoins."
+      }
+    }
+  },
+  "difference": {
+    "without_us": {
+      "title": "Sans nous",
+      "criteria": ["Indéfiniment", "Stress", "Lent"],
+      "items": [
+        "C'est incertain",
+        "Frais élevés",
+        "C'est retardé",
+        "Manque de transparence sur le taux de change",
+        "C'est stressant",
+        "Paiement en espèces non indisponible"
+      ]
+    },
+    "with_us": {
+      "title": "Avec nous",
+      "criteria": ["Sûr", "Transparent", "Rapide"],
+      "items": [
+        "C'est sécurisé",
+        "Frais bas",
+        "C'est rapide (5 minutes maximum)",
+        "Taux transparent et clair",
+        "Pas de stress",
+        "Paiement en espèces disponible"
+      ]
+    }
+  },
+  "showcase": {
+    "title": "Transferts terminés avec succès"
+  },
+  "transaction": {
+    "title": "Transaction",
+    "form": {
+      "description": "Veillez entrer soigneusement les informations necessaires du destinataire!",
+      "fields": {
+        "country": "Pays*",
+        "operator": "Opérateur réseau*",
+        "select_operator": "Sélectionnez un opérateur",
+        "select_country_first": "Vous devrez d'abord choissir le pays",
+        "recipient": "du destinataire",
+        "sender": "de l'expéditeur",
+        "name": "Nom(s) et prénom(s) du destinataire*",
+        "name_placeholder": "El Nuntia",
+        "phone": "Numéro de téléphone du destinataire*",
+        "phone_placeholder": "Ex: 77 123 45 67"
+      },
+      "validation": {
+        "name_min_length": "Le nom du destinataire doit contenir au moins 3 lettres!",
+        "phone_length": "Le numéro doit contenir {{count}} chiffres!",
+        "operator_required": "Veillez sélectionner un opérateur réseau!",
+        "name_min_letters": "Le nom doit contenir au moins 5 lettres!",
+        "phone_digits": "Le numéro doit contenir 9 chiffres!"
+      }
+    }
+  },
+  "footer": {
+    "links": {
+      "about": "à propos",
+      "advantages": "Avantages",
+      "transaction": "Transaction",
+      "faq": "FAQ"
+    },
+    "description": "Mode de paiement flexible avec une possibilité de se rendre dans nos locaux",
+    "contacts": "Contacts",
+    "offices": {
+      "russia": "AfruE-Russie 🇷🇺",
+      "senegal": "AfruE-Senegal 🇸🇳",
+      "congo": "AfruE-Congo 🇨🇬",
+      "cameroon": "AfruE-Cameroun 🇨🇲"
+    }
+  },
+  "meta": {
+    "title": "AfruE - Transfert d'argent Russie-Afrique | Rapide, Sécurisé, Transparent",
+    "description": "AfruE facilite les transferts d'argent entre la Russie et l'Afrique (CEMAC, UEMOA). Transactions rapides en 5 minutes, frais compétitifs, sécurité maximale. Rejoignez 6000+ clients satisfaits.",
+    "keywords": [
+      "transfert d'argent",
+      "Russie Afrique",
+      "CEMAC",
+      "UEMOA",
+      "envoi d'argent",
+      "micro-finance",
+      "taux de change",
+      "transfert international",
+      "argent diaspora",
+      "frais bas",
+      "transaction sécurisée",
+      "AfruE",
+      "Afru-Exchange",
+      "transfert rapide",
+      "mobile money",
+      "virement bancaire"
+    ]
+  },
+  "profile": {
+    "personalInfo": "Information personnelle",
+    "clientNumber": "Client numéro",
+    "fullName": "Nom et prénoms",
+    "email": "Email",
+    "phone": "Téléphone",
+    "country": "Pays",
+    "security": "Sécurité",
+    "changePassword": "Changer le mot de passe",
+    "others": "Autres",
+    "edit": "Modifier",
+    "title": "Votre profile"
+  },
+  "send": {
+    "title": "Envoyer de l'argent",
+    "welcome": "Bienvenue chez AfruE",
+    "fillInfo": "Remplissons les informations",
+    "selectCountry": "Sélectionnez le pays du bénéficiaire",
+    "amountToSend": "Montant à envoyer",
+    "amountToReceive": "Montant à recevoir",
+    "exchangeRate": "Le taux de change varie en fonction du mode d'envoi et de paiement",
+    "includeFees": "Inclure les frais",
+    "beneficiaryInfo": "Informations du bénéficiaire",
+    "beneficiaryName": "Nom et prénom du bénéficiaire",
+    "beneficiaryPhone": "Le numéro du destinataire",
+    "beneficiaryNote": "Veillez noter que ces informations peuvent être demandé pour des raisons de vérification en cas de problemes avec la transaction",
+    "receiveMethod": "Comment le bénéficiaire souhaite-t-il recevoir l'argent?",
+    "summary": "Synthèse",
+    "transferAmount": "Montant du transfert",
+    "transferFees": "Frais de transfert",
+    "totalTransfer": "Total du transfert",
+    "beneficiaryReceives": "Total Le bénéficiaire reçoit",
+    "recipient": "Destinataire",
+    "name": "Nom et prénoms",
+    "phoneNumber": "Numéro",
+    "network": "Réseau",
+    "continue": "Continuer",
+    "pleaseWait": "Veillez patientez",
+    "validation": {
+      "checkForm": "S'il vous plait, vérifiez que vous aviez correctement remplis le formulaire d'envoie!",
+      "amountRange": "le montant à envoyer doit être compris entre {{min}} et {{max}}",
+      "validPhone": "Veillez s'il vous plait entrer un numéro valide"
+    },
+    "success": "Transaction créée avec succès",
+    "error": "Ops! une érreur s'est produite lors de l'enregustrement de votre transaction. Veillez ressayer plutard"
+  },
+  "confirmation": {
+    "title": "En attente de confirmation",
+    "loading": "Chargement...",
+    "error": "Une erreur est survenue lors du chargement de la transaction",
+    "notFound": "Transaction non trouvée",
+    "steps": {
+      "depositInfo": "Coordonnées du dépot",
+      "method": "Methode",
+      "accountNumber": "N° du compte",
+      "name": "Nom",
+      "amount": "Montant",
+      "instructions": "Instructions de dépot",
+      "depositDetails": "Informations relatives au depot",
+      "accountName": "Nom rélié au compte, ex: El Nuntia",
+      "accountNamePlaceholder": "Nom rélié au compte",
+      "sendNumber": "Numero d'envoie, ex: 066779090",
+      "sendNumberPlaceholder": "Numero d'envoie",
+      "exactTime": "Heure précise, ex: 14h05",
+      "exactTimePlaceholder": "Heure précise",
+      "understood": "J'ai compris",
+      "depositDone": "Dépot éffectué",
+      "pleaseWait": "Veillez patienter...",
+      "viewDetails": "Voir les details"
+    },
+    "validation": {
+      "phoneIncorrect": "Le numéro d'envoie n'est pas correcte",
+      "selectTime": "Veillez s'il vous plait selectionner une heure précise!"
+    },
+    "status": {
+      "inProgress": "En cours",
+      "error": "Echec",
+      "finished": "Terminée"
+    },
+    "transactionDetails": {
+      "title": "A propos de la transaction",
+      "status": "status:",
+      "initiationDate": "Date d'initiation:",
+      "itinerary": "Iltinéraire:",
+      "amountSent": "Montant transféré:",
+      "amountToReceive": "Montant à recevoir:",
+      "recipientName": "Nom du destinataire:"
+    },
+    "success": "La transaction a été confirmé avec succès!",
+    "errorConfirm": "Une erreur s'est produite lors de la confirmation de la transaction"
+  }
+}
